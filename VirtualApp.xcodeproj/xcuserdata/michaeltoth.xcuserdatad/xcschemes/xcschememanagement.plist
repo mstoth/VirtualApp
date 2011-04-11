@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>Beta.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
+		<key>Logic Test.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+		<key>LogicTest.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+		<key>Unit Test.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>VirtualApp.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>0</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>A48AD76C134BDDF3004271C0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A48AD783134BE26D004271C0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A48AD7A2134BE6BF004271C0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A48AD7BD134BEAD8004271C0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A48D1FC3134992E800B13EC5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A48D1FE7134992E900B13EC5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>
