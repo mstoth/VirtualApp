@@ -100,10 +100,11 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 	fileNames = [[NSMutableArray alloc] init];
 	pageTypes = [[NSMutableArray alloc] init];
 	
-	NSURL *url = [[NSURL alloc] initWithString:[webSite stringByAppendingPathComponent:fileName]];
+	NSURL *url = [[[NSURL alloc] initWithString:[webSite stringByAppendingPathComponent:fileName]]autorelease];
 	if (url) {
-		NSURLRequest *menuRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:[url absoluteString]]];
-		[url release];
+		//NSURLRequest *menuRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:[url absoluteString]]];
+        NSURLRequest *menuRequest = [NSURLRequest requestWithURL:url];
+		//[url release];
 		self.menuFeedConnection = [[[NSURLConnection alloc] initWithRequest:menuRequest delegate:self] autorelease];
 		NSAssert(self.menuFeedConnection != nil, @"Failure to create URL connection for Menus.");
 		[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
@@ -199,7 +200,7 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 	//[self.fileName release];
 	[self.filePath release];
 	[self.dataPath release];
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 	[self.menuTitle release];
     [super dealloc];
 }
@@ -214,7 +215,7 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 	NSURL *imageURL = [[NSURL alloc] initWithString:[webSite stringByAppendingPathComponent:fn]];
 	[self displayImageWithURL:imageURL];
 	[imageURL release];
-	
+	//[[NSNotificationCenter defaultCenter] removeObserver:self];
     //[self addMenu:[[notif userInfo] valueForKey:@"menuResult"]];
 }
 
@@ -342,7 +343,7 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 	if ([[item pageType] isEqualToString:@"SUMMARY"]) {
 		SummaryViewController *summaryViewController = [[SummaryViewController alloc] initWithNibName:@"SummaryViewController" bundle:nil];
 		summaryViewController.webSite = [webSite autorelease];
-		summaryViewController.fileName = [[item fileName]autorelease];
+		summaryViewController.fileName = [item fileName];
 		[self.navigationController pushViewController:summaryViewController animated:YES];
 		[summaryViewController release];
 	}
@@ -537,11 +538,11 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
     // also make sure the MIMEType is correct:
     //
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-	//NSUInteger status;
-	//NSString *mimeType;
-	// mimeType = [response MIMEType];
-	// status = [httpResponse statusCode];
-    if ((([httpResponse statusCode]/100) == 2) && [[response MIMEType] isEqual:@"application/xml"]) {
+	NSUInteger status;
+	NSString *mimeType;
+	mimeType = [response MIMEType];
+	status = [httpResponse statusCode];
+    if ((([httpResponse statusCode]/100) == 2) && [[response MIMEType] isEqual:@"text/xml"]) {
         self.menuData = [NSMutableData data];
     } else {
         NSDictionary *userInfo = [NSDictionary dictionaryWithObject:

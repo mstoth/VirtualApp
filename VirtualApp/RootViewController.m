@@ -289,7 +289,7 @@
             for (SiteObject *aSite in self.siteList) {
                 if ([aSite.category isEqualToString:self.currentCategory]) {
                     if (count == indexPath.row) {
-                        urlString = [[NSString alloc] initWithFormat:@"http://vsec.railsplayground.net/system/icons/%@/mainmenu.xml",aSite.appID];
+                        urlString = [[NSString alloc] initWithFormat:@"http://my-iphone-app.com/system/icons/%@/mainmenu.xml",aSite.appID];
                         menuViewController = [[MenuViewController alloc] initWithNibName:@"MenuViewController" bundle:nil];
                         NSURL *url = [[NSURL alloc] initWithString:urlString];
                         menuViewController.userID = aSite.userID;
@@ -307,9 +307,9 @@
                         
                         NSURL *baseURL = [url URLByDeletingLastPathComponent];
                         [url release];
-                        menuViewController.webSite = [[baseURL absoluteString] autorelease];
+                        menuViewController.webSite = [baseURL absoluteString];
                         menuViewController.fileName = [[urlString lastPathComponent] autorelease];
-                        [urlString release];
+                        //[urlString release];
                         //[baseURL release];
                         [self.navigationController pushViewController:menuViewController animated:YES];
                         [menuViewController release];
@@ -356,7 +356,7 @@
 				}
  			}
             
-			urlString = [[NSString alloc] initWithFormat:@"http://vsec.railsplayground.net/system/icons/%@/mainmenu.xml",site.appID];
+			urlString = [[NSString alloc] initWithFormat:@"http://my-iphone-app.com/system/icons/%@/mainmenu.xml",site.appID];
 			menuViewController = [[MenuViewController alloc] initWithNibName:@"MenuViewController" bundle:nil];
 			url = [[NSURL alloc] initWithString:urlString];
 			if (!url) {
@@ -389,7 +389,7 @@
 		case ALL:
 			site = [self.siteList objectAtIndex:indexPath.row];
             
-			urlString = [[NSString alloc] initWithFormat:@"http://vsec.railsplayground.net/system/icons/%@/mainmenu.xml",site.appID];
+			urlString = [[NSString alloc] initWithFormat:@"http://my-iphone-app.com/system/icons/%@/mainmenu.xml",site.appID];
             
 			menuViewController = [[MenuViewController alloc] initWithNibName:@"MenuViewController" bundle:nil];
             
@@ -406,7 +406,7 @@
 			}
 			
 			
-			menuViewController.webSite = [[[NSString alloc] initWithFormat:@"http://vsec.railsplayground.net/system/icons/%@/",site.appID] autorelease];
+			menuViewController.webSite = [[[NSString alloc] initWithFormat:@"http://my-iphone-app.com/system/icons/%@/",site.appID] autorelease];
 			menuViewController.userID = site.userID;
 			menuViewController.fileName = [[urlString lastPathComponent] autorelease];
             

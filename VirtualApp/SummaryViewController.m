@@ -21,7 +21,7 @@
 @synthesize buttonTextControl, imageView, notesView, infoView;
 @synthesize imageButton, customButton;
 @synthesize parseQueue, summaryData, summaryFeedConnection;
-
+@synthesize buttonURL;
 
 -(void) toggleNetworkIndicator {
 	UIApplication *app = [UIApplication sharedApplication];
@@ -48,7 +48,7 @@
                                              selector:@selector(parserDone:)
                                                  name:@"parserDone"
                                                object:nil];
-    /*
+    /* a different architecture to keep in mind
     self.imageView.frame = CGRectMake(0,0, 320, 230);
     self.imageView.bounds = CGRectMake(0, 0, 320, 230);
     self.infoView.frame = CGRectMake(0, 240, 160, 230);
@@ -94,7 +94,7 @@
 	
     // define button
     // if buttonURL has something
-    buttonURL = [dict objectForKey:@"buttonURL"];
+    self.buttonURL = [dict objectForKey:@"buttonURL"];
     buttonLabel = [dict objectForKey:@"buttonLabel"];
     
 	if (buttonURL.length > 0) {
@@ -156,11 +156,11 @@
     // also make sure the MIMEType is correct:
     //
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-    //NSUInteger status;
-    //NSString *mimeType;
-    // mimeType = [response MIMEType];
-    // status = [httpResponse statusCode];
-    if ((([httpResponse statusCode]/100) == 2) && [[response MIMEType] isEqual:@"application/xml"]) {
+    NSUInteger status;
+    NSString *mimeType;
+     mimeType = [response MIMEType];
+     status = [httpResponse statusCode];
+    if ((([httpResponse statusCode]/100) == 2) && [[response MIMEType] isEqual:@"text/xml"]) {
         self.summaryData = [[NSMutableData alloc] init];
     } else {
         NSDictionary *userInfo = [NSDictionary dictionaryWithObject:

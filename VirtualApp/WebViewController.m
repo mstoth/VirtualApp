@@ -52,10 +52,16 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+    self.fileName = nil;
+    self.webSite = nil;
+    self.urlLocation = nil;
 }
 
 
 - (void)dealloc {
+    [fileName release];
+    [webSite release];
+    [urlLocation release];
     [super dealloc];
 }
 

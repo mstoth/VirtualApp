@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #include "/usr/include/sqlite3.h"
 
-#define kSitesURL @"http://iapp.vsec.railsplayground.net/apps/listapps"
+//#define kSitesURL @"http://iapp.vsec.railsplayground.net/apps/listapps"
+#define kSitesURL @"http://my-iphone-app.com/apps/listapps"
 //#define kSitesURL @"http://localhost:3000/apps/listapps"
 #define kAddSitesNotif @"addSites"
 #define kSitesErrorNotif @"sitesError"
