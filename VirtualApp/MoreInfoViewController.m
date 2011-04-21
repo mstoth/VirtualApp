@@ -7,7 +7,7 @@
 //
 
 #import "MoreInfoViewController.h"
-
+#import "SHK.h"
 
 @implementation MoreInfoViewController
 @synthesize textView;
@@ -31,9 +31,24 @@
 - (void)viewDidLoad {
 	textView.text = moreInfo;
 	self.title = [delegate myTitle];
+    
+
     [super viewDidLoad];
 }
 
+- (IBAction)share:(id)sender
+{
+	// Create the item to share (in this example, a url)
+    SHKItem *item;
+    item = [SHKItem text:self.moreInfo];
+    
+	// Get the ShareKit action sheet
+	SHKActionSheet *actionSheet = [SHKActionSheet actionSheetForItem:item];
+    
+	// Display the action sheet
+	//[actionSheet showFromToolbar:self.navigationController.toolbar];
+    [actionSheet showInView:self.view];
+}
 
 /*
 // Override to allow orientations other than the default portrait orientation.
@@ -62,7 +77,6 @@
 - (void)dealloc {
 	//[moreInfo release];
 	//[textView release];
-	
     [super dealloc];
 }
 

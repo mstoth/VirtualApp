@@ -51,6 +51,7 @@
 	UITextView *infoView;
 	
 }
+@property (nonatomic, retain) NSString *buttonLabel;
 @property (nonatomic, retain) NSString *buttonURL;
 @property (nonatomic, retain) NSOperationQueue *parseQueue;
 @property (nonatomic, retain) NSMutableData *summaryData;

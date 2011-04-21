@@ -13,6 +13,7 @@
 #import "FullScreenImageViewController.h"
 #import "WebViewController.h"
 #import "GeneralParser.h"
+#import "SHK.h"
 
 @implementation SummaryViewController
 
@@ -21,7 +22,7 @@
 @synthesize buttonTextControl, imageView, notesView, infoView;
 @synthesize imageButton, customButton;
 @synthesize parseQueue, summaryData, summaryFeedConnection;
-@synthesize buttonURL;
+@synthesize buttonURL, buttonLabel;
 
 -(void) toggleNetworkIndicator {
 	UIApplication *app = [UIApplication sharedApplication];
@@ -95,7 +96,7 @@
     // define button
     // if buttonURL has something
     self.buttonURL = [dict objectForKey:@"buttonURL"];
-    buttonLabel = [dict objectForKey:@"buttonLabel"];
+    self.buttonLabel = [dict objectForKey:@"buttonLabel"];
     
 	if (buttonURL.length > 0) {
 		// Create button with link to URL
@@ -113,7 +114,8 @@
 		[self.view addSubview:label];
 		[label release];
 	}
-	
+    
+    
 	// Create a final modal view controller for viewing image full screen
     UIButton* modalViewButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
     [modalViewButton addTarget:self action:@selector(modalViewAction:) forControlEvents:UIControlEventTouchUpInside];

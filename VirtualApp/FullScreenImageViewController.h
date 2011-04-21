@@ -13,7 +13,10 @@
 	UIImageView *imageView;
 	UIButton *imageButton;
 	UIImage *myImage;
+    NSString *buttonLabel, *buttonURL;
+
 }
+@property (nonatomic, retain) NSString *buttonLabel, *buttonURL;
 @property (nonatomic, retain) UIImage *myImage;
 @property (nonatomic, retain) IBOutlet UIImageView *imageView;
 @property (nonatomic, retain) IBOutlet UIButton *imageButton;

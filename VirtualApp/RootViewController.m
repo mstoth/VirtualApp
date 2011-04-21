@@ -10,6 +10,7 @@
 #import "ParseOperation.h"
 #import "SiteObject.h"
 #import "MenuViewController.h"
+#import "SHK.h"
 
 @implementation RootViewController
 
@@ -26,6 +27,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [SHK logoutOfAll];
     self.title = @"Virtual App";
 	
 	// initialize lists

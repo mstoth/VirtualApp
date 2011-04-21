@@ -17,12 +17,12 @@
 	NSString *moreInfo;
 	UINavigationBar *navBar;
 }
-
 @property (nonatomic, retain) IBOutlet UINavigationBar *navBar;
 @property (nonatomic, retain) NSString *moreInfo;
 @property (nonatomic, retain) IBOutlet UITextView *textView;
 @property (nonatomic, assign) id <MoreInfoViewControllerDelegate> delegate;
 - (IBAction)done:(id)sender;
+- (IBAction)share:(id)sender;
 @end
 
 @protocol MoreInfoViewControllerDelegate
