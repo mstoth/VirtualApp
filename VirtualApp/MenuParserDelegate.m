@@ -20,6 +20,7 @@
 
 -(void) dealloc {
     [currentStringValue release];
+    self.currentStringValue = nil;
     [self.menuTitle release];
     [self.imageFileName release];
     [super dealloc];
@@ -47,7 +48,7 @@
         [elementName isEqualToString:@"itemTitle"] ||
         [elementName isEqualToString:@"image"]) {
         accumulatingChars = YES;
-        currentStringValue = [[NSMutableString alloc] init];
+        self.currentStringValue = [[NSMutableString alloc] init];
     }
     
 }
@@ -58,7 +59,7 @@
     
     if ([elementName isEqualToString:@"menu"]) {
         [currentStringValue release];
-        currentStringValue = nil;
+        self.currentStringValue = nil;
         return;
     }
     if ([elementName isEqualToString:@"menuItem"]) {
@@ -83,14 +84,14 @@
     }
     accumulatingChars = NO;
     [currentStringValue release];
-    currentStringValue = nil;    
+    self.currentStringValue = nil;    
 }
 
 
 
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
     if (accumulatingChars) {
-        [currentStringValue appendString:string];
+        [self.currentStringValue appendString:string];
     }
 }
 

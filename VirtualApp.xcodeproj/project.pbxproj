@@ -58,8 +58,6 @@
 		A48D204613499DE100B13EC5 /* MoreInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A48D203D13499DDB00B13EC5 /* MoreInfoViewController.xib */; };
 		A48D204713499DE100B13EC5 /* ContactViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A48D203E13499DDD00B13EC5 /* ContactViewController.xib */; };
 		A48D204813499DE100B13EC5 /* CategoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A48D203F13499DDF00B13EC5 /* CategoryViewController.xib */; };
-		A48D204D13499E4D00B13EC5 /* default.png in Resources */ = {isa = PBXBuildFile; fileRef = A48D204913499E4A00B13EC5 /* default.png */; };
-		A48D204E13499E4D00B13EC5 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A48D204A13499E4A00B13EC5 /* icon.png */; };
 		A48D204F13499E4D00B13EC5 /* bookmark.png in Resources */ = {isa = PBXBuildFile; fileRef = A48D204B13499E4B00B13EC5 /* bookmark.png */; };
 		A48D205013499E4D00B13EC5 /* nobookmark.png in Resources */ = {isa = PBXBuildFile; fileRef = A48D204C13499E4C00B13EC5 /* nobookmark.png */; };
 		A48D205213499EBE00B13EC5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A48D205113499EBE00B13EC5 /* MapKit.framework */; };
@@ -170,8 +168,6 @@
 		A48D203D13499DDB00B13EC5 /* MoreInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MoreInfoViewController.xib; sourceTree = "<group>"; };
 		A48D203E13499DDD00B13EC5 /* ContactViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactViewController.xib; sourceTree = "<group>"; };
 		A48D203F13499DDF00B13EC5 /* CategoryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoryViewController.xib; sourceTree = "<group>"; };
-		A48D204913499E4A00B13EC5 /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default.png; sourceTree = "<group>"; };
-		A48D204A13499E4A00B13EC5 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		A48D204B13499E4B00B13EC5 /* bookmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bookmark.png; sourceTree = "<group>"; };
 		A48D204C13499E4C00B13EC5 /* nobookmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nobookmark.png; sourceTree = "<group>"; };
 		A48D205113499EBE00B13EC5 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -387,8 +383,6 @@
 				A48D203D13499DDB00B13EC5 /* MoreInfoViewController.xib */,
 				A48D203E13499DDD00B13EC5 /* ContactViewController.xib */,
 				A48D203F13499DDF00B13EC5 /* CategoryViewController.xib */,
-				A48D204913499E4A00B13EC5 /* default.png */,
-				A48D204A13499E4A00B13EC5 /* icon.png */,
 				A48D204B13499E4B00B13EC5 /* bookmark.png */,
 				A48D204C13499E4C00B13EC5 /* nobookmark.png */,
 				A48D1FCF134992E800B13EC5 /* Supporting Files */,
@@ -544,8 +538,6 @@
 				A48D204613499DE100B13EC5 /* MoreInfoViewController.xib in Resources */,
 				A48D204713499DE100B13EC5 /* ContactViewController.xib in Resources */,
 				A48D204813499DE100B13EC5 /* CategoryViewController.xib in Resources */,
-				A48D204D13499E4D00B13EC5 /* default.png in Resources */,
-				A48D204E13499E4D00B13EC5 /* icon.png in Resources */,
 				A48D204F13499E4D00B13EC5 /* bookmark.png in Resources */,
 				A48D205013499E4D00B13EC5 /* nobookmark.png in Resources */,
 				A4C9AC92135286C400539C1D /* dist.plist in Resources */,
