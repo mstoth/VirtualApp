@@ -40,7 +40,7 @@
 	NSString *dataPath;
 	NSString *filePath;
 	NSDate *fileDate;
-	NSURLConnection *connection;
+	NSURLConnection *myConnection;
 	NSError *error;
 	UIActivityIndicatorView *activityIndicator;
 	UIButton *customButton;
@@ -69,6 +69,7 @@
 @property (nonatomic, retain) IBOutlet UIImageView *imageView;
 @property (nonatomic, retain) IBOutlet UITextView *notesView;
 @property (nonatomic, retain) IBOutlet UITextView *infoView;
+@property (nonatomic, retain) IBOutlet UIWebView *webView;
 
 @property (nonatomic, retain) UISegmentedControl *buttonTextControl;
 

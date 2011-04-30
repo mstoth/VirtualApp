@@ -137,10 +137,10 @@
     // also make sure the MIMEType is correct:
     //
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-    NSUInteger status;
-    NSString *mimeType;
-     mimeType = [response MIMEType];
-     status = [httpResponse statusCode];
+    //NSUInteger status;
+    //NSString *mimeType;
+     //mimeType = [response MIMEType];
+     //status = [httpResponse statusCode];
     if ((([httpResponse statusCode]/100) == 2) && [[response MIMEType] isEqual:@"application/xml"]) {
         self.profileData = [[NSMutableData alloc] init 
                        ];

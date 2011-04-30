@@ -18,7 +18,7 @@
     NSString *menuTitle,*imageFileName;
 
 }
-@property (nonatomic, retain) NSMutableString *currentStringValue;
+//@property (nonatomic, retain) NSMutableString *currentStringValue;
 @property (nonatomic, retain) MenuItem *currentMenuItem;
 @property (nonatomic, retain) NSMutableArray *menuItems;
 @property (nonatomic, retain) NSString *menuTitle, *imageFileName;

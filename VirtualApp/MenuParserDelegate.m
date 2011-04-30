@@ -10,7 +10,7 @@
 
 
 @implementation MenuParserDelegate
-@synthesize currentStringValue, currentMenuItem, menuItems, imageFileName, menuTitle;
+@synthesize   currentMenuItem, menuItems, imageFileName, menuTitle;
 
 -(id)init {
     [super init];
@@ -19,13 +19,11 @@
 }
 
 -(void) dealloc {
-    [currentStringValue release];
-    self.currentStringValue = nil;
+    //[currentStringValue release];
     [self.menuTitle release];
     [self.imageFileName release];
     [super dealloc];
     [menuItems release];
-    
 }
 
 #pragma mark -
@@ -48,7 +46,9 @@
         [elementName isEqualToString:@"itemTitle"] ||
         [elementName isEqualToString:@"image"]) {
         accumulatingChars = YES;
-        self.currentStringValue = [[NSMutableString alloc] init];
+        currentStringValue = [[NSMutableString alloc] init];
+        //[currentStringValue release];
+        //currentStringValue = nil;
     }
     
 }
@@ -57,14 +57,9 @@
   namespaceURI:(NSString *)namespaceURI
  qualifiedName:(NSString *)qName {   
     
-    if ([elementName isEqualToString:@"menu"]) {
-        [currentStringValue release];
-        self.currentStringValue = nil;
-        return;
-    }
     if ([elementName isEqualToString:@"menuItem"]) {
         [self.menuItems addObject:currentMenuItem];
-        [self.currentMenuItem release];
+        [currentMenuItem release];
         currentMenuItem = nil;
     }
     if ([elementName isEqualToString:@"pageType"]) {
@@ -82,16 +77,16 @@
     if ([elementName isEqualToString:@"image"]) {
         self.imageFileName = currentStringValue;
     }
-    accumulatingChars = NO;
     [currentStringValue release];
-    self.currentStringValue = nil;    
+    currentStringValue = nil;
+    accumulatingChars = NO;
 }
 
 
 
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
     if (accumulatingChars) {
-        [self.currentStringValue appendString:string];
+        [currentStringValue appendString:string];
     }
 }
 

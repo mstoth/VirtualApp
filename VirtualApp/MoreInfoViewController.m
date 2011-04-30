@@ -29,7 +29,16 @@
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
-	textView.text = moreInfo;
+    
+    if ([moreInfo rangeOfString:@"<html"].location != NSNotFound) {
+        UIWebView *webView = [[UIWebView alloc] initWithFrame:textView.frame];
+        [webView loadHTMLString:moreInfo baseURL:[[[NSURL alloc] initWithString:@"http://my-iphone-app.com/"] autorelease]];
+        [self.view addSubview:webView];
+        [webView release];
+        webView = nil;
+    } else {
+        textView.text = moreInfo;
+    }
 	self.title = [delegate myTitle];
     
 

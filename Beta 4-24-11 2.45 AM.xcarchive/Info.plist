@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ApplicationProperties</key>
+	<dict>
+		<key>ApplicationPath</key>
+		<string>Applications/VirtualApp.app</string>
+		<key>CFBundleIdentifier</key>
+		<string>com.virtualpianist.virtualapp</string>
+		<key>CFBundleShortVersionString</key>
+		<string>1.0</string>
+		<key>IconPaths</key>
+		<array>
+			<string>Applications/VirtualApp.app/icon.png</string>
+			<string>Applications/VirtualApp.app/icon.png</string>
+		</array>
+	</dict>
+	<key>ArchiveVersion</key>
+	<real>1</real>
+	<key>CreationDate</key>
+	<date>2011-04-24T06:45:45Z</date>
+	<key>Name</key>
+	<string>Beta</string>
+	<key>SchemeName</key>
+	<string>Beta</string>
+</dict>
+</plist>

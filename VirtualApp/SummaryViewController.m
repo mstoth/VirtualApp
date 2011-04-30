@@ -23,6 +23,7 @@
 @synthesize imageButton, customButton;
 @synthesize parseQueue, summaryData, summaryFeedConnection;
 @synthesize buttonURL, buttonLabel;
+@synthesize webView;
 
 -(void) toggleNetworkIndicator {
 	UIApplication *app = [UIApplication sharedApplication];
@@ -87,6 +88,22 @@
     notesView.text = [dict objectForKey:@"notes"];
     more = [[NSString alloc] initWithString:[dict objectForKey:@"more"]];
     
+    if ([infoView.text rangeOfString:@"<html"].location != NSNotFound) {
+        self.webView = [[UIWebView alloc] initWithFrame:infoView.frame];
+        [self.webView loadHTMLString:infoView.text baseURL:[[[NSURL alloc] initWithString:@"http://my-iphone-app.com/"]autorelease]];
+        [self.view addSubview:self.webView];
+        [self.webView release];
+        self.webView = nil;
+    }
+    if ([notesView.text rangeOfString:@"<html"].location != NSNotFound) {
+        self.webView = [[UIWebView alloc] initWithFrame:notesView.frame];
+        [self.webView loadHTMLString:notesView.text baseURL:[[[NSURL alloc] initWithString:@"http://my-iphone-app.com/"]autorelease]];
+        [self.view addSubview:self.webView];
+        [self.webView release];
+        self.webView = nil;
+    }
+
+    
     // display the image or load it and display it if it's not loaded yet. 
     NSString *fn = [imageFileName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 	NSURL *imageURL = [[NSURL alloc] initWithString:[self.webSite  stringByAppendingPathComponent:fn]];
@@ -138,12 +155,16 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     self.summaryData = nil;
     self.summaryFeedConnection = nil;
+    self.buttonURL = nil;
+    self.buttonLabel = nil;
 }
 
 
 - (void)dealloc {
     [self.summaryFeedConnection release];
     [self.summaryData release];
+    [self.buttonURL release];
+    [self.buttonLabel release];
     [parseQueue release];
     [super dealloc];
 	[more release];
@@ -158,10 +179,11 @@
     // also make sure the MIMEType is correct:
     //
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-    NSUInteger status;
-    NSString *mimeType;
-     mimeType = [response MIMEType];
-     status = [httpResponse statusCode];
+    // for debugging purposes
+    // NSUInteger status;
+    // NSString *mimeType;
+    // mimeType = [response MIMEType];
+    // status = [httpResponse statusCode];
     if ((([httpResponse statusCode]/100) == 2) && [[response MIMEType] isEqual:@"text/xml"]) {
         self.summaryData = [[NSMutableData alloc] init];
     } else {
@@ -207,6 +229,7 @@
     [self.parseQueue addOperation:parseOperation];
     [parseOperation release];   
     [summaryData release];
+    [myConnection release];
 }
 
 - (void)handleError:(NSError *)theerror {
@@ -330,7 +353,7 @@
 	if (time > URLCacheInterval) {
 		/* file doesn't exist or hasn't been updated for at least one day */
 		[self startAnimation];
-		connection = [[URLCacheConnection alloc] initWithURL:theURL delegate:self];
+		myConnection = [[URLCacheConnection alloc] initWithURL:theURL delegate:self];
 	}
 	else {
 		//[self startAnimation];

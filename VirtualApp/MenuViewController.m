@@ -50,7 +50,11 @@
 #import "Menu.h"
 #import "MenuItem.h"
 #import "ParseOperation.h"
-
+/*
+#import "MobicartViewController.h"
+#import "UserDetails.h"
+#import "MobiCartStart.h"
+*/
 NSString *kAddMenuItemNotif = @"AddMenuItemNotif";
 NSString *kMenuItemResultsKey = @"MenuItemResultsKey";
 NSString *kMenuItemErrorNotif = @"MenuItemErrorNotif";
@@ -124,24 +128,35 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 		return;
 	}
 /*
-	if (!success) {
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:self.fileName message:[perror localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-		[alert show];
-		[alert release];
-		return;
-	}
- *//*
-	[self initCache];
-	self.title = menuTitle;
-	NSString *fn = [imageFileName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-	NSURL *imageURL = [[NSURL alloc] initWithString:[webSite stringByAppendingPathComponent:fn]];
-	[self displayImageWithURL:imageURL];
-	[imageURL release];
-	*/
+    UIButton* modalViewButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
+    [modalViewButton addTarget:self action:@selector(startMobiCart:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *modalBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:modalViewButton];
+    self.navigationItem.rightBarButtonItem = modalBarButtonItem;
+    [modalBarButtonItem release];
+ */
+
     [super viewDidLoad];
 }
 
-
+/*
+- (IBAction)startMobiCart:(id)sender {
+    // Add the view controller's view to the window and display.
+	NSString *strMobicartEmail=[NSString stringWithFormat:@"%@",merchant_email];
+	NSString *strPaypaEmail=[NSString stringWithFormat:@"%@",merchant_paypal_email_id];
+	NSString *strPaypalToken=[NSString stringWithFormat:@"%@",merchant_paypal_live_token];
+	
+    UIWindow *window = [[UIWindow alloc] initWithFrame:[UIApplication sharedApplication].keyWindow.frame];
+	if([strPaypalToken isEqualToString:@"nil"])
+		strPaypalToken=nil;
+    
+	if([strPaypaEmail isEqualToString:@"nil"])
+		strPaypaEmail=nil;
+	[[MobiCartStart sharedApplication] startMobicartOnMainWindow:window withMerchantEmail:strMobicartEmail PayPal_SandBox_Email_ID:strPaypaEmail Paypal_Live_Token_ID:strPaypalToken];
+    [window makeKeyAndVisible];
+    [window release];
+	
+}
+*/
 /*
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -343,7 +358,7 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 	if ([[item pageType] isEqualToString:@"SUMMARY"]) {
 		SummaryViewController *summaryViewController = [[SummaryViewController alloc] initWithNibName:@"SummaryViewController" bundle:nil];
 		summaryViewController.webSite = [webSite autorelease];
-		summaryViewController.fileName = [item fileName];
+		summaryViewController.fileName = [[item fileName] autorelease];
 		[self.navigationController pushViewController:summaryViewController animated:YES];
 		[summaryViewController release];
 	}
@@ -538,10 +553,10 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
     // also make sure the MIMEType is correct:
     //
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-	NSUInteger status;
-	NSString *mimeType;
-	mimeType = [response MIMEType];
-	status = [httpResponse statusCode];
+	//NSUInteger status;
+	//NSString *mimeType;
+	//mimeType = [response MIMEType];
+	//status = [httpResponse statusCode];
     if ((([httpResponse statusCode]/100) == 2) && [[response MIMEType] isEqual:@"text/xml"]) {
         self.menuData = [NSMutableData data];
     } else {

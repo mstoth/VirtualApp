@@ -95,7 +95,7 @@ Copyright (C) 2008-2010 Apple Inc. All Rights Reserved.
 - (void)dealloc
 {
 	[receivedData release];
-	//[lastModified release];
+	self.lastModified = nil;
 	//[connection release];
 	[super dealloc];
 }
@@ -128,7 +128,7 @@ Copyright (C) 2008-2010 Apple Inc. All Rights Reserved.
 			NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
 
 			/* avoid problem if the user's locale is incompatible with HTTP-style dates */
-			[dateFormatter setLocale:[[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"] autorelease]];
+			[dateFormatter setLocale:[[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]autorelease]];
 
 			[dateFormatter setDateFormat:@"EEE, dd MMM yyyy HH:mm:ss zzz"];
 			self.lastModified = [dateFormatter dateFromString:modified];

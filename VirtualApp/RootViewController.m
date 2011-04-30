@@ -310,8 +310,8 @@
                         NSURL *baseURL = [url URLByDeletingLastPathComponent];
                         [url release];
                         menuViewController.webSite = [baseURL absoluteString];
-                        menuViewController.fileName = [[urlString lastPathComponent] autorelease];
-                        //[urlString release];
+                        menuViewController.fileName = [[urlString lastPathComponent] retain];
+                        [urlString release];
                         //[baseURL release];
                         [self.navigationController pushViewController:menuViewController animated:YES];
                         [menuViewController release];
