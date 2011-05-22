@@ -13,7 +13,7 @@
 #import "ParseOperation.h"
 
 @implementation ContactViewController
-@synthesize userName, street, cityStateZip, phone, email, mapView;
+@synthesize userName, street, street2, cityStateZip, city, state, zip, phone, email, mapView;
 @synthesize userID, appID;
 @synthesize parseQueue, profileData, profileFeedConnection;
 
@@ -27,7 +27,12 @@
 	//int success;
 	if (userID>0) {
         
-        NSString *urlStringFormat = @"http://my-iphone-app.com/profiles/%@.xml";
+#ifdef LOCAL
+        NSString *urlStringFormat = @"http://localhost:3000/profiles/%@.xml";
+#else
+        NSString *urlStringFormat = @"http://home.my-iphone-app.com/profiles/%@.xml";
+#endif
+        
 		NSString *urlString = [[NSString alloc] initWithFormat:urlStringFormat, self.userID];
         
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
@@ -60,9 +65,14 @@
     NSString *value;
     value = [dict objectForKey:@"name"];
     userName.text = value;
-    value = [dict objectForKey:@"street"];
+    value = [dict objectForKey:@"street1"];
     street.text = value;
+    value = [dict objectForKey:@"street2"];
+    street2.text = value;
     cityStateZip.text = [dict objectForKey:@"citystatezip"];
+    city.text = [dict objectForKey:@"city"];
+    state.text = [dict objectForKey:@"state"];
+    zip.text = [dict objectForKey:@"zip"];
     phone.text = [dict objectForKey:@"phone"];
     email.text = [dict objectForKey:@"email"];
     latitude = [[dict objectForKey:@"latitude"] floatValue];
@@ -103,6 +113,10 @@
     [super viewDidUnload];
     self.userName = nil;
     self.street = nil;
+    self.street2 = nil;
+    self.city = nil;
+    self.state = nil;
+    self.zip = nil;
     self.cityStateZip = nil;
     self.phone = nil;
     self.userID = nil;
@@ -119,7 +133,11 @@
     [parseQueue release]; 
     [userName release];
     [street release];
+    [street2 release];
     [cityStateZip release];
+    [city release];
+    [state release];
+    [zip release];
     [phone release];
     [userID release];
     [appID release];
@@ -141,7 +159,7 @@
     //NSString *mimeType;
      //mimeType = [response MIMEType];
      //status = [httpResponse statusCode];
-    if ((([httpResponse statusCode]/100) == 2) && [[response MIMEType] isEqual:@"application/xml"]) {
+    if ((([httpResponse statusCode]/100) == 2) && ([[response MIMEType] isEqual:@"application/xml"] || [[response MIMEType] isEqual:@"text/xml"]) ) {
         self.profileData = [[NSMutableData alloc] init 
                        ];
     } else {

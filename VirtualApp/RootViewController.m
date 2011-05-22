@@ -14,7 +14,7 @@
 
 @implementation RootViewController
 
-@synthesize siteList, sitesData, sitesFeedConnection;
+@synthesize  sitesData;
 @synthesize parseQueue;
 @synthesize toolBar, tableView;
 @synthesize allButtonItem, bookmarksButtonItem, categoriesButtonItem;
@@ -27,22 +27,30 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [SHK logoutOfAll];
+    //[SHK logoutOfAll];
+    
+    NSError *error;
     self.title = @"Virtual App";
+    /* create path to cache directory inside the application's Documents directory */
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *dataPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"VAPP"];
 	
+	/* check for existence of cache directory */
+	if ([[NSFileManager defaultManager] fileExistsAtPath:dataPath]) {
+        [[NSFileManager defaultManager] removeItemAtPath:dataPath error:&error];
+	}
+	
+	/* create a new cache directory */
+	[[NSFileManager defaultManager] createDirectoryAtPath:dataPath
+								   withIntermediateDirectories:NO
+													attributes:nil
+                                                    error:&error];
+	
+
 	// initialize lists
-	self.siteList = [[NSMutableArray alloc] init];
 	self.categoryList = [[NSMutableArray alloc] init];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(addSites:)
-                                                 name:@"addSites"
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(sitesError:)
-                                                 name:kSitesErrorNotif
-                                               object:nil];	
+
     parseQueue = [NSOperationQueue new];
 
     [self loadSites];
@@ -51,16 +59,14 @@
 
 - (void) loadSites {
     
-    [self.siteList release];
     [self.categoryList release];
-    self.siteList = [[NSMutableArray alloc] init];
 	self.categoryList = [[NSMutableArray alloc] init];
 
     // request the sites xml data
     NSURLRequest *sitesRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:kSitesURL]];
-	self.sitesFeedConnection = [[NSURLConnection alloc] initWithRequest:sitesRequest delegate:self];
+	sitesFeedConnection = [[NSURLConnection alloc] initWithRequest:sitesRequest delegate:self];
     
-	NSAssert(self.sitesFeedConnection != nil, @"Failure to create URL connection for Sites.");
+	NSAssert(sitesFeedConnection != nil, @"Failure to create URL connection for Sites.");
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 
@@ -155,7 +161,7 @@
 
 - (NSInteger)numberOfSitesInCategory:(NSString *)category {
 	NSInteger total = 0;
-	for (SiteObject *site in siteList) {
+	for (SiteObject *site in siteObjects) {
 		if ([site.category isEqualToString:category]) {
 			total++;
 		}
@@ -170,7 +176,7 @@
 	NSInteger total = 0;
 	switch (displayMode) {
 		case SUBLIST:
-			for (SiteObject *aSite in self.siteList) {
+			for (SiteObject *aSite in siteObjects) {
 				if ([self.currentCategory isEqualToString:aSite.category]) {
 					total++;
 				}
@@ -178,7 +184,7 @@
 			return total;
 			break;
 		case ALL:
-			return [siteList count];
+			return [siteObjects count];
 			break;
 		case BOOKMARKS:
 			return [self numberOfBookmarks];
@@ -208,7 +214,7 @@
 	
 	switch (displayMode) {
 		case SUBLIST:
-			for (SiteObject *aSite in self.siteList) {
+			for (SiteObject *aSite in siteObjects) {
 				if ([aSite.category isEqualToString:self.currentCategory]) {
 					if (count == indexPath.row) {
 						cell.textLabel.text = aSite.siteTitle;
@@ -219,7 +225,7 @@
 			}
 			break;
 		case ALL:
-			site = [siteList objectAtIndex:indexPath.row];
+			site = [siteObjects objectAtIndex:indexPath.row];
 			cell.textLabel.text = site.siteTitle;
 			
 			buttonImage = [UIImage imageNamed:@"bookmark.png"];
@@ -281,17 +287,22 @@
 	MenuViewController *menuViewController;
     NSURL *url,*baseURL;
     
-    if ([siteList count] == 0) {
+    if ([siteObjects count] == 0) {
         [list release];
         return;
     }
     
 	switch (displayMode) {
         case SUBLIST:
-            for (SiteObject *aSite in self.siteList) {
+            for (SiteObject *aSite in siteObjects) {
                 if ([aSite.category isEqualToString:self.currentCategory]) {
                     if (count == indexPath.row) {
-                        urlString = [[NSString alloc] initWithFormat:@"http://my-iphone-app.com/system/icons/%@/mainmenu.xml",aSite.appID];
+#ifdef LOCAL
+                        urlString = [[NSString alloc] initWithFormat:@"http://localhost:3000/system/icons/%@/mainmenu.xml",aSite.appID];
+#else
+                        urlString = [[NSString alloc] initWithFormat:@"http://home.my-iphone-app.com/system/icons/%@/mainmenu.xml",aSite.appID];
+#endif
+
                         menuViewController = [[MenuViewController alloc] initWithNibName:@"MenuViewController" bundle:nil];
                         NSURL *url = [[NSURL alloc] initWithString:urlString];
                         menuViewController.userID = aSite.userID;
@@ -309,8 +320,13 @@
                         
                         NSURL *baseURL = [url URLByDeletingLastPathComponent];
                         [url release];
-                        menuViewController.webSite = [baseURL absoluteString];
-                        menuViewController.fileName = [[urlString lastPathComponent] retain];
+#ifdef LOCAL
+                        [menuViewController setPaths:[baseURL absoluteString] root:@"http://localhost:3000/system" fname:[urlString lastPathComponent]];
+#else
+                        [menuViewController setPaths:[baseURL absoluteString] 
+                                                root:@"http://home.my-iphone-app.com/system" 
+                                               fname:[urlString lastPathComponent]];
+#endif
                         [urlString release];
                         //[baseURL release];
                         [self.navigationController pushViewController:menuViewController animated:YES];
@@ -343,22 +359,25 @@
 			sqlite3_finalize(statement);
 			sqlite3_close(database);
 			NSString *chosenTitle = [list objectAtIndex:indexPath.row];
-            if ([self.siteList count] == 0) {
+            if ([siteObjects count] == 0) {
                 UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"No Sites Loaded" message:@"There are no sites loaded." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                 [av show];
                 [av release];
                 [list release];
                 return;
             }
-            site = [self.siteList objectAtIndex:0];
-			for (SiteObject *asite in self.siteList) {
+            site = [siteObjects objectAtIndex:0];
+			for (SiteObject *asite in siteObjects) {
 				if ([asite.siteTitle isEqualToString:chosenTitle]) {
 					site = asite;
 					break;
 				}
  			}
-            
-			urlString = [[NSString alloc] initWithFormat:@"http://my-iphone-app.com/system/icons/%@/mainmenu.xml",site.appID];
+#ifdef LOCAL
+			urlString = [[NSString alloc] initWithFormat:@"http://localhost:3000/system/icons/%@/mainmenu.xml",site.appID];
+#else
+			urlString = [[NSString alloc] initWithFormat:@"http://home.my-iphone-app.com/system/icons/%@/mainmenu.xml",site.appID];
+#endif
 			menuViewController = [[MenuViewController alloc] initWithNibName:@"MenuViewController" bundle:nil];
 			url = [[NSURL alloc] initWithString:urlString];
 			if (!url) {
@@ -379,9 +398,12 @@
 			
 			baseURL = [[url URLByDeletingLastPathComponent] retain];
 			[url release];
-			menuViewController.webSite = [baseURL absoluteString];
+#ifdef LOCAL
+            [menuViewController setPaths:[baseURL absoluteString] root:@"http://localhost:3000/system" fname:[urlString lastPathComponent]];
+#else
+            [menuViewController setPaths:[baseURL absoluteString] root:@"http://home.my-iphone-app.com/system" fname:[urlString lastPathComponent]];
+#endif
 			menuViewController.userID = site.userID;
-			menuViewController.fileName = [urlString lastPathComponent];
 			[urlString release];
 			[self.navigationController pushViewController:menuViewController animated:YES];
 			[menuViewController release];
@@ -389,11 +411,16 @@
             [baseURL release];
 			break;
 		case ALL:
-			site = [self.siteList objectAtIndex:indexPath.row];
+			site = [siteObjects objectAtIndex:indexPath.row];
             
-			urlString = [[NSString alloc] initWithFormat:@"http://my-iphone-app.com/system/icons/%@/mainmenu.xml",site.appID];
+#ifdef LOCAL
+			urlString = [[NSString alloc] initWithFormat:@"http://localhost:3000/system/icons/%@/mainmenu.xml",site.appID];
+#else
+			urlString = [[NSString alloc] initWithFormat:@"http://home.my-iphone-app.com/system/icons/%@/mainmenu.xml",site.appID];
+#endif
+           
             
-			menuViewController = [[MenuViewController alloc] initWithNibName:@"MenuViewController" bundle:nil];
+			menuViewController = [[[MenuViewController alloc] initWithNibName:@"MenuViewController" bundle:nil] autorelease];
             
 			url = [[NSURL alloc] initWithString:urlString];
             
@@ -407,14 +434,21 @@
 				return;
 			}
 			
-			
-			menuViewController.webSite = [[[NSString alloc] initWithFormat:@"http://my-iphone-app.com/system/icons/%@/",site.appID] autorelease];
+#ifdef LOCAL
+            NSString *ws = [[[NSString alloc] initWithFormat:@"http://home.my-iphone-app.com/system/icons/%@/",site.appID] autorelease];
+            NSString *rs = [[[NSString alloc] initWithFormat:@"http://home.my-iphone-app.com/system"] autorelease];
+            NSString *fn = [[urlString lastPathComponent] autorelease];
+#else
+            NSString *ws = [[[NSString alloc] initWithFormat:@"http://home.my-iphone-app.com/system/icons/%@/",site.appID] autorelease];
+            NSString *rs = [[[NSString alloc] initWithFormat:@"http://home.my-iphone-app.com/system"] autorelease];
+            NSString *fn = [[urlString lastPathComponent] autorelease];
+#endif
+            [menuViewController setPaths:ws root:rs fname:fn];
+
 			menuViewController.userID = site.userID;
-			menuViewController.fileName = [[urlString lastPathComponent] autorelease];
             
 			[self.navigationController pushViewController:menuViewController animated:YES];
             
-			[menuViewController release];
             [url release];
 			[urlString release];
             
@@ -441,7 +475,7 @@
     // Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.
     // For example: self.myOutlet = nil;
 	categoryList = nil;
-	siteList = nil;
+	siteObjects = nil;
 }
 
 
@@ -451,7 +485,7 @@
     [parseQueue release];
     [sitesData release];
 	[categoryList release];
-	[siteList release];
+	[siteObjects release];
     [super dealloc];
 }
 
@@ -465,7 +499,7 @@
     //
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
 
-    if ((([httpResponse statusCode]/100) == 2) && [[response MIMEType] isEqual:@"application/xml"]) {
+    if ((([httpResponse statusCode]/100) == 2) && ([[response MIMEType] isEqual:@"application/xml"] || [[response MIMEType] isEqual:@"text/xml"]) ) {
         self.sitesData = [NSMutableData data];
     } else {
         NSDictionary *userInfo = [NSDictionary dictionaryWithObject:
@@ -502,13 +536,16 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     [sitesFeedConnection release];
-    self.sitesFeedConnection = nil;
+    sitesFeedConnection = nil;
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;   
     
-    ParseOperation *parseOperation = [[ParseOperation alloc] initWithDataAndType:self.sitesData type:@"App"];
-	parseOperation.objectType = @"App";
-    [self.parseQueue addOperation:parseOperation];
-    [parseOperation release];       
+    NSXMLParser *parser = [[NSXMLParser alloc] initWithData:self.sitesData];
+    [parser setDelegate:self];
+    [parser parse];
+    [parser release];
+
+    [self.tableView reloadData];
+    
     self.sitesData = nil;
 }
 
@@ -526,42 +563,6 @@
     [alertView release];
 }
 
-- (void)addSites:(NSNotification *)notif {
-    assert([NSThread isMainThread]);
-    [self addSitesToList:[[notif userInfo] valueForKey:@"sitesResult"]];
-}
-
-- (void)sitesError:(NSNotification *)notif {
-    assert([NSThread isMainThread]);
-    
-    [self handleError:[[notif userInfo] valueForKey:kSitesMsgErrorKey]];
-}
-
-- (void)addSitesToList:(NSArray *)sitesArray {
-	[self insertSites:sitesArray];
-	[self.tableView reloadData];
-}
-
-- (void)insertSites:(NSArray *)sitesArray
-{
-    // this will allow us as an observer to notified (see observeValueForKeyPath)
-    // so we can update our UITableView
-    //
-	
-    [self willChangeValueForKey:@"siteList"];
-    [self.siteList addObjectsFromArray:sitesArray];
-	[self didChangeValueForKey:@"siteList"];
-	// pull out the unique categories 
-	
-	for (SiteObject *site in sitesArray) {
-		if ([self.categoryList indexOfObject:site.category] == NSNotFound) {
-			[self.categoryList addObject:site.category];
-		}
-	} 
-	
-	[self.tableView reloadData];
-	
-}
 
 #pragma mark -
 #pragma mark Bar Button Item Actions
@@ -588,7 +589,7 @@
 	UIButton *senderButton = (UIButton*)sender;
 	UITableViewCell *buttonCell = (UITableViewCell *)[senderButton superview];
 	NSUInteger buttonRow = [[self.tableView indexPathForCell:buttonCell] row];
-	SiteObject	*site = [siteList objectAtIndex:buttonRow];
+	SiteObject	*site = [siteObjects objectAtIndex:buttonRow];
 	NSString *appID = site.appID;
 	NSString *appTitle = site.siteTitle ;
 	
@@ -685,6 +686,85 @@
 	sqlite3_close(database);
 	[self.tableView reloadData];
 }
+
+
+#pragma mark -
+#pragma mark NSXMLParser delegate routines
+
+- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName
+  namespaceURI:(NSString *)namespaceURI
+ qualifiedName:(NSString *)qName
+	attributes:(NSDictionary *)attributeDict {
+    
+    if ([elementName isEqualToString:@"apps"]) {
+        siteObjects = [[NSMutableArray alloc] init];
+    }
+    if ([elementName isEqualToString:@"app"]) {
+        currentSite = [[SiteObject alloc] init];
+    }
+    if ([elementName isEqualToString:@"category"] ||
+        [elementName isEqualToString:@"id"] ||
+        [elementName isEqualToString:@"title"] ||
+        [elementName isEqualToString:@"icon-file-name"] ||
+        [elementName isEqualToString:@"user-id"]) {
+        accumulatingChars = YES;
+        currentStringValue = [[NSMutableString alloc] init];
+    }
+    
+}
+
+- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName
+  namespaceURI:(NSString *)namespaceURI
+ qualifiedName:(NSString *)qName {   
+    
+    if ([elementName isEqualToString:@"app"]) {
+        [siteObjects addObject:currentSite];
+        [currentStringValue release];
+        currentStringValue = nil;
+        [currentSite release];
+        currentSite = nil;
+    }
+    if ([elementName isEqualToString:@"category"]) {
+        currentSite.category = currentStringValue;
+        accumulatingChars = NO;
+        [currentStringValue release];
+        currentStringValue = nil;
+    }
+    if ([elementName isEqualToString:@"id"]) {
+        currentSite.appID = currentStringValue;
+        accumulatingChars = NO;
+        [currentStringValue release];
+        currentStringValue = nil;
+    }
+    if ([elementName isEqualToString:@"title"]) {
+        currentSite.siteTitle = currentStringValue;
+        accumulatingChars = NO;
+        [currentStringValue release];
+        currentStringValue = nil;
+    }
+    if ([elementName isEqualToString:@"icon-file-name"]) {
+        currentSite.filename = currentStringValue;
+        accumulatingChars = NO;
+        [currentStringValue release];
+        currentStringValue = nil;
+    }
+    if ([elementName isEqualToString:@"user-id"]) {
+        currentSite.userID = currentStringValue;
+        accumulatingChars = NO;
+        [currentStringValue release];
+        currentStringValue = nil;
+    }
+    
+}
+
+
+
+- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
+    if (accumulatingChars) {
+        [currentStringValue appendString:string];
+    }
+}
+
 
 
 @end

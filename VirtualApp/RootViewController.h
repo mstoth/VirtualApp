@@ -8,10 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #include "/usr/include/sqlite3.h"
+#include "SiteObject.h"
 
 //#define kSitesURL @"http://iapp.vsec.railsplayground.net/apps/listapps"
-#define kSitesURL @"http://my-iphone-app.com/apps/listapps"
-//#define kSitesURL @"http://localhost:3000/apps/listapps"
+#ifdef LOCAL
+#define kSitesURL @"http://localhost:3000/apps/listapps"
+#else
+#define kSitesURL @"http://home.my-iphone-app.com/apps/listapps"
+#endif
 #define kAddSitesNotif @"addSites"
 #define kSitesErrorNotif @"sitesError"
 #define kSitesMsgErrorKey @"msgError"
@@ -25,8 +29,8 @@ typedef enum {
 	SUBLIST
 } DisplayMode; 
 
-@interface RootViewController : UIViewController {
-	NSMutableArray *siteList,*subList;
+@interface RootViewController : UIViewController <NSXMLParserDelegate> {
+	NSMutableArray *subList;
 	NSString *currentCategory;
 	NSMutableArray *categoryList;
     UITableView *tableView;
@@ -35,7 +39,12 @@ typedef enum {
 	NSURLConnection *sitesFeedConnection;
 	NSMutableData *sitesData;
 	NSOperationQueue *parseQueue;
-	
+    
+    NSMutableArray *siteObjects;
+    SiteObject *currentSite;
+    NSMutableString *currentStringValue;
+    BOOL accumulatingChars;
+    
 	sqlite3 *database;
 	
 	UIToolbar *toolBar;
@@ -47,16 +56,12 @@ typedef enum {
 @property (nonatomic, retain) NSMutableArray *categoryList,*subList;
 @property (nonatomic, retain) IBOutlet UIBarButtonItem *allButtonItem, *bookmarksButtonItem, *categoriesButtonItem;
 @property (nonatomic, retain) NSOperationQueue *parseQueue;
-@property (nonatomic, retain) NSMutableArray *siteList;
 @property (nonatomic, retain) NSMutableData *sitesData;
-@property (nonatomic, retain) NSURLConnection *sitesFeedConnection;
 
 @property (nonatomic, retain) IBOutlet UIToolbar *toolBar;
 
 - (void) handleError:(NSError *)error;
 - (void) loadSites;
-- (void) addSitesToList:(NSArray *)sitesArray;
-- (void) insertSites:(NSArray *)sitesArray;
 
 - (IBAction) allButtonItemPushed:(id)sender;
 - (IBAction) bookmarksButtonItemPushed:(id)sender;

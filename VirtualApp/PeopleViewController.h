@@ -13,7 +13,9 @@
 
 @interface PeopleViewController : UIViewController <NSXMLParserDelegate, URLCacheConnectionDelegate, MoreInfoViewControllerDelegate> {
 	NSString *webSite;  // path to directory of the xml file
+    NSString *rootSite;
 	NSString *fileName; // name of the xml file
+	NSString *imageFileName; // name of the image file
 	UIImage *myImage; 
 	Group *group;
 	// results from parsing the xml file go into these variables
@@ -52,6 +54,7 @@
 @property (nonatomic, retain) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) IBOutlet UIButton *imageButton;
 @property (nonatomic, retain) NSString *webSite;
+@property (nonatomic, retain) NSString *rootSite;
 @property (nonatomic, retain) NSString *fileName;
 
 -(void)initCache;
@@ -66,6 +69,6 @@
 -(IBAction)viewPicture:(id)sender;
 - (void)groupError:(NSNotification *)notif;
 - (void)handleError:(NSError *)theError;
-
+-(void) setPaths:(NSString *)aweb root:(NSString *)aroot fileName:(NSString *)afileName;
 
 @end

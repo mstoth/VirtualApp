@@ -10,25 +10,42 @@
 #import "MenuItem.h"
 
 @implementation Menu
-@synthesize menuItems, title, fileName, userID, image;
+@synthesize menuItems, menuTitle, fileName, userID, image, menutype;
 
 - (id)init {
-    //menuItems = [[NSMutableArray alloc] init];
+    [super init];
+    menuItems = [[NSMutableArray alloc] init];
+    return self;
+}
+
+- (id)initWithMenu:(Menu *)originalMenu {
+    menuItems = originalMenu.menuItems;
+    self.menuTitle = originalMenu.menuTitle;
+    self.fileName = originalMenu.fileName;
+    self.userID = originalMenu.userID;
+    self.image = originalMenu.image;
+    self.menutype = originalMenu.menutype;
+    // NSLog(@"Menu:initWithMenu - self.menuItems retain count = %d",[self.menuItems retainCount]);
     [super init];
     return self;
 }
-/*
-- (void)addMenuItem:(MenuItem *)menuItem {
-    [menuItems addObject:[[MenuItem alloc] initWithMenuItem:menuItem]];
-    //[menuItems addObject:menuItem];
-}
-*/
+
 -(void)dealloc {
-	[menuItems release];
-	[title release];
-	[fileName release];
-	[userID release];
-	[image release];
+    // NSLog(@"Menu:dealloc - self.menuItems retain count = %d",[self.menuItems retainCount]);
+	[self.menuItems release];
+	//[self.menuTitle release];
+    //[self.menutype release];
+	//[self.fileName release];
+	//[self.userID release];
+	//[self.image release];
+    
+    //self.menuItems = nil;
+    //self.menuTitle = nil;
+    //self.menutype = nil;
+    //self.fileName = nil;
+    //self.userID = nil;
+    //self.image = nil;
+    
 	[super dealloc];
 }
 

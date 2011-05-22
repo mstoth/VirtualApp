@@ -15,7 +15,11 @@
 // These values are used by any service that shows 'shared from XYZ'
 
 #define SHKMyAppName			@"VirtualApp"
-#define SHKMyAppURL				@"http://my-iphone-app.com"
+#ifdef LOCAL
+#define SHKMyAppURL				@"http://localhost:3000"
+#else
+#define SHKMyAppURL				@"http://home.my-iphone-app.com"
+#endif
 
 
 

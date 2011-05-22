@@ -17,10 +17,12 @@
 	NSMutableString *currentStringValue; // used by parser to keep intermediate results
 	NSString *userID;
 	NSString *webSite;  // path to directory of the xml file
+    NSString *rootSite; // path to the root web site
 	NSString *fileName; // name of the xml file
 	
 	// results from parsing the xml file go into these variables
 	NSString *menuTitle;
+    NSString *imageFileNameWithoutPath;
 	NSString *imageFileName;
 	NSString *info;
 	NSString *notes;
@@ -61,6 +63,7 @@
 @property (nonatomic, retain) IBOutlet UIButton *imageButton;
 @property (nonatomic, retain) IBOutlet UIButton	*blowup;
 
+@property (nonatomic, retain) NSString *rootSite;
 @property (nonatomic, retain) NSString *webSite;
 @property (nonatomic, retain) NSString *userID;
 @property (nonatomic, retain) NSString *fileName;
@@ -86,5 +89,5 @@
 - (void)moreInfoViewControllerDidFinish:(MoreInfoViewController *)controller;
 - (void)buttonPressed;
 - (void)handleError:(NSError *)error;
-
+- (void)setPaths:(NSString *)web root:(NSString *)root fileName:(NSString *)fileName;
 @end

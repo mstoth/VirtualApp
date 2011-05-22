@@ -12,12 +12,13 @@
 @interface Menu : NSObject {
 	NSMutableArray *menuItems;
 	NSString *fileName; 
-	NSString *title; 
+	NSString *menuTitle; 
+    NSString *menutype;
 	NSString *userID;
 	NSString *image;
 }
 @property (nonatomic, retain) NSMutableArray *menuItems;
-@property (nonatomic, retain) NSString *fileName, *title, *userID, *image; 
+@property (nonatomic, retain) NSString *fileName, *menuTitle, *userID, *image, *menutype; 
 //- (void) addMenuItem:(MenuItem *)menuItem;
-
+- (id) initWithMenu:(Menu *)menu;
 @end

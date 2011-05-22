@@ -21,9 +21,9 @@
 }
 
 - (void)dealloc {
-	[itemTitle release];
-	[fileName release];
-	[pageType release];
+	[self.itemTitle release];
+	[self.fileName release];
+	[self.pageType release];
 	[super dealloc];
 }
 

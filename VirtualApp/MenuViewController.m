@@ -5,6 +5,8 @@
 //  Created by Michael Toth on 12/14/10.
 //  Copyright 2010 Michael Toth. All rights reserved.
 //
+
+
 /* EXAMPLE XML FILE
  <menu>
  <menuTitle>More Details</menuTitle>
@@ -50,34 +52,30 @@
 #import "Menu.h"
 #import "MenuItem.h"
 #import "ParseOperation.h"
-/*
-#import "MobicartViewController.h"
-#import "UserDetails.h"
-#import "MobiCartStart.h"
-*/
+
 NSString *kAddMenuItemNotif = @"AddMenuItemNotif";
 NSString *kMenuItemResultsKey = @"MenuItemResultsKey";
 NSString *kMenuItemErrorNotif = @"MenuItemErrorNotif";
 NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 
 @implementation MenuViewController
-@synthesize webSite, fileName, filePath, dataPath;
-@synthesize menuTitle, menuItems, pageTypes, fileNames, connection;
+@synthesize webSite, rootSite, fileName, imageFileName, filePath, dataPath;
+@synthesize menuTitle, menuType, pageTypes, fileNames, connection;
 @synthesize userID;
-@synthesize menuFeedConnection, menuData, parseQueue;
+@synthesize menuFeedConnection, menuData;
 @synthesize menu;
 @synthesize myTableView;
+@synthesize banner;
 
-// The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
-/*
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization.
-    }
-    return self;
+
+
+- (void)setPaths:(NSString *)web root:(NSString *)root fname:(NSString *)fname {
+    self.webSite = web;
+    self.rootSite = root;
+    self.fileName = fname;
 }
-*/
+
+
 - (BOOL)hidesBottomBarWhenPushed{
 	return true;
 }
@@ -99,71 +97,29 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
-	
-	menuItems = [[NSMutableArray alloc] init];
-	fileNames = [[NSMutableArray alloc] init];
-	pageTypes = [[NSMutableArray alloc] init];
-	
-	NSURL *url = [[[NSURL alloc] initWithString:[webSite stringByAppendingPathComponent:fileName]]autorelease];
+    NSLog(@"viewDidLoad");
+    NSURL *url;
+    if ([self.fileName isEqualToString:@"mainmenu.xml"]) 
+        url = [[NSURL alloc] initWithString:[webSite stringByAppendingPathComponent:self.fileName]];
+    else {
+        url = [[NSURL alloc] initWithString:[rootSite stringByAppendingPathComponent:self.fileName]];
+    }
 	if (url) {
-		//NSURLRequest *menuRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:[url absoluteString]]];
         NSURLRequest *menuRequest = [NSURLRequest requestWithURL:url];
-		//[url release];
-		self.menuFeedConnection = [[[NSURLConnection alloc] initWithRequest:menuRequest delegate:self] autorelease];
+		[url release];
+		self.menuFeedConnection = [[NSURLConnection alloc] initWithRequest:menuRequest delegate:self];
 		NSAssert(self.menuFeedConnection != nil, @"Failure to create URL connection for Menus.");
 		[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-		parseQueue = [NSOperationQueue new];
-		[[NSNotificationCenter defaultCenter] addObserver:self
-												 selector:@selector(addMenus:)
-													 name:@"AddMenus"
-												   object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self
-												 selector:@selector(menuError:)
-													 name:@"MenuError"
-												   object:nil];
 	} else {
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"URL failed" message:[webSite stringByAppendingPathComponent:fileName] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"URL failed" message:[rootSite stringByAppendingPathComponent:self.fileName] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
 		[alert show];
 		[alert release];
 		return;
 	}
-/*
-    UIButton* modalViewButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
-    [modalViewButton addTarget:self action:@selector(startMobiCart:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *modalBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:modalViewButton];
-    self.navigationItem.rightBarButtonItem = modalBarButtonItem;
-    [modalBarButtonItem release];
- */
 
     [super viewDidLoad];
 }
 
-/*
-- (IBAction)startMobiCart:(id)sender {
-    // Add the view controller's view to the window and display.
-	NSString *strMobicartEmail=[NSString stringWithFormat:@"%@",merchant_email];
-	NSString *strPaypaEmail=[NSString stringWithFormat:@"%@",merchant_paypal_email_id];
-	NSString *strPaypalToken=[NSString stringWithFormat:@"%@",merchant_paypal_live_token];
-	
-    UIWindow *window = [[UIWindow alloc] initWithFrame:[UIApplication sharedApplication].keyWindow.frame];
-	if([strPaypalToken isEqualToString:@"nil"])
-		strPaypalToken=nil;
-    
-	if([strPaypaEmail isEqualToString:@"nil"])
-		strPaypaEmail=nil;
-	[[MobiCartStart sharedApplication] startMobicartOnMainWindow:window withMerchantEmail:strMobicartEmail PayPal_SandBox_Email_ID:strPaypaEmail Paypal_Live_Token_ID:strPaypalToken];
-    [window makeKeyAndVisible];
-    [window release];
-	
-}
-*/
-/*
-// Override to allow orientations other than the default portrait orientation.
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations.
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-*/
 
 - (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.
@@ -173,67 +129,34 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 }
 
 - (void)viewDidUnload {
+    
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 	self.myTableView = nil;
-	self.menu = nil;
-	self.menuFeedConnection = nil;
-	self.menuData = nil;
-	self.parseQueue = nil;
-	
-	self.userID = nil;
-	self.connection = nil;
-	self.menuTitle = nil;
-	self.menuItems = nil;
-	self.pageTypes = nil;
-	self.fileNames = nil;
-	webSite = nil;
-	fileName = nil;
-	self.filePath = nil;
-	self.dataPath = nil;
-	
-	menuTitle = nil;
 	
 }
 
 
 - (void)dealloc {
+     NSLog(@"MenuViewController:dealloc ");
 	[myTableView release];
-	[self.menu release];
-	[self.menuFeedConnection release];
-	[self.menuData release];
-	[self.parseQueue release];
-	
-	[self.userID release];
-	[self.connection release];
-	[self.menuTitle release];
-	[self.menuItems release];
-	[self.pageTypes release];
-	[fileNames release];
-	[webSite release];
-	//[self.fileName release];
-	[self.filePath release];
-	[self.dataPath release];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-	[self.menuTitle release];
+    [menuItems release];
+    [currentMenuItem release];
+    [dataPath release];
+    [filePath release];
+    [self.webSite release];
+    [self.rootSite release];
+    //[self.fileName release];
+    [imageFileName release];
+    [menuTitle release];
+    //NSLog( @"releasing imageFileName: %d",[self.imageFileName retainCount]);
+    //[self.imageFileName release];
+    [currentStringValue release];
+	[connection release];
     [super dealloc];
-}
 
-- (void)addMenus:(NSNotification *)notif {
-    assert([NSThread isMainThread]);
-    self.menu = [[notif userInfo] valueForKey:@"menuResult"];
-	[self.myTableView reloadData];
-	[self initCache];
-	self.title = self.menu.title;
-	NSString *fn = [self.menu.image stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-	NSURL *imageURL = [[NSURL alloc] initWithString:[webSite stringByAppendingPathComponent:fn]];
-	[self displayImageWithURL:imageURL];
-	[imageURL release];
-	//[[NSNotificationCenter defaultCenter] removeObserver:self];
-    //[self addMenu:[[notif userInfo] valueForKey:@"menuResult"]];
 }
-
 
 - (void)handleError:(NSError *)theError {
     NSString *errorMessage = [theError localizedDescription];
@@ -275,7 +198,7 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.menu.menuItems count];
+    return [menuItems count];
 }
 
 
@@ -288,9 +211,9 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
-    
+    // NSLog(@"MenuViewController:cellForRowAtIndexPath - menuItems retain count = %d, self.menu retainCount = %d",[menuItems retainCount],[self.menu retainCount]);
 	// Configure the cell.
-	MenuItem *item = [self.menu.menuItems objectAtIndex:indexPath.row];
+	MenuItem *item = [menuItems objectAtIndex:indexPath.row];
 	NSString *cellText = item.itemTitle;
 	
 	cell.textLabel.text = cellText;
@@ -343,29 +266,24 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	MenuItem *item = [self.menu.menuItems objectAtIndex:indexPath.row];
+	MenuItem *item = [menuItems objectAtIndex:indexPath.row];
 	if ([[item pageType] isEqualToString:@"MENU"]) {
 		MenuViewController *menuViewController = [[MenuViewController alloc] initWithNibName:@"MenuViewController" bundle:nil];
-		menuViewController.webSite = webSite;
+        [menuViewController setPaths:webSite root:self.rootSite fname:[item fileName]];
 		menuViewController.userID = self.userID; 
-		menuViewController.fileName = [[item fileName] autorelease];
-		[[NSNotificationCenter defaultCenter] removeObserver:self name:@"AddMenus" object:nil];
-		[[NSNotificationCenter defaultCenter] removeObserver:self name:@"MenuError" object:nil];
-
+        
 		[self.navigationController pushViewController:menuViewController animated:YES];
 		[menuViewController release];
 	}
 	if ([[item pageType] isEqualToString:@"SUMMARY"]) {
 		SummaryViewController *summaryViewController = [[SummaryViewController alloc] initWithNibName:@"SummaryViewController" bundle:nil];
-		summaryViewController.webSite = [webSite autorelease];
-		summaryViewController.fileName = [[item fileName] autorelease];
+        [summaryViewController setPaths:webSite root:self.rootSite fileName:[item fileName]];
 		[self.navigationController pushViewController:summaryViewController animated:YES];
 		[summaryViewController release];
 	}
 	if ([[item pageType] isEqualToString:@"GROUP"]) {
 		PeopleViewController *peopleViewController = [[PeopleViewController alloc] initWithNibName:@"PeopleViewController" bundle:nil];
-		peopleViewController.webSite = webSite;
-		peopleViewController.fileName = [[item fileName] autorelease];
+        [peopleViewController setPaths:webSite root:self.rootSite fileName:[item fileName]];
 		[self.navigationController pushViewController:peopleViewController animated:YES];
 		[peopleViewController release];
 	}
@@ -373,7 +291,8 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 		WebViewController *webViewController = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
 		webViewController.webSite = webSite;
 		NSURL *url = [[NSURL alloc] initWithString:[item fileName]];
-		webViewController.urlLocation = url;
+		webViewController.urlLocation = [url retain];
+        [url release];
 		[self.navigationController pushViewController:webViewController animated:YES];
 		[webViewController release];
 	}
@@ -441,7 +360,7 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 			
 		}
 	}
-	
+	// NSLog(@"MenuViewController: Finished loading image");
 	if ([[NSFileManager defaultManager] fileExistsAtPath:self.filePath] == NO) {
 		/* file doesn't exist, so create it */
 		[[NSFileManager defaultManager] createFileAtPath:self.filePath
@@ -453,6 +372,7 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 	/* reset the file's modification date to indicate that the URL has been checked */
 	
 	NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSDate date], NSFileModificationDate, nil];
+    // NSLog(@"self.filePath: %@",self.filePath);
 	if (![[NSFileManager defaultManager] setAttributes:dict ofItemAtPath:self.filePath error:&error]) {
 		URLCacheAlertWithError(error);
 	}
@@ -485,17 +405,14 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 {
 	/* cache update interval in seconds */
 	const double URLCacheInterval = 86400.0;
-
-	/* get the path to the cached image */
-	[self.filePath release]; /* release previous instance */
-	fileName = [[theURL path] lastPathComponent];
-    self.filePath = [self.dataPath stringByAppendingPathComponent:fileName];
 	
 	/* In this program, "update" means to check the last modified date
 	 of the image to see if we need to load a new version. */
 	
 	[self getFileModificationDate];
+    
 	/* get the elapsed time since last file update */
+    
 	NSTimeInterval time = fabs([fileDate timeIntervalSinceNow]);
 	if (time > URLCacheInterval) {
 		/* file doesn't exist or hasn't been updated for at least one day */
@@ -513,14 +430,27 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 - (void) displayCachedImage
 {	
 	/* display the file as an image */
-	UIImage *theImage = [[UIImage alloc] initWithContentsOfFile:self.filePath];
+    //NSString *fp;
+    //fp = self.filePath;
+	UIImage *theImage = [[[UIImage alloc] initWithContentsOfFile:self.filePath] autorelease];
 	if (theImage) {
-		UIImageView *iview = [[UIImageView alloc] initWithImage:theImage];
-		iview.alpha = 0.3;
-		iview.frame = CGRectMake(0, 0, 320, 460);
-		[self.view insertSubview:iview atIndex:0];
-		[iview release];
-		[theImage release];
+        UIImageView *theImageView = [[UIImageView alloc] initWithImage:theImage];
+        // NSLog(@"MenuViewController:displayCachedImage - %@",self.menuType);
+        //if ([self.menu.menutype isEqualToString:@"1"]) {
+            UIImageView *iview = [[UIImageView alloc] initWithImage:theImage];
+            iview.alpha = 0.3;
+            iview.frame = CGRectMake(0, 0, 320, 460);
+            [self.view insertSubview:iview atIndex:0];
+            [iview release];
+            CGRect frame = self.myTableView.frame;
+            frame.origin.x = 0;
+            frame.origin.y = 0;
+            self.myTableView.frame = frame;            
+            [self.view setNeedsDisplay];
+       // } else {
+         //   self.myTableView.tableHeaderView = theImageView;
+       // }
+        [theImageView release];
 	}
 }
 
@@ -553,11 +483,11 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
     // also make sure the MIMEType is correct:
     //
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-	//NSUInteger status;
-	//NSString *mimeType;
-	//mimeType = [response MIMEType];
-	//status = [httpResponse statusCode];
-    if ((([httpResponse statusCode]/100) == 2) && [[response MIMEType] isEqual:@"text/xml"]) {
+//	NSUInteger status;
+//	NSString *mimeType;
+//	mimeType = [response MIMEType];
+//	status = [httpResponse statusCode];
+    if ((([httpResponse statusCode]/100) == 2) && ([[response MIMEType] isEqual:@"application/xml"] || [[response MIMEType] isEqual:@"text/xml"]) ) {
         self.menuData = [NSMutableData data];
     } else {
         NSDictionary *userInfo = [NSDictionary dictionaryWithObject:
@@ -585,6 +515,7 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
     } else {
         [self handleError:theError];
     }
+    [self.menuFeedConnection release];
     self.menuFeedConnection = nil;
 }
 
@@ -593,24 +524,104 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+    [self.menuFeedConnection release];
     self.menuFeedConnection = nil;
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;   
+    // NSLog(@"MenuViewController: finished loading data, starting to parse.");
     
-    // Spawn an NSOperation to parse the earthquake data so that the UI is not blocked while the
-    // application parses the XML data.
-    //
-    // IMPORTANT! - Don't access or affect UIKit objects on secondary threads.
-    //
-    ParseOperation *parseOperation = [[ParseOperation alloc] initWithDataAndType:self.menuData type:@"Menu"];
-	//parseOperation.objectType = @"Menu";
-    [self.parseQueue addOperation:parseOperation];
-    [parseOperation release];   // once added to the NSOperationQueue it's retained, we don't need it anymore
+    NSXMLParser *parser = [[NSXMLParser alloc] initWithData:self.menuData];
+    [parser setDelegate:self];
+    [parser parse];
+    [parser release];
+    [self.myTableView reloadData];
+    [self initCache];
     
-    // menuData will be retained by the NSOperation until it has finished executing,
-    // so we no longer need a reference to it in the main thread.
+	NSString *fn = [self.imageFileName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    //NSLog(@"Set fn: %d",[self.imageFileName retainCount]);
+	NSURL *imageURL = [[NSURL alloc] initWithString:[rootSite stringByAppendingPathComponent:fn]];
+    self.filePath = [self.dataPath stringByAppendingPathComponent:[fn lastPathComponent]];
+
+	[self displayImageWithURL:imageURL];
+	[imageURL release];
+
     self.menuData = nil;
 }
 
+#pragma mark -
+#pragma mark NSXMLParser delegate routines
+
+- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName
+  namespaceURI:(NSString *)namespaceURI
+ qualifiedName:(NSString *)qName
+	attributes:(NSDictionary *)attributeDict {
+    
+    if ([elementName isEqualToString:@"menu"]) {
+        menuItems = [[NSMutableArray alloc] init];
+        // NSLog(@"menuItems retain count after init is %d",[menuItems retainCount]);
+        
+    }
+    if ([elementName isEqualToString:@"menuItem"]) {
+        currentMenuItem = [[MenuItem alloc] init];
+    }
+    if ([elementName isEqualToString:@"fileName"] ||
+        [elementName isEqualToString:@"menuTitle"] ||
+        [elementName isEqualToString:@"pageType"] ||
+        [elementName isEqualToString:@"itemTitle"] ||
+        [elementName isEqualToString:@"menutype"] ||
+        [elementName isEqualToString:@"image"]) {
+        accumulatingChars = YES;
+        currentStringValue = [[NSMutableString alloc] init];
+        // NSLog(@"Allocated currentStringValue: %d",[currentStringValue retainCount]);
+
+    }
+    
+}
+
+- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName
+  namespaceURI:(NSString *)namespaceURI
+ qualifiedName:(NSString *)qName {   
+    
+    if ([elementName isEqualToString:@"menuItem"]) {
+        // NSLog(@"MenuParserDelegate:didEndElement - menuItems retain count before adding object is %d",[self.menuItems retainCount]);
+        [menuItems addObject:currentMenuItem];
+        // NSLog(@"MenuParserDelegate:didEndElement - menuItems retain count after adding object is %d",[self.menuItems retainCount]);
+        [currentMenuItem release];
+        currentMenuItem = nil;
+    }
+    if ([elementName isEqualToString:@"pageType"]) {
+        currentMenuItem.pageType = currentStringValue;
+    }
+    if ([elementName isEqualToString:@"fileName"]) {
+        currentMenuItem.fileName = currentStringValue;
+    }
+    if ([elementName isEqualToString:@"itemTitle"]) {
+        currentMenuItem.itemTitle = currentStringValue;
+    }
+    if ([elementName isEqualToString:@"menuTitle"]) {
+        self.menuTitle = currentStringValue;
+    }
+    if ([elementName isEqualToString:@"menutype"]) {
+        self.menuType = currentStringValue;
+    }
+    if ([elementName isEqualToString:@"image"]) {
+        //NSLog(@"Setting imageFileName: %d",[self.imageFileName retainCount]);
+        self.imageFileName = currentStringValue;
+        //NSLog(@"Set imageFileName: %d",[self.imageFileName retainCount]);
+    }
+    //NSLog( @"releasing currentString Value, %d",[currentStringValue retainCount]);
+    [currentStringValue release];
+    currentStringValue = nil;
+    accumulatingChars = NO;
+}
+
+
+
+- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
+    if (accumulatingChars) {
+        [currentStringValue appendString:string];
+       // NSLog(@"Added to currentStringValue: %d",[currentStringValue retainCount]);
+    }
+}
 
 
 

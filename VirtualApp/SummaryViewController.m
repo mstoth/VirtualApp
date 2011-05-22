@@ -18,7 +18,7 @@
 @implementation SummaryViewController
 
 @synthesize userID;
-@synthesize webSite, fileName, purchase, blowup;
+@synthesize webSite, rootSite, fileName, purchase, blowup;
 @synthesize buttonTextControl, imageView, notesView, infoView;
 @synthesize imageButton, customButton;
 @synthesize parseQueue, summaryData, summaryFeedConnection;
@@ -32,14 +32,14 @@
 
 - (void)viewDidLoad {
     [self initCache];
-    NSString *urlString = [self.webSite stringByAppendingPathComponent:fileName];
+    NSString *urlString = [self.rootSite stringByAppendingPathComponent:fileName];
     
     // turn on activity indicator
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
     // request profile data from the URL specified by webSite/fileName
     NSURLRequest *profileRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    
+    // NSLog(@"%@",urlString);
     self.summaryFeedConnection = [[[NSURLConnection alloc] initWithRequest:profileRequest delegate:self] autorelease];
     
     // start the parse queue
@@ -61,6 +61,11 @@
     [super viewDidLoad];
 }
 
+- (void)setPaths:(NSString *)theweb root:(NSString *)theroot fileName:(NSString *)thefileName {
+    self.webSite = theweb;
+    self.rootSite = theroot;
+    self.fileName = thefileName;
+}
 
 
 - (void)parserDone:(NSNotification *)notif {
@@ -90,14 +95,22 @@
     
     if ([infoView.text rangeOfString:@"<html"].location != NSNotFound) {
         self.webView = [[UIWebView alloc] initWithFrame:infoView.frame];
-        [self.webView loadHTMLString:infoView.text baseURL:[[[NSURL alloc] initWithString:@"http://my-iphone-app.com/"]autorelease]];
+#ifdef LOCAL
+        [self.webView loadHTMLString:infoView.text baseURL:[[[NSURL alloc] initWithString:@"http://localhost:3000/"]autorelease]];
+#else
+        [self.webView loadHTMLString:infoView.text baseURL:[[[NSURL alloc] initWithString:@"http://home.my-iphone-app.com/"]autorelease]];
+#endif
         [self.view addSubview:self.webView];
         [self.webView release];
         self.webView = nil;
     }
     if ([notesView.text rangeOfString:@"<html"].location != NSNotFound) {
         self.webView = [[UIWebView alloc] initWithFrame:notesView.frame];
-        [self.webView loadHTMLString:notesView.text baseURL:[[[NSURL alloc] initWithString:@"http://my-iphone-app.com/"]autorelease]];
+#ifdef LOCAL
+        [self.webView loadHTMLString:notesView.text baseURL:[[[NSURL alloc] initWithString:@"http://localhost:3000/"]autorelease]];
+#else
+        [self.webView loadHTMLString:notesView.text baseURL:[[[NSURL alloc] initWithString:@"http://home.my-iphone-app.com/"]autorelease]];
+#endif
         [self.view addSubview:self.webView];
         [self.webView release];
         self.webView = nil;
@@ -106,7 +119,7 @@
     
     // display the image or load it and display it if it's not loaded yet. 
     NSString *fn = [imageFileName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-	NSURL *imageURL = [[NSURL alloc] initWithString:[self.webSite  stringByAppendingPathComponent:fn]];
+	NSURL *imageURL = [[NSURL alloc] initWithString:[self.rootSite  stringByAppendingPathComponent:fn]];
 	[self displayImageWithURL:imageURL];
 	[imageURL release];
 	
@@ -157,6 +170,7 @@
     self.summaryFeedConnection = nil;
     self.buttonURL = nil;
     self.buttonLabel = nil;
+    self.rootSite = nil;
 }
 
 
@@ -166,8 +180,12 @@
     [self.buttonURL release];
     [self.buttonLabel release];
     [parseQueue release];
-    [super dealloc];
+    [filePath release];
+    [self.webSite release];
+    [self.fileName release];
 	[more release];
+    [self.rootSite release];
+    [super dealloc];
 }
 
 #pragma mark -
@@ -180,11 +198,11 @@
     //
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
     // for debugging purposes
-    // NSUInteger status;
-    // NSString *mimeType;
-    // mimeType = [response MIMEType];
-    // status = [httpResponse statusCode];
-    if ((([httpResponse statusCode]/100) == 2) && [[response MIMEType] isEqual:@"text/xml"]) {
+//    NSUInteger status;
+//    NSString *mimeType;
+//    mimeType = [response MIMEType];
+//    status = [httpResponse statusCode];
+    if ((([httpResponse statusCode]/100) == 2) && ([[response MIMEType] isEqual:@"application/xml"] || [[response MIMEType] isEqual:@"text/xml"]) ) {
         self.summaryData = [[NSMutableData alloc] init];
     } else {
         NSDictionary *userInfo = [NSDictionary dictionaryWithObject:
@@ -230,6 +248,7 @@
     [parseOperation release];   
     [summaryData release];
     [myConnection release];
+    myConnection = nil;
 }
 
 - (void)handleError:(NSError *)theerror {
@@ -307,7 +326,8 @@
 		URLCacheAlertWithError(error);
 	}
 	[dict release];
-	
+	[myConnection release];
+    myConnection = nil;
 	[self stopAnimation];
 	[self displayCachedImage];
 }
@@ -339,8 +359,8 @@
 	/* get the path to the cached image */
 	
 	[filePath release]; /* release previous instance */
-	fileName = [[theURL path] lastPathComponent];
-	filePath = [[dataPath stringByAppendingPathComponent:fileName] retain];
+	imageFileNameWithoutPath = [[theURL path] lastPathComponent];
+	filePath = [[dataPath stringByAppendingPathComponent:imageFileNameWithoutPath] retain];
 	
 	/* apply daily time interval policy */
 	
@@ -429,7 +449,7 @@
 -(void)buttonPressed {
 	NSString *urlString = [[NSString alloc] initWithString:buttonURL];
 	WebViewController *webViewController = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
-	webViewController.webSite = self.webSite;
+	webViewController.webSite = webSite;
 	NSURL *url = [[NSURL alloc] initWithString:urlString];
 	[urlString release];
 	webViewController.urlLocation = url;

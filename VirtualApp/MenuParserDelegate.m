@@ -10,7 +10,7 @@
 
 
 @implementation MenuParserDelegate
-@synthesize   currentMenuItem, menuItems, imageFileName, menuTitle;
+@synthesize    menutype, menuItems, imageFileName, menuTitle;
 
 -(id)init {
     [super init];
@@ -19,11 +19,21 @@
 }
 
 -(void) dealloc {
-    //[currentStringValue release];
+    /*
     [self.menuTitle release];
-    [self.imageFileName release];
+    [self.imageFileName release];*/
+    // NSLog(@"MenuParserDelegate:dealloc - menuItems retain count is %d",[self.menuItems retainCount]);
+    //[self.menuItems release];
+    //[self.menutype release];
+    [currentMenuItem release];
+    currentMenuItem = nil;
+    [currentStringValue release];
+    currentStringValue = nil;
+    /*self.menuTitle = nil;
+    self.imageFileName = nil;
+    self.menuItems = nil;
+    self.menutype = nil;*/
     [super dealloc];
-    [menuItems release];
 }
 
 #pragma mark -
@@ -36,6 +46,8 @@
     
     if ([elementName isEqualToString:@"menu"]) {
         menuItems = [[NSMutableArray alloc] init];
+        // NSLog(@"menuItems retain count after init is %d",[self.menuItems retainCount]);
+
     }
     if ([elementName isEqualToString:@"menuItem"]) {
         currentMenuItem = [[MenuItem alloc] init];
@@ -44,11 +56,10 @@
         [elementName isEqualToString:@"menuTitle"] ||
         [elementName isEqualToString:@"pageType"] ||
         [elementName isEqualToString:@"itemTitle"] ||
+        [elementName isEqualToString:@"menutype"] ||
         [elementName isEqualToString:@"image"]) {
         accumulatingChars = YES;
         currentStringValue = [[NSMutableString alloc] init];
-        //[currentStringValue release];
-        //currentStringValue = nil;
     }
     
 }
@@ -58,21 +69,26 @@
  qualifiedName:(NSString *)qName {   
     
     if ([elementName isEqualToString:@"menuItem"]) {
-        [self.menuItems addObject:currentMenuItem];
+        // NSLog(@"MenuParserDelegate:didEndElement - menuItems retain count before adding object is %d",[self.menuItems retainCount]);
+        [menuItems addObject:currentMenuItem];
+        // NSLog(@"MenuParserDelegate:didEndElement - menuItems retain count after adding object is %d",[self.menuItems retainCount]);
         [currentMenuItem release];
         currentMenuItem = nil;
     }
     if ([elementName isEqualToString:@"pageType"]) {
-        self.currentMenuItem.pageType = currentStringValue;
+        currentMenuItem.pageType = currentStringValue;
     }
     if ([elementName isEqualToString:@"fileName"]) {
-        self.currentMenuItem.fileName = currentStringValue;
+        currentMenuItem.fileName = currentStringValue;
     }
     if ([elementName isEqualToString:@"itemTitle"]) {
-        self.currentMenuItem.itemTitle = currentStringValue;
+        currentMenuItem.itemTitle = currentStringValue;
     }
     if ([elementName isEqualToString:@"menuTitle"]) {
         self.menuTitle = currentStringValue;
+    }
+    if ([elementName isEqualToString:@"menutype"]) {
+        self.menutype = currentStringValue;
     }
     if ([elementName isEqualToString:@"image"]) {
         self.imageFileName = currentStringValue;

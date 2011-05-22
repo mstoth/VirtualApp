@@ -9,18 +9,25 @@
 #import <UIKit/UIKit.h>
 #import "URLCacheConnection.h"
 #import "Menu.h"
-@interface MenuViewController : UIViewController  <URLCacheConnectionDelegate> {
+#import "MenuItem.h"
+
+@interface MenuViewController : UIViewController  <NSXMLParserDelegate, UITableViewDelegate, UITableViewDataSource, URLCacheConnectionDelegate> {
 	
 	NSMutableString *currentStringValue; // used by parser to keep intermediate results
 	Menu *menu;
+    NSString *rootSite; // path to the root of public directory
 	NSString *webSite;  // path to directory of the xml file
 	NSString *fileName; // name of the xml file
 	UITableView *myTableView;
-	
+    
+    // parser variables
+    NSMutableArray *menuItems;
+    MenuItem *currentMenuItem;
+	BOOL accumulatingChars;
+    
 	// results from parsing the xml file go into these variables
 	NSString *menuTitle;
 	NSString *imageFileName;
-	NSMutableArray *menuItems;
 	NSMutableArray *pageTypes;
 	NSMutableArray *fileNames;
 	NSString *userID;
@@ -35,25 +42,29 @@
 	
     NSURLConnection *menuFeedConnection;
     NSMutableData *menuData;
-    NSOperationQueue *parseQueue;
+    
+    UIImageView *banner;
 	
 }
 @property (nonatomic, retain) IBOutlet UITableView *myTableView;
 @property (nonatomic, retain) Menu *menu;
 @property (nonatomic, retain) NSURLConnection *menuFeedConnection;
 @property (nonatomic, retain) NSMutableData *menuData;
-@property (nonatomic, retain) NSOperationQueue *parseQueue;
+
 
 @property (nonatomic, retain) NSString *userID;
 @property (nonatomic, retain) NSURLConnection *connection;
 @property (nonatomic, retain) NSString *menuTitle;
-@property (nonatomic, retain) NSMutableArray *menuItems;
 @property (nonatomic, retain) NSMutableArray *pageTypes;
 @property (nonatomic, retain) NSMutableArray *fileNames;
+@property (nonatomic, retain) NSString *rootSite;
 @property (nonatomic, retain) NSString *webSite;
 @property (nonatomic, retain) NSString *fileName;
+@property (nonatomic, retain) NSString *menuType;
+@property (nonatomic, retain) NSString *imageFileName;
 @property (nonatomic, retain) NSString *filePath;
 @property (nonatomic, retain) NSString *dataPath;
+@property (nonatomic, retain) IBOutlet UIImageView *banner;
 -(void)initCache;
 -(void)startAnimation;
 -(void)stopAnimation;
@@ -62,4 +73,5 @@
 -(void)getFileModificationDate;
 - (BOOL)hidesBottomBarWhenPushed;
 - (void)handleError:(NSError *)theError;
+- (void)setPaths:(NSString *)web root:(NSString *)root fname:(NSString *)fname;
 @end

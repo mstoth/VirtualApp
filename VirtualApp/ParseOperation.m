@@ -39,7 +39,7 @@ NSString *kSitesMsgErrorKey = @"SitesMsgErrorKey";
 
 @implementation ParseOperation
 
-@synthesize sitesData, menuData, groupData, currentSiteObject, currentMenuItem, currentMenu, currentParsedCharacterData, currentParseBatch;
+@synthesize sitesData, menuData, groupData, currentSiteObject, currentMenuItem, currentMenu, menu, currentParsedCharacterData, currentParseBatch;
 @synthesize objectType;
 @synthesize currentGroup, currentGroupItem;
 
@@ -47,12 +47,15 @@ NSString *kSitesMsgErrorKey = @"SitesMsgErrorKey";
 	if ((self = [super init])) {    
 		sitesData = [parseData copy];
 	}
+    self.currentParsedCharacterData = nil;
+
 	return self;
 }
 
 
 - (id)initWithDataAndType:(NSData *)parseData type:(NSString *)type 
 {
+    
 	if ([type isEqualToString:@"App"]) {
 		if ((self = [super init])) {    
 			sitesData = [parseData copy];
@@ -61,6 +64,7 @@ NSString *kSitesMsgErrorKey = @"SitesMsgErrorKey";
 	if ([type isEqualToString:@"Menu"]) {
 		if ((self = [super init])) {
 			menuData = [parseData copy];
+            mpd = [[MenuParserDelegate alloc] init];
 		}
 	}
 	if ([type isEqualToString:@"Group"]) {
@@ -69,6 +73,8 @@ NSString *kSitesMsgErrorKey = @"SitesMsgErrorKey";
 		}
 	}
 	self.objectType = type;
+    self.currentParsedCharacterData = nil;
+
     return self;
 }
 
@@ -77,12 +83,12 @@ NSString *kSitesMsgErrorKey = @"SitesMsgErrorKey";
                                                   userInfo:[NSDictionary dictionaryWithObject:group forKey:@"GroupResult"]];
 }
 
-- (void)addMenu:(Menu *)menu {
+- (void)addMenu:(Menu *)theMenu {
 	assert([NSThread isMainThread]);
-	
+	// NSLog(@"ParseOperation:addMenu - Posting notification to AddMenus");
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"AddMenus" 
                                                         object:self 
-                                                      userInfo:[NSDictionary dictionaryWithObject:menu
+                                                      userInfo:[NSDictionary dictionaryWithObject:theMenu
                                                                                            forKey:@"menuResult"]];
 	
 }
@@ -98,10 +104,9 @@ NSString *kSitesMsgErrorKey = @"SitesMsgErrorKey";
 
 // the main function for this NSOperation, to start the parsing
 - (void)main {
-    
-    self.currentParsedCharacterData = nil;
-    
-    
+    //NSLog(@"Starting ParseOperation");
+    self.menu = [[[Menu alloc] init] autorelease];
+    //NSLog(@"self.menu:%d",[self.menu retainCount]);
     if ([self.objectType isEqualToString:@"Group"]) {
         GroupParserDelegate *gpd = [[[GroupParserDelegate alloc] init] autorelease];
         
@@ -119,20 +124,18 @@ NSString *kSitesMsgErrorKey = @"SitesMsgErrorKey";
     }
     
 	if ([self.objectType isEqualToString:@"Menu"]) {
-        MenuParserDelegate *mpd = [[[MenuParserDelegate alloc] init] autorelease];
-        
+        // NSLog(@"ParseOperation: Starting to parse.");
 		NSXMLParser *parser = [[NSXMLParser alloc] initWithData:self.menuData];
 		[parser setDelegate:mpd];
 		[parser parse];
-        
-        Menu *menu = [[Menu alloc] init];
-        menu.menuItems = mpd.menuItems;
-        menu.title = mpd.menuTitle;
-        menu.image = mpd.imageFileName;
-        
-        [self performSelectorOnMainThread:@selector(addMenu:) withObject:menu waitUntilDone:NO];
-        
-        [menu release];
+        // NSLog(@"mpd:%d",[mpd retainCount]);
+        self.menu.menuItems = mpd.menuItems;
+        self.menu.menuTitle = mpd.menuTitle;
+        self.menu.image = mpd.imageFileName;
+        self.menu.menutype = mpd.menutype;
+        // NSLog(@"ParseOperation:main - self.menu retain count before performSelector... is %d",[self.menu retainCount]);
+        [self performSelectorOnMainThread:@selector(addMenu:) withObject:self.menu waitUntilDone:NO];
+        // NSLog(@"ParseOperation:main - self.menu retain count after performSelector... is %d",[self.menu retainCount]);
         [parser release];
 	}
 	
@@ -146,24 +149,34 @@ NSString *kSitesMsgErrorKey = @"SitesMsgErrorKey";
         [self performSelectorOnMainThread:@selector(addSitesToList:) withObject:spd.siteObjects waitUntilDone:NO];
 		[parser release];
 	}
-	
-    
+    // NSLog(@"self.menu:%d",[self.menu retainCount]);
+
+    //[self.menu release];
+    //self.menu=nil;
+
 }
 
 - (void)dealloc {
     if ([self.objectType isEqualToString:@"Group"]) {
         [groupData release];
+        [self.menu release];
         [currentGroup release];
     }
 	if ([self.objectType isEqualToString:@"Menu"]) {
+        // NSLog(@"self.menu:%d",[self.menu retainCount]);
+        [self.menu release];
+        // NSLog(@"self.menu:%d",[self.menu retainCount]);
+
+        self.menu=nil;
+        // NSLog(@"ParseOperation:dealloc - mpd retain count is %d before release",[mpd retainCount]);
+        [mpd release];
 		[menuData release];
 	}
 	if ([self.objectType isEqualToString:@"App"]) {
+        [self.menu release];
 		[sitesData release];
 	}	
-	[super dealloc];
-    
-
+    [super dealloc];
 }
 
 

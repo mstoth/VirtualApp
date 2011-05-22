@@ -13,7 +13,11 @@
 @interface ContactViewController : UIViewController {
 	UILabel *userName;
 	UILabel *street;
+    UILabel *street2;
 	UILabel *cityStateZip;
+    UILabel *city;
+    UILabel *state;
+    UILabel *zip;
 	UITextView *phone, *email;
 	NSString *userID, *appID;
 	MKMapView *mapView;
@@ -31,7 +35,7 @@
 
 @property (nonatomic, retain) NSString *userID, *appID;
 @property (nonatomic, retain) IBOutlet UITextView *phone, *email; 
-@property (nonatomic, retain) IBOutlet UILabel *userName, *street, *cityStateZip;
+@property (nonatomic, retain) IBOutlet UILabel *userName, *street, *street2, *cityStateZip, *city, *state, *zip;
 @property (nonatomic, retain) IBOutlet MKMapView *mapView;
 - (void)handleError:(NSError *)error ;
 - (void)parserDone:(NSNotification *)notif;

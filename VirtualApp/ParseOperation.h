@@ -15,6 +15,7 @@
 #import "Menuitem.h"
 #import "Group.h"
 #import "GroupItem.h"
+#import "MenuParserDelegate.h"
 
 @class SiteObject;
 
@@ -25,7 +26,8 @@
 
     // these variables are used during parsing
     SiteObject *currentSiteObject;
-	Menu *currentMenu;
+    MenuParserDelegate *mpd;
+	Menu *currentMenu,*menu;
 	MenuItem *currentMenuItem;
 	Group *currentGroup;
 	GroupItem *currentGroupItem;
@@ -38,7 +40,7 @@
 @property (nonatomic, retain) NSMutableString *currentParsedCharacterData;
 @property (nonatomic, retain) GroupItem *currentGroupItem;
 //@property (nonatomic, retain) Group *currentGroup;
-@property (nonatomic, retain) Menu *currentMenu;
+@property (nonatomic, retain) Menu *currentMenu,*menu;
 @property (nonatomic, retain) MenuItem *currentMenuItem;
 @property (nonatomic, retain) NSString *objectType;
 @property (copy, readonly) NSData *sitesData, *menuData, *groupData;

@@ -32,7 +32,11 @@
     
     if ([moreInfo rangeOfString:@"<html"].location != NSNotFound) {
         UIWebView *webView = [[UIWebView alloc] initWithFrame:textView.frame];
-        [webView loadHTMLString:moreInfo baseURL:[[[NSURL alloc] initWithString:@"http://my-iphone-app.com/"] autorelease]];
+#ifdef LOCAL
+        [webView loadHTMLString:moreInfo baseURL:[[[NSURL alloc] initWithString:@"http://localhost:3000/"] autorelease]];
+#else
+        [webView loadHTMLString:moreInfo baseURL:[[[NSURL alloc] initWithString:@"http://home.my-iphone-app.com/"] autorelease]];
+#endif
         [self.view addSubview:webView];
         [webView release];
         webView = nil;

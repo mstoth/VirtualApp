@@ -15,7 +15,7 @@
 #import "Group.h"
 
 @implementation PeopleViewController
-@synthesize group, webSite, fileName, infoView, imageView, tableView, imageButton;
+@synthesize group, webSite, rootSite, fileName, infoView, imageView, tableView, imageButton;
 @synthesize groupData, parseQueue, groupFeedConnection;
 // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 /*
@@ -27,7 +27,11 @@
     return self;
 }
 */
-
+-(void) setPaths:(NSString *)aweb root:(NSString *)aroot fileName:(NSString *)afileName {
+    self.webSite = aweb;
+    self.rootSite = aroot;
+    self.fileName = afileName;
+}
 -(void) toggleNetworkIndicator {
 	UIApplication *app = [UIApplication sharedApplication];
 	app.networkActivityIndicatorVisible = !app.networkActivityIndicatorVisible;
@@ -61,7 +65,7 @@
 	images = [[NSMutableArray alloc] init];
 	mores = [[NSMutableArray alloc] init];
 
-    NSURL *url = [[NSURL alloc] initWithString:[webSite stringByAppendingPathComponent:fileName]];
+    NSURL *url = [[NSURL alloc] initWithString:[rootSite stringByAppendingPathComponent:self.fileName]];
 	if (url) {
 		NSURLRequest *groupRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:[url absoluteString]]];
 		[url release];
@@ -93,7 +97,7 @@
          [parser release];
 		 */
 	} else {
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"URL failed" message:[webSite stringByAppendingPathComponent:fileName] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"URL failed" message:[rootSite stringByAppendingPathComponent:fileName] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
 		[alert show];
 		[alert release];
 		return;
@@ -172,7 +176,7 @@
 	}
 	if ([images count]>0) {
 		NSString *fn = [[images objectAtIndex:0] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-		NSURL *imageURL = [[NSURL alloc] initWithString:[self.webSite stringByAppendingPathComponent:fn]];
+		NSURL *imageURL = [[NSURL alloc] initWithString:[self.rootSite stringByAppendingPathComponent:fn]];
 		[self displayImageWithURL:imageURL];
 		[imageURL release];
 	}
@@ -206,6 +210,7 @@
 
 - (void)viewDidUnload {
     [super viewDidUnload];
+    self.rootSite = nil;
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
@@ -217,7 +222,9 @@
     [images release];
     [mores release];
     [parseQueue release];
-    [webSite release];
+    [self.webSite release];
+    [self.rootSite release];
+    [self.fileName release];
     [super dealloc];
 }
 
@@ -357,8 +364,8 @@
 	/* get the path to the cached image */
 	
 	[filePath release]; /* release previous instance */
-	fileName = [[theURL path] lastPathComponent];
-	filePath = [[dataPath stringByAppendingPathComponent:fileName] retain];
+	imageFileName = [[theURL path] lastPathComponent];
+	filePath = [[dataPath stringByAppendingPathComponent:imageFileName] retain];
 	
 	/* apply daily time interval policy */
 	
@@ -494,7 +501,7 @@
 	more = [mores objectAtIndex:indexPath.row];
 	NSString *img = [images objectAtIndex:indexPath.row];
 	NSString *fn = [img stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-	NSString *wsite = [self.webSite stringByAppendingPathComponent:fn];
+	NSString *wsite = [self.rootSite stringByAppendingPathComponent:fn];
 	NSURL *imageURL = [[NSURL alloc] initWithString:wsite];
 	[self displayImageWithURL:imageURL];
 	[imageURL release];
@@ -537,7 +544,7 @@
 	//NSString *mimeType;
 	// mimeType = [response MIMEType];
 	// status = [httpResponse statusCode];
-    if ((([httpResponse statusCode]/100) == 2) && [[response MIMEType] isEqual:@"text/xml"]) {
+    if ((([httpResponse statusCode]/100) == 2) && ([[response MIMEType] isEqual:@"application/xml"] || [[response MIMEType] isEqual:@"text/xml"]) ) {
         self.groupData = [NSMutableData data];
     } else {
         NSDictionary *userInfo = [NSDictionary dictionaryWithObject:

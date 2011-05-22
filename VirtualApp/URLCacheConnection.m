@@ -52,8 +52,8 @@ Copyright (C) 2008-2010 Apple Inc. All Rights Reserved.
 @implementation URLCacheConnection
 
 @synthesize delegate;
-@synthesize receivedData;
 @synthesize lastModified;
+@synthesize receivedData;
 @synthesize connection;
 
 
@@ -79,8 +79,8 @@ Copyright (C) 2008-2010 Apple Inc. All Rights Reserved.
 		 data. The connection object is owned both by the creator and the
 		 loading system. */
 
-		self.connection = [NSURLConnection connectionWithRequest:theRequest delegate:self];
-		if (self.connection == nil) {
+		connection = [NSURLConnection connectionWithRequest:theRequest delegate:self];
+		if (connection == nil) {
 			/* inform the user that the connection failed */
 			NSString *message = NSLocalizedString (@"Unable to initiate request.",
 												   @"NSURLConnection initialization method failed.");
@@ -94,8 +94,11 @@ Copyright (C) 2008-2010 Apple Inc. All Rights Reserved.
 
 - (void)dealloc
 {
-	[receivedData release];
-	self.lastModified = nil;
+    [self.receivedData release];
+    self.receivedData = nil;
+    //[self.lastModified release];
+    lastModified = nil;
+    
 	//[connection release];
 	[super dealloc];
 }
@@ -116,8 +119,8 @@ Copyright (C) 2008-2010 Apple Inc. All Rights Reserved.
 	if (contentLength == NSURLResponseUnknownLength) {
 		contentLength = 500000;
 	}
-	self.receivedData = [NSMutableData dataWithCapacity:(NSUInteger)contentLength];
-
+	//self.receivedData = [NSMutableData dataWithCapacity:(NSUInteger)contentLength];
+    self.receivedData = [[NSMutableData alloc] initWithCapacity:(NSUInteger)contentLength];
 	/* Try to retrieve last modified date from HTTP header. If found, format
 	 date so it matches format of cached image file modification date. */
 
@@ -131,12 +134,12 @@ Copyright (C) 2008-2010 Apple Inc. All Rights Reserved.
 			[dateFormatter setLocale:[[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]autorelease]];
 
 			[dateFormatter setDateFormat:@"EEE, dd MMM yyyy HH:mm:ss zzz"];
-			self.lastModified = [dateFormatter dateFromString:modified];
+			lastModified = [dateFormatter dateFromString:modified];
 			[dateFormatter release];
 		}
 		else {
 			/* default if last modified date doesn't exist (not an error) */
-			self.lastModified = [NSDate dateWithTimeIntervalSinceReferenceDate:0];
+			lastModified = [NSDate dateWithTimeIntervalSinceReferenceDate:0];
 		}
 	}
 }
