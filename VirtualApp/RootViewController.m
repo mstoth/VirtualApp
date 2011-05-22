@@ -425,8 +425,7 @@
 			url = [[NSURL alloc] initWithString:urlString];
             
 			if (!url) {
-				[menuViewController release];
-				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"URL failed" message:url.path delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"URL failed" message:urlString delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
 				[alert show];
 				[alert release];
                 [list release];
@@ -441,7 +440,7 @@
 #else
             NSString *ws = [[[NSString alloc] initWithFormat:@"http://home.my-iphone-app.com/system/icons/%@/",site.appID] autorelease];
             NSString *rs = [[[NSString alloc] initWithFormat:@"http://home.my-iphone-app.com/system"] autorelease];
-            NSString *fn = [[urlString lastPathComponent] autorelease];
+            NSString *fn = [urlString lastPathComponent];
 #endif
             [menuViewController setPaths:ws root:rs fname:fn];
 
