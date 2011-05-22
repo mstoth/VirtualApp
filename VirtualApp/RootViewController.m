@@ -727,6 +727,8 @@
     if ([elementName isEqualToString:@"category"]) {
         currentSite.category = currentStringValue;
         accumulatingChars = NO;
+        if ([self.categoryList indexOfObject:currentStringValue] == NSNotFound)
+            [self.categoryList addObject:currentStringValue];
         [currentStringValue release];
         currentStringValue = nil;
     }
