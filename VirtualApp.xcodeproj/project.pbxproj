@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A452D2A8138B24A100987109 /* MenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A452D2A7138B24A100987109 /* MenuCell.m */; };
+		A452D2AD138B28E500987109 /* MenuCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A452D2AC138B28E500987109 /* MenuCell.xib */; };
+		A452D2B1138B691E00987109 /* TextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A452D2AF138B691D00987109 /* TextViewController.m */; };
+		A452D2B2138B691E00987109 /* TextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A452D2B0138B691D00987109 /* TextViewController.xib */; };
+		A45834141389C45000378AE0 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A45834131389C45000378AE0 /* Settings.bundle */; };
 		A48AD763134B9B39004271C0 /* GroupItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A48AD762134B9B37004271C0 /* GroupItem.m */; };
 		A48AD767134B9BD4004271C0 /* Group.m in Sources */ = {isa = PBXBuildFile; fileRef = A48AD766134B9BD2004271C0 /* Group.m */; };
 		A48AD7BF134BEAD8004271C0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A48D1FC8134992E800B13EC5 /* UIKit.framework */; };
@@ -152,6 +157,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A452D2A6138B24A100987109 /* MenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuCell.h; sourceTree = "<group>"; };
+		A452D2A7138B24A100987109 /* MenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuCell.m; sourceTree = "<group>"; };
+		A452D2AC138B28E500987109 /* MenuCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuCell.xib; sourceTree = "<group>"; };
+		A452D2AE138B691D00987109 /* TextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextViewController.h; sourceTree = "<group>"; };
+		A452D2AF138B691D00987109 /* TextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextViewController.m; sourceTree = "<group>"; };
+		A452D2B0138B691D00987109 /* TextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextViewController.xib; sourceTree = "<group>"; };
+		A45834131389C45000378AE0 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		A48AD761134B9B36004271C0 /* GroupItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupItem.h; sourceTree = "<group>"; };
 		A48AD762134B9B37004271C0 /* GroupItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupItem.m; sourceTree = "<group>"; };
 		A48AD765134B9BD1004271C0 /* Group.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Group.h; sourceTree = "<group>"; };
@@ -508,6 +520,7 @@
 		A48D1FB9134992E800B13EC5 = {
 			isa = PBXGroup;
 			children = (
+				A45834131389C45000378AE0 /* Settings.bundle */,
 				A4C24C1B13649F04005A73F7 /* iTunesArtwork */,
 				A49A67851352CBC700ED1B70 /* Default.png */,
 				A49A67831352C99100ED1B70 /* icon.png */,
@@ -622,6 +635,12 @@
 				A4C9AC841351090D00539C1D /* SitesParserDelegate.m */,
 				A4C9AC8E135179FD00539C1D /* GroupParserDelegate.h */,
 				A4C9AC8F13517A0700539C1D /* GroupParserDelegate.m */,
+				A452D2A6138B24A100987109 /* MenuCell.h */,
+				A452D2A7138B24A100987109 /* MenuCell.m */,
+				A452D2AC138B28E500987109 /* MenuCell.xib */,
+				A452D2AE138B691D00987109 /* TextViewController.h */,
+				A452D2AF138B691D00987109 /* TextViewController.m */,
+				A452D2B0138B691D00987109 /* TextViewController.xib */,
 			);
 			path = VirtualApp;
 			sourceTree = "<group>";
@@ -1131,6 +1150,9 @@
 				A4C24B40135FBFE8005A73F7 /* Localizable.strings in Resources */,
 				A4C24B47135FBFE8005A73F7 /* FBConnect.bundle in Resources */,
 				A4C24C1C13649F04005A73F7 /* iTunesArtwork in Resources */,
+				A45834141389C45000378AE0 /* Settings.bundle in Resources */,
+				A452D2AD138B28E500987109 /* MenuCell.xib in Resources */,
+				A452D2B2138B691E00987109 /* TextViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1274,6 +1296,8 @@
 				A4C24B60135FBFE8005A73F7 /* SHKOAuthView.m in Sources */,
 				A4C24B61135FBFE8005A73F7 /* SHKShareMenu.m in Sources */,
 				A4C24B62135FBFE8005A73F7 /* SHKViewControllerWrapper.m in Sources */,
+				A452D2A8138B24A100987109 /* MenuCell.m in Sources */,
+				A452D2B1138B691E00987109 /* TextViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

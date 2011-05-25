@@ -31,6 +31,9 @@
 }
 
 - (void)viewDidLoad {
+    if (!self.webSite || !self.rootSite || !self.fileName) {
+        return;
+    }
     [self initCache];
     NSString *urlString = [self.rootSite stringByAppendingPathComponent:fileName];
     

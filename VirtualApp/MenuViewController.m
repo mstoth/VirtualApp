@@ -49,9 +49,11 @@
 #import "WebViewController.h"
 #import "ImagesViewController.h"
 #import "ContactViewController.h"
+#import "TextViewController.h"
 #import "Menu.h"
 #import "MenuItem.h"
 #import "ParseOperation.h"
+#import "MenuCell.h"
 
 NSString *kAddMenuItemNotif = @"AddMenuItemNotif";
 NSString *kMenuItemResultsKey = @"MenuItemResultsKey";
@@ -66,7 +68,7 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 @synthesize menu;
 @synthesize myTableView;
 @synthesize banner;
-
+@synthesize cellView;
 
 
 - (void)setPaths:(NSString *)web root:(NSString *)root fname:(NSString *)fname {
@@ -104,6 +106,7 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
     else {
         url = [[NSURL alloc] initWithString:[rootSite stringByAppendingPathComponent:self.fileName]];
     }
+    NSLog(@"URL = %@",[url absoluteString]);
 	if (url) {
         NSURLRequest *menuRequest = [NSURLRequest requestWithURL:url];
 		[url release];
@@ -147,7 +150,7 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
     [filePath release];
     [self.webSite release];
     [self.rootSite release];
-    //[self.fileName release];
+    [self.fileName release];
     [imageFileName release];
     [menuTitle release];
     //NSLog( @"releasing imageFileName: %d",[self.imageFileName retainCount]);
@@ -201,22 +204,88 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
     return [menuItems count];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
+{
+    MenuItem *item = [menuItems objectAtIndex:[indexPath row]];
+    
+    NSString *text = item.description;
+    CGSize constraint = CGSizeMake(CELL_CONTENT_WIDTH - (CELL_CONTENT_MARGIN * 2), 20000.0f);
+    CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:FONT_SIZE] constrainedToSize:constraint lineBreakMode:UILineBreakModeWordWrap];
+    CGFloat height = MAX(size.height, 44.0f);
+    return height + (CELL_CONTENT_MARGIN * 2);
+}
+
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    static NSString *CellIdentifier = @"Cell";
+     static NSString *CellIdentifier = @"Cell";
+    UITableViewCell *cell;
+    //UILabel *label=nil,*desc;
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    // MenuCell *cell = (MenuCell *)[tableView dequeueReusableCellWithIdentifier:@"MenuCell"];
+
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        
+
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+        
+//        label = [[UILabel alloc] initWithFrame:CGRectZero];
+//        [label setLineBreakMode:UILineBreakModeWordWrap];
+//        [label setMinimumFontSize:FONT_SIZE];
+//        [label setNumberOfLines:0];
+//        [label setBackgroundColor:[UIColor clearColor]];
+//        [label setFont:[UIFont systemFontOfSize:TITLE_FONT_SIZE]];
+//        [label setTag:1];
+//        [[cell contentView] addSubview:label];
+//        
+//        desc = [[UILabel alloc] initWithFrame:CGRectZero];
+//        [desc setLineBreakMode:UILineBreakModeWordWrap];
+//        [desc setMinimumFontSize:FONT_SIZE];
+//        [desc setNumberOfLines:0];
+//        [desc setBackgroundColor:[UIColor clearColor]];
+//        [desc setFont:[UIFont systemFontOfSize:FONT_SIZE]];
+//        [label setTag:2];
+//        [[cell contentView] addSubview:desc];
+
+        
     }
+    
+    //[cell.detailTextLabel setNumberOfLines:2];
     // NSLog(@"MenuViewController:cellForRowAtIndexPath - menuItems retain count = %d, self.menu retainCount = %d",[menuItems retainCount],[self.menu retainCount]);
 	// Configure the cell.
+    
 	MenuItem *item = [menuItems objectAtIndex:indexPath.row];
 	NSString *cellText = item.itemTitle;
-	
-	cell.textLabel.text = cellText;
+//    
+//    CGSize constraint = CGSizeMake(CELL_CONTENT_WIDTH - (CELL_CONTENT_MARGIN * 2), 20000.0f);
+//    CGSize size = [cellText sizeWithFont:[UIFont systemFontOfSize:TITLE_FONT_SIZE] constrainedToSize:constraint lineBreakMode:UILineBreakModeWordWrap];
+//    [label setFrame:CGRectMake(CELL_CONTENT_MARGIN, 0, size.width, size.height)];
+//    [label setText:cellText];
+//    [[cell contentView] addSubview:label];
+//    
+//    CGSize dsize = [text sizeWithFont:[UIFont systemFontOfSize:FONT_SIZE] constrainedToSize:constraint lineBreakMode:UILineBreakModeWordWrap];
+//    [desc setFrame:CGRectMake(CELL_CONTENT_MARGIN, size.height, size.width, size.height)];
+//    [desc setText:text];
+//    [[cell contentView] addSubview:desc];
+    
+//    CGSize constraint = CGSizeMake(CELL_CONTENT_WIDTH - (CELL_CONTENT_MARGIN * 2), 20000.0f);
+//    CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:FONT_SIZE] constrainedToSize:constraint lineBreakMode:UILineBreakModeWordWrap];
+//    
+//    NSLog(@"%@",item.description);
+//    
+//    cell.textLabel.text = cellText;
+//    if (!label)
+//        label = (UILabel*)[cell viewWithTag:1];
+//    
+//    [label setText:item.description];
+//    [label setFrame:CGRectMake(CELL_CONTENT_MARGIN, CELL_CONTENT_MARGIN+40.0f, CELL_CONTENT_WIDTH - (CELL_CONTENT_MARGIN * 2), MAX(size.height, 44.0f))];
+    //[cell.detailTextLabel setFrame:CGRectMake(CELL_CONTENT_MARGIN, CELL_CONTENT_MARGIN, CELL_CONTENT_WIDTH - (CELL_CONTENT_MARGIN * 2), MAX(size.height, 44.0f))];
+    [cell.detailTextLabel setTextColor:[UIColor blackColor]];
+    [cell.detailTextLabel setText:item.description];
+    [cell.textLabel setText:cellText];
+    
     return cell;
 }
 
@@ -280,6 +349,12 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
         [summaryViewController setPaths:webSite root:self.rootSite fileName:[item fileName]];
 		[self.navigationController pushViewController:summaryViewController animated:YES];
 		[summaryViewController release];
+	}
+	if ([[item pageType] isEqualToString:@"TEXTPAGE"]) {
+		TextViewController *textViewController = [[TextViewController alloc] initWithNibName:@"TextViewController" bundle:nil];
+        textViewController.fileName=[item fileName];
+		[self.navigationController pushViewController:textViewController animated:YES];
+		[textViewController release];
 	}
 	if ([[item pageType] isEqualToString:@"GROUP"]) {
 		PeopleViewController *peopleViewController = [[PeopleViewController alloc] initWithNibName:@"PeopleViewController" bundle:nil];
@@ -433,6 +508,7 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
     //NSString *fp;
     //fp = self.filePath;
 	UIImage *theImage = [[[UIImage alloc] initWithContentsOfFile:self.filePath] autorelease];
+    NSLog(@"%@",self.filePath);
 	if (theImage) {
         UIImageView *theImageView = [[UIImageView alloc] initWithImage:theImage];
         // NSLog(@"MenuViewController:displayCachedImage - %@",self.menuType);
@@ -483,10 +559,11 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
     // also make sure the MIMEType is correct:
     //
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-//	NSUInteger status;
-//	NSString *mimeType;
-//	mimeType = [response MIMEType];
-//	status = [httpResponse statusCode];
+	NSUInteger status;
+	NSString *mimeType;
+	mimeType = [response MIMEType];
+	status = [httpResponse statusCode];
+    NSLog(@"mimeType = %@, status = %d",mimeType,status);
     if ((([httpResponse statusCode]/100) == 2) && ([[response MIMEType] isEqual:@"application/xml"] || [[response MIMEType] isEqual:@"text/xml"]) ) {
         self.menuData = [NSMutableData data];
     } else {
@@ -524,6 +601,7 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+    int result;
     [self.menuFeedConnection release];
     self.menuFeedConnection = nil;
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;   
@@ -531,13 +609,16 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
     
     NSXMLParser *parser = [[NSXMLParser alloc] initWithData:self.menuData];
     [parser setDelegate:self];
-    [parser parse];
+    result = [parser parse];
+    NSLog(@"%d",result);
+    
     [parser release];
     [self.myTableView reloadData];
     [self initCache];
     
 	NSString *fn = [self.imageFileName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     //NSLog(@"Set fn: %d",[self.imageFileName retainCount]);
+    NSLog(@"%@",fn);
 	NSURL *imageURL = [[NSURL alloc] initWithString:[rootSite stringByAppendingPathComponent:fn]];
     self.filePath = [self.dataPath stringByAppendingPathComponent:[fn lastPathComponent]];
 
@@ -565,6 +646,7 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
     }
     if ([elementName isEqualToString:@"fileName"] ||
         [elementName isEqualToString:@"menuTitle"] ||
+        [elementName isEqualToString:@"desc"] ||
         [elementName isEqualToString:@"pageType"] ||
         [elementName isEqualToString:@"itemTitle"] ||
         [elementName isEqualToString:@"menutype"] ||
@@ -599,6 +681,9 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
     }
     if ([elementName isEqualToString:@"menuTitle"]) {
         self.menuTitle = currentStringValue;
+    }
+    if ([elementName isEqualToString:@"desc"]) {
+        currentMenuItem.description = currentStringValue;
     }
     if ([elementName isEqualToString:@"menutype"]) {
         self.menuType = currentStringValue;

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #include "/usr/include/sqlite3.h"
+#import "MenuViewController.h"
 #include "SiteObject.h"
 
 //#define kSitesURL @"http://iapp.vsec.railsplayground.net/apps/listapps"
@@ -39,6 +40,10 @@ typedef enum {
 	NSURLConnection *sitesFeedConnection;
 	NSMutableData *sitesData;
 	NSOperationQueue *parseQueue;
+    NSString *defaultAppID;
+    NSString *defaultUserID;
+    MenuViewController  *defaultMenuViewController;
+    NSString *urlString;
     
     NSMutableArray *siteObjects;
     SiteObject *currentSite;

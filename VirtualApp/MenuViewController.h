@@ -10,7 +10,10 @@
 #import "URLCacheConnection.h"
 #import "Menu.h"
 #import "MenuItem.h"
-
+#define FONT_SIZE 14.0f
+#define TITLE_FONT_SIZE 18.0f
+#define CELL_CONTENT_WIDTH 320.0f
+#define CELL_CONTENT_MARGIN 10.0f
 @interface MenuViewController : UIViewController  <NSXMLParserDelegate, UITableViewDelegate, UITableViewDataSource, URLCacheConnectionDelegate> {
 	
 	NSMutableString *currentStringValue; // used by parser to keep intermediate results
@@ -19,6 +22,7 @@
 	NSString *webSite;  // path to directory of the xml file
 	NSString *fileName; // name of the xml file
 	UITableView *myTableView;
+    NSString *description;
     
     // parser variables
     NSMutableArray *menuItems;
@@ -42,6 +46,7 @@
 	
     NSURLConnection *menuFeedConnection;
     NSMutableData *menuData;
+    UITableViewCell *cellView;
     
     UIImageView *banner;
 	
@@ -50,7 +55,7 @@
 @property (nonatomic, retain) Menu *menu;
 @property (nonatomic, retain) NSURLConnection *menuFeedConnection;
 @property (nonatomic, retain) NSMutableData *menuData;
-
+@property (nonatomic, retain) IBOutlet UITableViewCell *cellView;
 
 @property (nonatomic, retain) NSString *userID;
 @property (nonatomic, retain) NSURLConnection *connection;

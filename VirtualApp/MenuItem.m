@@ -10,11 +10,12 @@
 
 
 @implementation MenuItem
-@synthesize itemTitle, fileName, pageType;
+@synthesize itemTitle, fileName, pageType, description;
 
 - (id)initWithMenuItem:(MenuItem *)menuItem {
     [super init];
     self.itemTitle = menuItem.itemTitle;
+    self.description = menuItem.description;
     self.fileName = menuItem.fileName;
     self.pageType = menuItem.pageType;
     return self;
@@ -22,6 +23,7 @@
 
 - (void)dealloc {
 	[self.itemTitle release];
+	[self.description release];
 	[self.fileName release];
 	[self.pageType release];
 	[super dealloc];

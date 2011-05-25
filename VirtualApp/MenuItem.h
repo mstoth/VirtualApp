@@ -10,9 +10,9 @@
 
 
 @interface MenuItem : NSObject {
-	NSString *itemTitle, *pageType, *fileName;
+	NSString *itemTitle, *pageType, *fileName, *description;
 }
-@property (nonatomic, retain) NSString *itemTitle, *pageType, *fileName;
+@property (nonatomic, retain) NSString *itemTitle, *pageType, *fileName, *description;
 - (id)initWithMenuItem:(MenuItem *)menuItem;
 
 @end
