@@ -30,18 +30,18 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     
-    if ([moreInfo rangeOfString:@"<html"].location != NSNotFound) {
+    if ([self.moreInfo rangeOfString:@"<html"].location != NSNotFound) {
         UIWebView *webView = [[UIWebView alloc] initWithFrame:textView.frame];
 #ifdef LOCAL
-        [webView loadHTMLString:moreInfo baseURL:[[[NSURL alloc] initWithString:@"http://localhost:3000/"] autorelease]];
+        [webView loadHTMLString:self.moreInfo baseURL:[[[NSURL alloc] initWithString:@"http://localhost:3000/"] autorelease]];
 #else
-        [webView loadHTMLString:moreInfo baseURL:[[[NSURL alloc] initWithString:@"http://home.my-iphone-app.com/"] autorelease]];
+        [webView loadHTMLString:self.moreInfo baseURL:[[[NSURL alloc] initWithString:@"http://home.my-iphone-app.com/"] autorelease]];
 #endif
         [self.view addSubview:webView];
         [webView release];
         webView = nil;
     } else {
-        textView.text = moreInfo;
+        textView.text = self.moreInfo;
     }
 	self.title = [delegate myTitle];
     
@@ -82,13 +82,13 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
-	//self.moreInfo = nil;
+	self.moreInfo = nil;
 	//self.textView = nil;
 }
 
 
 - (void)dealloc {
-	//[moreInfo release];
+	[self.moreInfo release];
 	//[textView release];
     [super dealloc];
 }
