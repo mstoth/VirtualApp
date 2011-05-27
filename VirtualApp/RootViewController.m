@@ -336,9 +336,9 @@
                 if ([aSite.category isEqualToString:self.currentCategory]) {
                     if (count == indexPath.row) {
 #ifdef LOCAL
-                        turlString = [[NSString alloc] initWithFormat:@"http://localhost:3000/system/icons/%@/mainmenu.xml",aSite.appID];
+                        turlString = [[[NSString alloc] initWithFormat:@"http://localhost:3000/system/icons/%@/mainmenu.xml",aSite.appID] autorelease];
 #else
-                        turlString = [[NSString alloc] initWithFormat:@"http://home.my-iphone-app.com/system/icons/%@/mainmenu.xml",aSite.appID];
+                        turlString = [[[NSString alloc] initWithFormat:@"http://home.my-iphone-app.com/system/icons/%@/mainmenu.xml",aSite.appID] autorelease];
 #endif
 
                         menuViewController = [[MenuViewController alloc] initWithNibName:@"MenuViewController" bundle:nil];
@@ -350,7 +350,7 @@
                             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"URL failed" message:url.path delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                             [alert show];
                             [alert release];
-                            [turlString release];
+                            //[turlString release];
                             [list release];
                             return;
                         }
@@ -358,15 +358,17 @@
                         
                         NSURL *baseURL = [url URLByDeletingLastPathComponent];
                         [url release];
+                        NSString *tFileName = [[[NSString alloc] initWithString:[turlString lastPathComponent]] autorelease];
 #ifdef LOCAL
-                        [menuViewController setPaths:[baseURL absoluteString] root:@"http://localhost:3000/system" fname:[turlString lastPathComponent]];
+                        [menuViewController setPaths:[baseURL absoluteString] root:@"http://localhost:3000/system" fname:tFileName];
 #else
                         [menuViewController setPaths:[baseURL absoluteString] 
                                                 root:@"http://home.my-iphone-app.com/system" 
-                                               fname:[turlString lastPathComponent]];
+                                               fname:tFileName];
 #endif
-                        [turlString release];
+                        //[turlString release];
                         //[baseURL release];
+                        [tFileName release];
                         [self.navigationController pushViewController:menuViewController animated:YES];
                         [menuViewController release];
                         [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -471,21 +473,20 @@
 				return;
 			}
 			
+            NSString *fn = [[[NSString alloc] initWithString:[turlString lastPathComponent]] autorelease];
 #ifdef LOCAL
             NSString *ws = [[[NSString alloc] initWithFormat:@"http://localhost:3000/system/icons/%@/",site.appID] autorelease];
             NSString *rs = [[[NSString alloc] initWithFormat:@"http://localhost:3000/system"] autorelease];
-            NSString *fn = [[turlString lastPathComponent] autorelease];
 #else
             NSString *ws = [[[NSString alloc] initWithFormat:@"http://home.my-iphone-app.com/system/icons/%@/",site.appID] autorelease];
             NSString *rs = [[[NSString alloc] initWithFormat:@"http://home.my-iphone-app.com/system"] autorelease];
-            NSString *fn = [turlString lastPathComponent];
 #endif
             [menuViewController setPaths:ws root:rs fname:fn];
 
 			menuViewController.userID = site.userID;
             
 			[self.navigationController pushViewController:menuViewController animated:YES];
-            
+            [fn release];
             [url release];
 			[turlString release];
             

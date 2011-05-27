@@ -74,7 +74,7 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 - (void)setPaths:(NSString *)web root:(NSString *)root fname:(NSString *)fname {
     self.webSite = web;
     self.rootSite = root;
-    self.fileName = fname;
+    self.fileName = [fname retain];
 }
 
 
@@ -99,14 +99,21 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
-    NSLog(@"viewDidLoad");
+    // NSLog(@"viewDidLoad");
+    [[myTableView backgroundView] setAlpha:0.3];
+    [super viewDidLoad];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+   // NSLog(@"%@",self.fileName);
+    [menuItems release];
     NSURL *url;
     if ([self.fileName isEqualToString:@"mainmenu.xml"]) 
         url = [[NSURL alloc] initWithString:[webSite stringByAppendingPathComponent:self.fileName]];
     else {
         url = [[NSURL alloc] initWithString:[rootSite stringByAppendingPathComponent:self.fileName]];
     }
-    NSLog(@"URL = %@",[url absoluteString]);
+   // NSLog(@"URL = %@",[url absoluteString]);
 	if (url) {
         NSURLRequest *menuRequest = [NSURLRequest requestWithURL:url];
 		[url release];
@@ -119,10 +126,8 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 		[alert release];
 		return;
 	}
-
-    [super viewDidLoad];
+    [self displayCachedImage];
 }
-
 
 - (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.
@@ -336,9 +341,10 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	MenuItem *item = [menuItems objectAtIndex:indexPath.row];
+    NSString *iFileName = [[NSString alloc] initWithString:[item fileName]];
 	if ([[item pageType] isEqualToString:@"MENU"]) {
 		MenuViewController *menuViewController = [[MenuViewController alloc] initWithNibName:@"MenuViewController" bundle:nil];
-        [menuViewController setPaths:webSite root:self.rootSite fname:[item fileName]];
+        [menuViewController setPaths:webSite root:self.rootSite fname:iFileName];
 		menuViewController.userID = self.userID; 
         
 		[self.navigationController pushViewController:menuViewController animated:YES];
@@ -346,26 +352,26 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 	}
 	if ([[item pageType] isEqualToString:@"SUMMARY"]) {
 		SummaryViewController *summaryViewController = [[SummaryViewController alloc] initWithNibName:@"SummaryViewController" bundle:nil];
-        [summaryViewController setPaths:webSite root:self.rootSite fileName:[item fileName]];
+        [summaryViewController setPaths:webSite root:self.rootSite fileName:iFileName];
 		[self.navigationController pushViewController:summaryViewController animated:YES];
 		[summaryViewController release];
 	}
 	if ([[item pageType] isEqualToString:@"TEXTPAGE"]) {
 		TextViewController *textViewController = [[TextViewController alloc] initWithNibName:@"TextViewController" bundle:nil];
-        textViewController.fileName=[item fileName];
+        textViewController.fileName=iFileName;
 		[self.navigationController pushViewController:textViewController animated:YES];
 		[textViewController release];
 	}
 	if ([[item pageType] isEqualToString:@"GROUP"]) {
 		PeopleViewController *peopleViewController = [[PeopleViewController alloc] initWithNibName:@"PeopleViewController" bundle:nil];
-        [peopleViewController setPaths:webSite root:self.rootSite fileName:[item fileName]];
+        [peopleViewController setPaths:webSite root:self.rootSite fileName:iFileName];
 		[self.navigationController pushViewController:peopleViewController animated:YES];
 		[peopleViewController release];
 	}
 	if ([[item pageType] isEqualToString:@"WEBVIEW"]) {
 		WebViewController *webViewController = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
 		webViewController.webSite = webSite;
-		NSURL *url = [[NSURL alloc] initWithString:[item fileName]];
+		NSURL *url = [[NSURL alloc] initWithString:iFileName];
 		webViewController.urlLocation = [url retain];
         [url release];
 		[self.navigationController pushViewController:webViewController animated:YES];
@@ -373,7 +379,7 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 	}
 	if ([[item pageType] isEqualToString:@"SLIDESHOW"]) {
 		ImagesViewController *slideShowViewController = [[ImagesViewController alloc] initWithNibName:@"ImagesViewController" bundle:nil];
-		slideShowViewController.fileName = [item fileName];
+		slideShowViewController.fileName = iFileName;
 		slideShowViewController.webSite = webSite;
 		[self.navigationController pushViewController:slideShowViewController animated:YES];
 		[slideShowViewController release];
@@ -384,6 +390,7 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 		[self.navigationController pushViewController:contactViewController animated:YES];
 		[contactViewController release];
 	}
+    [iFileName release];
 	[myTableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
@@ -507,26 +514,27 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 	/* display the file as an image */
     //NSString *fp;
     //fp = self.filePath;
+    UIImageView *iview;
 	UIImage *theImage = [[[UIImage alloc] initWithContentsOfFile:self.filePath] autorelease];
     NSLog(@"%@",self.filePath);
 	if (theImage) {
-        UIImageView *theImageView = [[UIImageView alloc] initWithImage:theImage];
-        // NSLog(@"MenuViewController:displayCachedImage - %@",self.menuType);
-        //if ([self.menu.menutype isEqualToString:@"1"]) {
-            UIImageView *iview = [[UIImageView alloc] initWithImage:theImage];
-            iview.alpha = 0.3;
-            iview.frame = CGRectMake(0, 0, 320, 460);
+        NSArray *subViews = [self.view subviews];
+        if ([subViews count] > 1) {
+            iview = [subViews objectAtIndex:0];
+        } else {
+            iview = [[UIImageView alloc] initWithImage:theImage];
+        }
+        iview.alpha = 0.3;
+        iview.frame = CGRectMake(0, 0, 320, 460);
+        if ([subViews count] == 1) {
             [self.view insertSubview:iview atIndex:0];
             [iview release];
-            CGRect frame = self.myTableView.frame;
-            frame.origin.x = 0;
-            frame.origin.y = 0;
-            self.myTableView.frame = frame;            
-            [self.view setNeedsDisplay];
-       // } else {
-         //   self.myTableView.tableHeaderView = theImageView;
-       // }
-        [theImageView release];
+        }
+        CGRect frame = self.myTableView.frame;
+        frame.origin.x = 0;
+        frame.origin.y = 0;
+        self.myTableView.frame = frame;            
+        [self.view setNeedsDisplay];
 	}
 }
 
@@ -674,6 +682,7 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
         currentMenuItem.pageType = currentStringValue;
     }
     if ([elementName isEqualToString:@"fileName"]) {
+        NSLog(@"%@",currentStringValue);
         currentMenuItem.fileName = currentStringValue;
     }
     if ([elementName isEqualToString:@"itemTitle"]) {

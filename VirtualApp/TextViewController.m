@@ -7,6 +7,7 @@
 //
 
 #import "TextViewController.h"
+#import "SHK.h"
 
 
 @implementation TextViewController
@@ -47,6 +48,14 @@
 #endif
     NSURL *url = [[NSURL alloc] initWithString:urlString];
     NSData *txtData = [[NSData alloc] initWithContentsOfURL:url];
+    
+    // set up the share button
+    UIBarButtonItem *shareButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction
+                                                                                     target:self
+                                                                                     action:@selector(share)];
+    self.navigationItem.rightBarButtonItem = shareButtonItem;
+    [shareButtonItem release];
+
      
     NSXMLParser *parser = [[NSXMLParser alloc] initWithData:txtData];
     [parser setDelegate:self];
@@ -89,6 +98,25 @@
 
 
 
+- (void)share
+{
+    SHKItem *item;
+    item = [SHKItem text:self.content];
+    
+	// Get the ShareKit action sheet
+	SHKActionSheet *actionSheet = [SHKActionSheet actionSheetForItem:item];
+    
+	// Display the action sheet
+	[actionSheet showFromToolbar:self.navigationController.toolbar];
+}
+
+
+
+
+
+
+
+
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName
   namespaceURI:(NSString *)namespaceURI
  qualifiedName:(NSString *)qName
@@ -100,6 +128,10 @@
     }
     
 }
+
+
+
+
 
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName
   namespaceURI:(NSString *)namespaceURI

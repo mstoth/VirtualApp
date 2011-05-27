@@ -1432,10 +1432,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Toth (Z2X5TZNEHK)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = LOCAL;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1445,7 +1446,7 @@
 					"-all_load",
 					"-ObjC",
 				);
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "CA851D1C-DE63-45C8-91AD-B2BBA41BED40";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1475,7 +1476,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Toth (Z2X5TZNEHK)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1483,7 +1484,7 @@
 				INFOPLIST_FILE = "VirtualApp/VirtualApp-Info.plist";
 				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "84140A55-E6D7-4122-8EE1-97BBB40E1A6D";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1556,7 +1557,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Michael Toth";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1567,7 +1568,7 @@
 					"-all_load",
 					"-ObjC",
 				);
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "C5D6A74A-4054-4F8D-AAB1-779A0BDBE441";
 				SDKROOT = iphoneos;
 			};
 			name = Beta;
@@ -1577,14 +1578,14 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Michael Toth";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VirtualApp/VirtualApp-Prefix.pch";
 				INFOPLIST_FILE = "VirtualApp/VirtualApp-Info.plist";
 				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "C5D6A74A-4054-4F8D-AAB1-779A0BDBE441";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};

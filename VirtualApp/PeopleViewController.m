@@ -217,6 +217,7 @@
 
 
 - (void)dealloc {
+    [connection release];
     [names release];
     [bios release];
     [images release];
