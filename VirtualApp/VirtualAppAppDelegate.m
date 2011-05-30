@@ -7,6 +7,11 @@
 //
 
 #import "VirtualAppAppDelegate.h"
+#import "Constants.h"
+
+#ifdef MAKE_FOR_CUSTOMER
+#import "MenuViewController.h"
+#endif
 
 @implementation VirtualAppAppDelegate
 
@@ -19,8 +24,23 @@
 {
     // Override point for customization after application launch.
     // Add the navigation controller's view to the window and display.
+    
+#ifdef MAKE_FOR_CUSTOMER
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+    
+    MenuViewController *mvc = [[MenuViewController alloc] initWithNibName:@"MenuViewController" bundle:nil];
+    [mvc setPaths:kWebPath root:kRootPath fname:kFileName];
+    [self.navigationController initWithRootViewController:mvc];
+    mvc.title = kTitle;
+    mvc.userID = kUserID;
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
+    [mvc release];
+#else // VIRTUALAPP
+    self.window.rootViewController = self.navigationController;
+    [self.window makeKeyAndVisible];
+#endif
     return YES;
 }
 

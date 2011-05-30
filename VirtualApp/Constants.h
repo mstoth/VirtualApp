@@ -56,3 +56,15 @@
 #define kTweenMargin			10.0
 
 #define kTextFieldHeight		30.0
+
+// #define MAKE_FOR_CUSTOMER 
+
+#ifdef MAKE_FOR_CUSTOMER
+#define xstr(s) str(s)
+#define kWebPath @"http://home.my-iphone-app.com/system/icons/4"
+#define kRootPath @"http://home.my-iphone-app.com/system"
+#define kFileName @"mainmenu.xml"
+#define kTitle @"Crosswinds Trio"
+#define kAppID @"4"
+#define kUserID @"1"
+#endif

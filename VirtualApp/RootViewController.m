@@ -11,6 +11,7 @@
 #import "SiteObject.h"
 #import "MenuViewController.h"
 #import "SHK.h"
+#import "Constants.h"
 
 @implementation RootViewController
 
@@ -26,11 +27,19 @@
 
 - (void)viewDidLoad
 {
+    NSError *error;
     [super viewDidLoad];
+    
+    // Uncomment this line if you want to reset your sharing ID information 
     //[SHK logoutOfAll];
     
-    NSError *error;
+    
+#ifdef MAKE_FOR_CUSTOMER
+    self.title = kTitle;
+#else
     self.title = @"Virtual App";
+#endif
+    
     /* create path to cache directory inside the application's Documents directory */
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -43,17 +52,17 @@
 	
 	/* create a new cache directory */
 	[[NSFileManager defaultManager] createDirectoryAtPath:dataPath
-								   withIntermediateDirectories:NO
-													attributes:nil
+                              withIntermediateDirectories:NO
+                                               attributes:nil
                                                     error:&error];
 	
-
-        // initialize lists
-        self.categoryList = [[NSMutableArray alloc] init];
-
-        parseQueue = [NSOperationQueue new];
-
-        [self loadSites];
+    
+    // initialize lists
+    self.categoryList = [[NSMutableArray alloc] init];
+    
+    parseQueue = [NSOperationQueue new];
+    
+    [self loadSites];
 }
 
 
@@ -80,9 +89,16 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    
+#ifdef MAKE_FOR_CUSTOMER
+    defaultAppID = kAppID;
+    defaultUserID = kUserID;
+#else
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     defaultAppID = [defaults stringForKey:@"AppID"];
     defaultUserID = [defaults stringForKey:@"UserID"];
+#endif
+    
     if (defaultAppID && ![defaultAppID  isEqualToString:@"0"]) { // go to specific app
 #ifdef LOCAL
         urlString = [[NSString alloc] initWithFormat:@"http://localhost:3000/system/icons/%@/mainmenu.xml",defaultAppID];

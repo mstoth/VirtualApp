@@ -7,7 +7,7 @@
 //
 
 #import "VirtualAppTests.h"
-
+#import "RootViewController.h"
 
 @implementation VirtualAppTests
 
@@ -27,6 +27,8 @@
 
 - (void)testExample
 {
+    RootViewController *rvc = [[RootViewController alloc] initWithNibName:@"RootViewController" bundle:nil];
+    
     STFail(@"Unit tests are not implemented yet in VirtualAppTests");
 }
 
