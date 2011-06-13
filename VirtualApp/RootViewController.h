@@ -21,6 +21,7 @@
 #define kSitesErrorNotif @"sitesError"
 #define kSitesMsgErrorKey @"msgError"
 #define kFilename @"bookmarks.sqlite3"
+#define alphabet @"abcdefghijklmnopqrstuvwxyz"
 
 typedef enum {
 	ALL,
@@ -46,6 +47,7 @@ typedef enum {
     NSString *urlString;
     
     NSMutableArray *siteObjects;
+    NSMutableArray *copyOfSiteObjects;
     SiteObject *currentSite;
     NSMutableString *currentStringValue;
     BOOL accumulatingChars;
@@ -56,6 +58,7 @@ typedef enum {
 	UIBarButtonItem *allButtonItem, *bookmarksButtonItem, *categoriesButtonItem;
 	DisplayMode displayMode;
 }
+@property (nonatomic, retain) IBOutlet UISearchBar *searchBar;
 @property (nonatomic, retain) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) NSString *currentCategory; 
 @property (nonatomic, retain) NSMutableArray *categoryList,*subList;
@@ -67,6 +70,9 @@ typedef enum {
 
 - (void) handleError:(NSError *)error;
 - (void) loadSites;
+- (void) copySites;
+- (void) resetSearch;
+- (void) handleSearchForTerm:(NSString *)searchTerm; 
 
 - (IBAction) allButtonItemPushed:(id)sender;
 - (IBAction) bookmarksButtonItemPushed:(id)sender;

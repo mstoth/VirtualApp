@@ -20,6 +20,7 @@
 @synthesize toolBar, tableView;
 @synthesize allButtonItem, bookmarksButtonItem, categoriesButtonItem;
 @synthesize categoryList,subList, currentCategory;
+@synthesize searchBar;
 
 #pragma mark -
 #pragma mark View lifecycle
@@ -146,6 +147,49 @@
 	[super viewDidDisappear:animated];
 }
 
+#pragma mark -
+#pragma mark Search Bar Delegate Routines
+
+- (void) searchBarSearchButtonClicked:(UISearchBar *)search_bar {
+    NSString *searchTerm = [searchBar text];
+    [self handleSearchForTerm:searchTerm];
+}
+
+- (void) searchBar:(UISearchBar *)search_bar textDidChange:(NSString *)searchText   {
+    if ([searchText length] == 0) {
+        [self resetSearch];
+        [tableView reloadData];
+        return;
+    }
+    [self handleSearchForTerm:searchText];
+}
+
+- (void) searchBarCancelButtonClicked:(UISearchBar *) search_bar {
+    searchBar.text = @"";
+    [self resetSearch];
+    [tableView reloadData];
+    [search_bar resignFirstResponder];
+}
+
+#pragma mark -
+#pragma mark Search Routines
+
+-(void)resetSearch {
+    [self copySites];
+}
+
+- (void) handleSearchForTerm:(NSString *)searchTerm {
+    NSMutableArray *sitesToRemove = [[NSMutableArray alloc] init];
+    [self resetSearch];
+    for (SiteObject *site in siteObjects) {
+        if ([site.siteTitle rangeOfString:searchTerm options:NSCaseInsensitiveSearch].location == NSNotFound) {
+            [sitesToRemove addObject:site];
+        }
+    }
+    [copyOfSiteObjects removeObjectsInArray:sitesToRemove];
+    [sitesToRemove release];
+    [tableView reloadData];
+}
 
 #pragma mark -
 #pragma mark Filtering Operations
@@ -189,6 +233,13 @@
 	return count;
 }	
 
+- (void)copySites {
+    [copyOfSiteObjects release];
+    copyOfSiteObjects = [[NSMutableArray alloc] init];
+    for (SiteObject *site in siteObjects) {
+        [copyOfSiteObjects addObject:site];
+    }
+}
 
 #pragma mark -
 #pragma mark Table view data source
@@ -199,7 +250,7 @@
 			return 1;
 			break;
 		case ALL:
-			return 1;
+			return 26;
 			break;
 		case CATEGORIES:
 			return 1;
@@ -213,9 +264,25 @@
     return 1;
 }
 
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
+    NSMutableArray *list = [[[NSMutableArray alloc] init] autorelease];
+    NSString *a = alphabet;
+    NSRange r;
+    if (displayMode == ALL) {
+        // a better way there must be but... 
+        for (NSUInteger i=0; i<26; i++) {
+            r.length = 1;
+            r.location = i;
+            [list addObject:[[a substringWithRange:r] uppercaseString]];
+        }
+        return list;
+    }
+    return list;
+}
+
 - (NSInteger)numberOfSitesInCategory:(NSString *)category {
 	NSInteger total = 0;
-	for (SiteObject *site in siteObjects) {
+	for (SiteObject *site in copyOfSiteObjects) {
 		if ([site.category isEqualToString:category]) {
 			total++;
 		}
@@ -238,7 +305,12 @@
 			return total;
 			break;
 		case ALL:
-			return [siteObjects count];
+            for (SiteObject *aSite in copyOfSiteObjects) {
+                if ([[aSite.siteTitle lowercaseString] characterAtIndex:0]  == [@"abcdefghijklmnopqrstuvwxyz" characterAtIndex:section] ) {
+                    total++;
+                }
+            }
+			return total;
 			break;
 		case BOOKMARKS:
 			return [self numberOfBookmarks];
@@ -260,6 +332,7 @@
 	static NSString *CellIdentifier = @"Cell";
 	UIImage *buttonImage;
 	UIButton *button;
+    NSUInteger section = [indexPath section];
 	NSInteger count = 0;
 	UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 	if (cell == nil) {
@@ -279,7 +352,15 @@
 			}
 			break;
 		case ALL:
-			site = [siteObjects objectAtIndex:indexPath.row];
+            list = [[NSMutableArray alloc] init];
+            for (site in copyOfSiteObjects) {
+                if ([[site.siteTitle lowercaseString] characterAtIndex:0]==[alphabet characterAtIndex:section]) {
+                    [list addObject:site];
+                }
+            }
+            
+			//site = [siteObjects objectAtIndex:indexPath.row];
+            site = [list objectAtIndex:indexPath.row];
 			cell.textLabel.text = site.siteTitle;
 			
 			buttonImage = [UIImage imageNamed:@"bookmark.png"];
@@ -289,7 +370,7 @@
 			[button setTitle:@"Bookmark" forState:UIControlStateNormal];
 			[button addTarget:self action:@selector(addToBookmarks:) forControlEvents:UIControlEventTouchUpInside];
 			cell.accessoryView = button;	
-			
+			[list release];
 			return cell;
 			break;
 		case CATEGORIES:
@@ -340,7 +421,8 @@
 	NSString *turlString;
 	MenuViewController *menuViewController;
     NSURL *url,*baseURL;
-    
+    NSUInteger section = [indexPath section];
+
     if ([siteObjects count] == 0) {
         [list release];
         return;
@@ -467,7 +549,16 @@
             [baseURL release];
 			break;
 		case ALL:
-			site = [siteObjects objectAtIndex:indexPath.row];
+            list = [[NSMutableArray alloc] init];
+            for (site in siteObjects) {
+                if ([[site.siteTitle lowercaseString] characterAtIndex:0]==[alphabet characterAtIndex:section]) {
+                    [list addObject:site];
+                }
+            }
+            
+			//site = [siteObjects objectAtIndex:indexPath.row];
+            site = [list objectAtIndex:indexPath.row];
+
             
 #ifdef LOCAL
 			turlString = [[NSString alloc] initWithFormat:@"http://localhost:3000/system/icons/%@/mainmenu.xml",site.appID];
@@ -530,6 +621,7 @@
     // For example: self.myOutlet = nil;
 	categoryList = nil;
 	siteObjects = nil;
+    copyOfSiteObjects = nil;
 }
 
 
@@ -540,6 +632,7 @@
     [sitesData release];
 	[categoryList release];
 	[siteObjects release];
+    [copyOfSiteObjects  release];
     [super dealloc];
 }
 
@@ -597,7 +690,7 @@
     [parser setDelegate:self];
     [parser parse];
     [parser release];
-
+    [self copySites];
     [self.tableView reloadData];
     
     self.sitesData = nil;

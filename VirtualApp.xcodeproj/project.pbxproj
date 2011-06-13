@@ -448,6 +448,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A41B3CA313A086C100EDC2BE /* xib files */ = {
+			isa = PBXGroup;
+			children = (
+				A452D2B0138B691D00987109 /* TextViewController.xib */,
+				A452D2AC138B28E500987109 /* MenuCell.xib */,
+				A48D1FDA134992E800B13EC5 /* MainWindow.xib */,
+				A48D203713499DD600B13EC5 /* MenuViewController.xib */,
+				A48D1FE0134992E800B13EC5 /* RootViewController.xib */,
+				A48D203813499DD600B13EC5 /* SummaryViewController.xib */,
+				A48D203913499DD700B13EC5 /* PeopleViewController.xib */,
+				A48D203A13499DD800B13EC5 /* WebViewController.xib */,
+				A48D203B13499DD800B13EC5 /* FullScreenImageViewController.xib */,
+				A48D203D13499DDB00B13EC5 /* MoreInfoViewController.xib */,
+				A48D203E13499DDD00B13EC5 /* ContactViewController.xib */,
+				A48D203F13499DDF00B13EC5 /* CategoryViewController.xib */,
+			);
+			name = "xib files";
+			sourceTree = "<group>";
+		};
 		A48AD771134BDDF4004271C0 /* Unit Test */ = {
 			isa = PBXGroup;
 			children = (
@@ -570,6 +589,7 @@
 		A48D1FCE134992E800B13EC5 /* VirtualApp */ = {
 			isa = PBXGroup;
 			children = (
+				A41B3CA313A086C100EDC2BE /* xib files */,
 				A4C24A86135FBFE7005A73F7 /* ShareKit */,
 				A48D202D1349983B00B13EC5 /* Constants.h */,
 				A48D1FD7134992E800B13EC5 /* VirtualAppAppDelegate.h */,
@@ -612,16 +632,6 @@
 				A48D202C1349983A00B13EC5 /* URLCacheConnection.m */,
 				A48D202E1349983B00B13EC5 /* URLCacheAlert.h */,
 				A48D202F1349983C00B13EC5 /* URLCacheAlert.m */,
-				A48D1FDA134992E800B13EC5 /* MainWindow.xib */,
-				A48D203713499DD600B13EC5 /* MenuViewController.xib */,
-				A48D1FE0134992E800B13EC5 /* RootViewController.xib */,
-				A48D203813499DD600B13EC5 /* SummaryViewController.xib */,
-				A48D203913499DD700B13EC5 /* PeopleViewController.xib */,
-				A48D203A13499DD800B13EC5 /* WebViewController.xib */,
-				A48D203B13499DD800B13EC5 /* FullScreenImageViewController.xib */,
-				A48D203D13499DDB00B13EC5 /* MoreInfoViewController.xib */,
-				A48D203E13499DDD00B13EC5 /* ContactViewController.xib */,
-				A48D203F13499DDF00B13EC5 /* CategoryViewController.xib */,
 				A48D204B13499E4B00B13EC5 /* bookmark.png */,
 				A48D204C13499E4C00B13EC5 /* nobookmark.png */,
 				A48D1FCF134992E800B13EC5 /* Supporting Files */,
@@ -637,10 +647,8 @@
 				A4C9AC8F13517A0700539C1D /* GroupParserDelegate.m */,
 				A452D2A6138B24A100987109 /* MenuCell.h */,
 				A452D2A7138B24A100987109 /* MenuCell.m */,
-				A452D2AC138B28E500987109 /* MenuCell.xib */,
 				A452D2AE138B691D00987109 /* TextViewController.h */,
 				A452D2AF138B691D00987109 /* TextViewController.m */,
-				A452D2B0138B691D00987109 /* TextViewController.xib */,
 			);
 			path = VirtualApp;
 			sourceTree = "<group>";
@@ -1481,6 +1489,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VirtualApp/VirtualApp-Prefix.pch";
 				INFOPLIST_FILE = "VirtualApp/VirtualApp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.1;
 				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "84140A55-E6D7-4122-8EE1-97BBB40E1A6D";
@@ -1499,6 +1508,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VirtualApp/VirtualApp-Prefix.pch";
 				INFOPLIST_FILE = "VirtualApp/VirtualApp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.1;
 				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "C5D6A74A-4054-4F8D-AAB1-779A0BDBE441";
@@ -1582,6 +1592,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VirtualApp/VirtualApp-Prefix.pch";
 				INFOPLIST_FILE = "VirtualApp/VirtualApp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.1;
 				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "C5D6A74A-4054-4F8D-AAB1-779A0BDBE441";

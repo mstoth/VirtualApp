@@ -96,7 +96,7 @@ Copyright (C) 2008-2010 Apple Inc. All Rights Reserved.
 {
     [self.receivedData release];
     self.receivedData = nil;
-    //[self.lastModified release];
+    [self.lastModified release];
     lastModified = nil;
     
 	//[connection release];
@@ -134,12 +134,12 @@ Copyright (C) 2008-2010 Apple Inc. All Rights Reserved.
 			[dateFormatter setLocale:[[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]autorelease]];
 
 			[dateFormatter setDateFormat:@"EEE, dd MMM yyyy HH:mm:ss zzz"];
-			lastModified = [dateFormatter dateFromString:modified];
+			lastModified = [[dateFormatter dateFromString:modified] retain];
 			[dateFormatter release];
 		}
 		else {
 			/* default if last modified date doesn't exist (not an error) */
-			lastModified = [NSDate dateWithTimeIntervalSinceReferenceDate:0];
+			lastModified = [[NSDate dateWithTimeIntervalSinceReferenceDate:0] retain];
 		}
 	}
 }
