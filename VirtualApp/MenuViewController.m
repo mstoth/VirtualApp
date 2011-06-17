@@ -74,7 +74,7 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 - (void)setPaths:(NSString *)web root:(NSString *)root fname:(NSString *)fname {
     self.webSite = web;
     self.rootSite = root;
-    self.fileName = [fname retain];
+    self.fileName = fname;
 }
 
 
@@ -156,8 +156,9 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
     [self.webSite release];
     [self.rootSite release];
     [self.fileName release];
+    [self.menuTitle release];
+    [self.menuType release];
     [imageFileName release];
-    [menuTitle release];
     //NSLog( @"releasing imageFileName: %d",[self.imageFileName retainCount]);
     //[self.imageFileName release];
     [currentStringValue release];
@@ -208,7 +209,7 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [menuItems count];
 }
-
+/*
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
     MenuItem *item = [menuItems objectAtIndex:[indexPath row]];
@@ -219,7 +220,7 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
     CGFloat height = MAX(size.height, 44.0f);
     return height + (CELL_CONTENT_MARGIN * 2);
 }
-
+*/
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -522,13 +523,14 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
         if ([subViews count] > 1) {
             iview = [subViews objectAtIndex:0];
         } else {
-            iview = [[UIImageView alloc] initWithImage:theImage];
+            iview = [[[UIImageView alloc] initWithImage:theImage] autorelease];
         }
         iview.alpha = 0.3;
-        iview.frame = CGRectMake(0, 0, 320, 460);
+        CGRect frm = self.myTableView.frame;
+        iview.frame = frm;
         if ([subViews count] == 1) {
             [self.view insertSubview:iview atIndex:0];
-            [iview release];
+            //[iview release];
         }
         CGRect frame = self.myTableView.frame;
         frame.origin.x = 0;

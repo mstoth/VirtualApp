@@ -42,7 +42,9 @@
     
     // request profile data from the URL specified by webSite/fileName
     NSURLRequest *profileRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    // NSLog(@"%@",urlString);
+#ifdef DEBUG
+    NSLog(@"URL for summary is %@",urlString);
+#endif
     self.summaryFeedConnection = [[[NSURLConnection alloc] initWithRequest:profileRequest delegate:self] autorelease];
     
     // start the parse queue

@@ -247,15 +247,19 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 	switch (displayMode) {
 		case SUBLIST:
+            [searchBar setHidden:true];
 			return 1;
 			break;
 		case ALL:
+            [searchBar setHidden:false];
 			return 26;
 			break;
 		case CATEGORIES:
+            [searchBar setHidden:true];
 			return 1;
 			break;
 		case BOOKMARKS:
+            [searchBar setHidden:true];
 			return 1;
 			break;
 		default:
@@ -336,7 +340,7 @@
 	NSInteger count = 0;
 	UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 	if (cell == nil) {
-		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
 	}
 	
 	switch (displayMode) {
@@ -370,6 +374,9 @@
 			[button setTitle:@"Bookmark" forState:UIControlStateNormal];
 			[button addTarget:self action:@selector(addToBookmarks:) forControlEvents:UIControlEventTouchUpInside];
 			cell.accessoryView = button;	
+            [cell.detailTextLabel setTextColor:[UIColor blackColor]];
+            [cell.detailTextLabel setText:site.siteTitle];
+
 			[list release];
 			return cell;
 			break;
@@ -416,7 +423,7 @@
     SiteObject *site;
     char *rowData;
     NSString *stringData;
-	NSInteger count = 0;
+	NSUInteger count;
 	NSMutableArray *list = [[NSMutableArray alloc] init];
 	NSString *turlString;
 	MenuViewController *menuViewController;
@@ -430,6 +437,7 @@
     
 	switch (displayMode) {
         case SUBLIST:
+            count=0;
             for (SiteObject *aSite in siteObjects) {
                 if ([aSite.category isEqualToString:self.currentCategory]) {
                     if (count == indexPath.row) {
@@ -466,7 +474,7 @@
 #endif
                         //[turlString release];
                         //[baseURL release];
-                        [tFileName release];
+                        //[tFileName release];
                         [self.navigationController pushViewController:menuViewController animated:YES];
                         [menuViewController release];
                         [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -549,7 +557,7 @@
             [baseURL release];
 			break;
 		case ALL:
-            list = [[NSMutableArray alloc] init];
+            // list = [[NSMutableArray alloc] init];
             for (site in siteObjects) {
                 if ([[site.siteTitle lowercaseString] characterAtIndex:0]==[alphabet characterAtIndex:section]) {
                     [list addObject:site];
@@ -580,7 +588,8 @@
 				return;
 			}
 			
-            NSString *fn = [[[NSString alloc] initWithString:[turlString lastPathComponent]] autorelease];
+            //NSString *fn = [[[NSString alloc] initWithString:[turlString lastPathComponent]] autorelease];
+            NSString *fn = [turlString lastPathComponent];
 #ifdef LOCAL
             NSString *ws = [[[NSString alloc] initWithFormat:@"http://localhost:3000/system/icons/%@/",site.appID] autorelease];
             NSString *rs = [[[NSString alloc] initWithFormat:@"http://localhost:3000/system"] autorelease];
@@ -593,7 +602,7 @@
 			menuViewController.userID = site.userID;
             
 			[self.navigationController pushViewController:menuViewController animated:YES];
-            [fn release];
+            //[fn release];
             [url release];
 			[turlString release];
             

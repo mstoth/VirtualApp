@@ -8,6 +8,7 @@
 
 #import "VirtualAppAppDelegate.h"
 #import "Constants.h"
+#import "PayPal.h"
 
 #ifdef MAKE_FOR_CUSTOMER
 #import "MenuViewController.h"
@@ -24,7 +25,8 @@
 {
     // Override point for customization after application launch.
     // Add the navigation controller's view to the window and display.
-    
+    [PayPal initializeWithAppID:@"APP-80W284485P519543T" forEnvironment:ENV_SANDBOX];
+
 #ifdef MAKE_FOR_CUSTOMER
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];

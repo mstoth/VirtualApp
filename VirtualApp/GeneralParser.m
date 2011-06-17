@@ -63,6 +63,11 @@
  qualifiedName:(NSString *)qName {   
     
     NSString *value = [[NSString alloc] initWithString:currentParsedCharacterData];
+    [currentParsedCharacterData setString:@""];
+
+#ifdef DEBUG
+    NSLog(@"Adding %@ and %@ to dictionary.",value,elementName);
+#endif
     if (!parsedData) {
         self.parsedData = [[NSMutableDictionary alloc] initWithObjectsAndKeys:value, elementName, nil];
     } else {
