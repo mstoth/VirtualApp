@@ -54,6 +54,7 @@
 #import "MenuItem.h"
 #import "ParseOperation.h"
 #import "MenuCell.h"
+#import "GCalEventsViewController.h"
 
 NSString *kAddMenuItemNotif = @"AddMenuItemNotif";
 NSString *kMenuItemResultsKey = @"MenuItemResultsKey";
@@ -64,6 +65,7 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 @synthesize webSite, rootSite, fileName, imageFileName, filePath, dataPath;
 @synthesize menuTitle, menuType, pageTypes, fileNames, connection;
 @synthesize userID;
+@synthesize appID;
 @synthesize menuFeedConnection, menuData;
 @synthesize menu;
 @synthesize myTableView;
@@ -113,7 +115,9 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
     else {
         url = [[NSURL alloc] initWithString:[rootSite stringByAppendingPathComponent:self.fileName]];
     }
-   // NSLog(@"URL = %@",[url absoluteString]);
+#ifdef DEBUG
+   NSLog(@"URL = %@",[url absoluteString]);
+#endif
 	if (url) {
         NSURLRequest *menuRequest = [NSURLRequest requestWithURL:url];
 		[url release];
@@ -147,7 +151,7 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 
 
 - (void)dealloc {
-     NSLog(@"MenuViewController:dealloc ");
+    
 	[myTableView release];
     [menuItems release];
     [currentMenuItem release];
@@ -341,13 +345,28 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *iFileName;
 	MenuItem *item = [menuItems objectAtIndex:indexPath.row];
-    NSString *iFileName = [[NSString alloc] initWithString:[item fileName]];
+    if ([[item pageType] isEqualToString:@"CALENDAR"]) {
+		GCalEventsViewController *calViewController = [[GCalEventsViewController alloc] initWithNibName:@"GCalEventsViewController" bundle:nil];
+		calViewController.appID = self.appID;
+        calViewController.filename = item.fileName;
+#ifdef DEBUG
+        NSLog(@"app ID is %@ and filename is %@",self.appID,item.fileName);
+#endif
+		[self.navigationController pushViewController:calViewController animated:YES];
+		[calViewController release];
+	}
+    if ([item fileName]) {
+        iFileName = [[NSString alloc] initWithString:[item fileName]];
+    } else {
+        iFileName = nil;
+    }
 	if ([[item pageType] isEqualToString:@"MENU"]) {
 		MenuViewController *menuViewController = [[MenuViewController alloc] initWithNibName:@"MenuViewController" bundle:nil];
         [menuViewController setPaths:webSite root:self.rootSite fname:iFileName];
 		menuViewController.userID = self.userID; 
-        
+        menuViewController.appID = self.appID;
 		[self.navigationController pushViewController:menuViewController animated:YES];
 		[menuViewController release];
 	}
@@ -620,8 +639,9 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
     NSXMLParser *parser = [[NSXMLParser alloc] initWithData:self.menuData];
     [parser setDelegate:self];
     result = [parser parse];
-    NSLog(@"%d",result);
-    
+#ifdef DEBUG
+    NSLog(@"Parser returned %d",result);
+#endif
     [parser release];
     [self.myTableView reloadData];
     [self initCache];

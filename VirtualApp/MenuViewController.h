@@ -35,6 +35,7 @@
 	NSMutableArray *pageTypes;
 	NSMutableArray *fileNames;
 	NSString *userID;
+    NSString *appID;
 	
 	// URLCacheConnection variables
 	NSString *dataPath;
@@ -58,6 +59,7 @@
 @property (nonatomic, retain) IBOutlet UITableViewCell *cellView;
 
 @property (nonatomic, retain) NSString *userID;
+@property (nonatomic, retain) NSString *appID;
 @property (nonatomic, retain) NSURLConnection *connection;
 @property (nonatomic, retain) NSString *menuTitle;
 @property (nonatomic, retain) NSMutableArray *pageTypes;

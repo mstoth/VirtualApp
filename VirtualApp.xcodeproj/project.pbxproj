@@ -7,11 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A426A8CC13B9FE3300C0322A /* CalAppParser.m in Sources */ = {isa = PBXBuildFile; fileRef = A426A8CB13B9FE3300C0322A /* CalAppParser.m */; };
 		A452D2A8138B24A100987109 /* MenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A452D2A7138B24A100987109 /* MenuCell.m */; };
 		A452D2AD138B28E500987109 /* MenuCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A452D2AC138B28E500987109 /* MenuCell.xib */; };
 		A452D2B1138B691E00987109 /* TextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A452D2AF138B691D00987109 /* TextViewController.m */; };
 		A452D2B2138B691E00987109 /* TextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A452D2B0138B691D00987109 /* TextViewController.xib */; };
 		A45834141389C45000378AE0 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A45834131389C45000378AE0 /* Settings.bundle */; };
+		A45A792713BF24A600594CF6 /* CalTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A45A792613BF24A600594CF6 /* CalTableViewCell.m */; };
+		A45A792A13BF27A600594CF6 /* CalCustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A45A792913BF27A600594CF6 /* CalCustomCell.xib */; };
 		A48AD763134B9B39004271C0 /* GroupItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A48AD762134B9B37004271C0 /* GroupItem.m */; };
 		A48AD767134B9BD4004271C0 /* Group.m in Sources */ = {isa = PBXBuildFile; fileRef = A48AD766134B9BD2004271C0 /* Group.m */; };
 		A48AD7BF134BEAD8004271C0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A48D1FC8134992E800B13EC5 /* UIKit.framework */; };
@@ -139,6 +142,9 @@
 		A4C24BFF13627883005A73F7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4C24BFE13627881005A73F7 /* QuartzCore.framework */; };
 		A4C24C0213634EDD005A73F7 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4C24C0113634EDA005A73F7 /* CoreLocation.framework */; };
 		A4C24C1C13649F04005A73F7 /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = A4C24C1B13649F04005A73F7 /* iTunesArtwork */; };
+		A4C4C44813B0ABC700B866BF /* GCalEventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C4C44613B0ABC700B866BF /* GCalEventsViewController.m */; };
+		A4C4C44913B0ABC700B866BF /* GCalEventsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4C4C44713B0ABC700B866BF /* GCalEventsViewController.xib */; };
+		A4C4C44D13B1F7C500B866BF /* CalEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C4C44C13B1F7C500B866BF /* CalEvent.m */; };
 		A4C9AC81135108BB00539C1D /* MenuParserDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C9AC80135108B400539C1D /* MenuParserDelegate.m */; };
 		A4C9AC851351091600539C1D /* SitesParserDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C9AC841351090D00539C1D /* SitesParserDelegate.m */; };
 		A4C9AC9013517A1F00539C1D /* GroupParserDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C9AC8F13517A0700539C1D /* GroupParserDelegate.m */; };
@@ -161,6 +167,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A426A8CA13B9FE3300C0322A /* CalAppParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalAppParser.h; sourceTree = "<group>"; };
+		A426A8CB13B9FE3300C0322A /* CalAppParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalAppParser.m; sourceTree = "<group>"; };
 		A452D2A6138B24A100987109 /* MenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuCell.h; sourceTree = "<group>"; };
 		A452D2A7138B24A100987109 /* MenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuCell.m; sourceTree = "<group>"; };
 		A452D2AC138B28E500987109 /* MenuCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuCell.xib; sourceTree = "<group>"; };
@@ -168,6 +176,9 @@
 		A452D2AF138B691D00987109 /* TextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextViewController.m; sourceTree = "<group>"; };
 		A452D2B0138B691D00987109 /* TextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextViewController.xib; sourceTree = "<group>"; };
 		A45834131389C45000378AE0 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		A45A792513BF24A600594CF6 /* CalTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalTableViewCell.h; sourceTree = "<group>"; };
+		A45A792613BF24A600594CF6 /* CalTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalTableViewCell.m; sourceTree = "<group>"; };
+		A45A792913BF27A600594CF6 /* CalCustomCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CalCustomCell.xib; sourceTree = "<group>"; };
 		A48AD761134B9B36004271C0 /* GroupItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupItem.h; sourceTree = "<group>"; };
 		A48AD762134B9B37004271C0 /* GroupItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupItem.m; sourceTree = "<group>"; };
 		A48AD765134B9BD1004271C0 /* Group.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Group.h; sourceTree = "<group>"; };
@@ -397,6 +408,11 @@
 		A4C24C0013627893005A73F7 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		A4C24C0113634EDA005A73F7 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		A4C24C1B13649F04005A73F7 /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
+		A4C4C44513B0ABC700B866BF /* GCalEventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCalEventsViewController.h; sourceTree = "<group>"; };
+		A4C4C44613B0ABC700B866BF /* GCalEventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCalEventsViewController.m; sourceTree = "<group>"; };
+		A4C4C44713B0ABC700B866BF /* GCalEventsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GCalEventsViewController.xib; sourceTree = "<group>"; };
+		A4C4C44B13B1F7C500B866BF /* CalEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalEvent.h; sourceTree = "<group>"; };
+		A4C4C44C13B1F7C500B866BF /* CalEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalEvent.m; sourceTree = "<group>"; };
 		A4C9AC7F135108B100539C1D /* MenuParserDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuParserDelegate.h; sourceTree = "<group>"; };
 		A4C9AC80135108B400539C1D /* MenuParserDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuParserDelegate.m; sourceTree = "<group>"; };
 		A4C9AC831351090A00539C1D /* SitesParserDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SitesParserDelegate.h; sourceTree = "<group>"; };
@@ -486,6 +502,7 @@
 				A48D203D13499DDB00B13EC5 /* MoreInfoViewController.xib */,
 				A48D203E13499DDD00B13EC5 /* ContactViewController.xib */,
 				A48D203F13499DDF00B13EC5 /* CategoryViewController.xib */,
+				A4C4C44713B0ABC700B866BF /* GCalEventsViewController.xib */,
 			);
 			name = "xib files";
 			sourceTree = "<group>";
@@ -562,9 +579,6 @@
 		A48D1FB9134992E800B13EC5 = {
 			isa = PBXGroup;
 			children = (
-				A4E0AEA213AAF569000DE7BD /* AddressBook.framework */,
-				A4E0AEA013AAF555000DE7BD /* libz.dylib */,
-				A4E0AE9E13AAF545000DE7BD /* libxml2.dylib */,
 				A45834131389C45000378AE0 /* Settings.bundle */,
 				A4C24C1B13649F04005A73F7 /* iTunesArtwork */,
 				A49A67851352CBC700ED1B70 /* Default.png */,
@@ -595,6 +609,9 @@
 		A48D1FC7134992E800B13EC5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A4E0AE9E13AAF545000DE7BD /* libxml2.dylib */,
+				A4E0AEA013AAF555000DE7BD /* libz.dylib */,
+				A4E0AEA213AAF569000DE7BD /* AddressBook.framework */,
 				A4C24C0113634EDA005A73F7 /* CoreLocation.framework */,
 				A4C24C0013627893005A73F7 /* SystemConfiguration.framework */,
 				A4C24BFE13627881005A73F7 /* QuartzCore.framework */,
@@ -619,6 +636,8 @@
 				A41B3CA313A086C100EDC2BE /* xib files */,
 				A4C24A86135FBFE7005A73F7 /* ShareKit */,
 				A48D202D1349983B00B13EC5 /* Constants.h */,
+				A4C4C44513B0ABC700B866BF /* GCalEventsViewController.h */,
+				A4C4C44613B0ABC700B866BF /* GCalEventsViewController.m */,
 				A48D1FD7134992E800B13EC5 /* VirtualAppAppDelegate.h */,
 				A48D1FD8134992E800B13EC5 /* VirtualAppAppDelegate.m */,
 				A48D1FDD134992E800B13EC5 /* RootViewController.h */,
@@ -676,6 +695,13 @@
 				A452D2A7138B24A100987109 /* MenuCell.m */,
 				A452D2AE138B691D00987109 /* TextViewController.h */,
 				A452D2AF138B691D00987109 /* TextViewController.m */,
+				A4C4C44B13B1F7C500B866BF /* CalEvent.h */,
+				A4C4C44C13B1F7C500B866BF /* CalEvent.m */,
+				A426A8CA13B9FE3300C0322A /* CalAppParser.h */,
+				A426A8CB13B9FE3300C0322A /* CalAppParser.m */,
+				A45A792513BF24A600594CF6 /* CalTableViewCell.h */,
+				A45A792913BF27A600594CF6 /* CalCustomCell.xib */,
+				A45A792613BF24A600594CF6 /* CalTableViewCell.m */,
 			);
 			path = VirtualApp;
 			sourceTree = "<group>";
@@ -1207,6 +1233,8 @@
 				A45834141389C45000378AE0 /* Settings.bundle in Resources */,
 				A452D2AD138B28E500987109 /* MenuCell.xib in Resources */,
 				A452D2B2138B691E00987109 /* TextViewController.xib in Resources */,
+				A4C4C44913B0ABC700B866BF /* GCalEventsViewController.xib in Resources */,
+				A45A792A13BF27A600594CF6 /* CalCustomCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1352,6 +1380,10 @@
 				A4C24B62135FBFE8005A73F7 /* SHKViewControllerWrapper.m in Sources */,
 				A452D2A8138B24A100987109 /* MenuCell.m in Sources */,
 				A452D2B1138B691E00987109 /* TextViewController.m in Sources */,
+				A4C4C44813B0ABC700B866BF /* GCalEventsViewController.m in Sources */,
+				A4C4C44D13B1F7C500B866BF /* CalEvent.m in Sources */,
+				A426A8CC13B9FE3300C0322A /* CalAppParser.m in Sources */,
+				A45A792713BF24A600594CF6 /* CalTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

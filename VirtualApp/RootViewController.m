@@ -600,7 +600,7 @@
             [menuViewController setPaths:ws root:rs fname:fn];
 
 			menuViewController.userID = site.userID;
-            
+            menuViewController.appID = site.appID;
 			[self.navigationController pushViewController:menuViewController animated:YES];
             //[fn release];
             [url release];
