@@ -13,5 +13,7 @@
     NSMutableString *currentStringValue;
     BOOL accumulatingChars;
 }
+
+
 @property (nonatomic, retain) NSString *username, *password, *title;
 @end
