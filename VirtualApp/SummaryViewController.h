@@ -10,10 +10,10 @@
 #import "URLCacheConnection.h"
 #import "MoreInfoViewController.h"
 #import "ListChoiceViewController.h"
+#import "PayPal.h"
 
 
-
-@interface SummaryViewController : UIViewController < /*PayPalPaymentDelegate,*/   URLCacheConnectionDelegate, MoreInfoViewControllerDelegate> {
+@interface SummaryViewController : UIViewController < PayPalPaymentDelegate,  URLCacheConnectionDelegate, MoreInfoViewControllerDelegate> {
 	NSMutableString *currentStringValue; // used by parser to keep intermediate results
 	NSString *userID;
 	NSString *webSite;  // path to directory of the xml file
@@ -31,6 +31,14 @@
 	NSString *productID;
 	NSString *buttonURL;
 	NSString *buttonLabel;
+// paypal info
+    NSString *productCompany;
+    NSString *productName;
+    NSString *productDescription;
+    NSString *productRecipient;
+    NSString *productShipping;
+    NSString *productTax;
+    NSString *productPrice;
     
     NSURLConnection *summaryFeedConnection;
     NSMutableData *summaryData;

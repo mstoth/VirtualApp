@@ -15,6 +15,7 @@
 		A45834141389C45000378AE0 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A45834131389C45000378AE0 /* Settings.bundle */; };
 		A45A792713BF24A600594CF6 /* CalTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A45A792613BF24A600594CF6 /* CalTableViewCell.m */; };
 		A45A792A13BF27A600594CF6 /* CalCustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A45A792913BF27A600594CF6 /* CalCustomCell.xib */; };
+		A45A793913C14A6300594CF6 /* libPayPalMEP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A45A792D13C14A6200594CF6 /* libPayPalMEP.a */; };
 		A48AD763134B9B39004271C0 /* GroupItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A48AD762134B9B37004271C0 /* GroupItem.m */; };
 		A48AD767134B9BD4004271C0 /* Group.m in Sources */ = {isa = PBXBuildFile; fileRef = A48AD766134B9BD2004271C0 /* Group.m */; };
 		A48AD7BF134BEAD8004271C0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A48D1FC8134992E800B13EC5 /* UIKit.framework */; };
@@ -149,7 +150,6 @@
 		A4C9AC851351091600539C1D /* SitesParserDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C9AC841351090D00539C1D /* SitesParserDelegate.m */; };
 		A4C9AC9013517A1F00539C1D /* GroupParserDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C9AC8F13517A0700539C1D /* GroupParserDelegate.m */; };
 		A4C9AC92135286C400539C1D /* dist.plist in Resources */ = {isa = PBXBuildFile; fileRef = A4C9AC91135286C000539C1D /* dist.plist */; };
-		A4E0AE9113AAF423000DE7BD /* libPayPalMEP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A4E0AE8513AAF423000DE7BD /* libPayPalMEP.a */; };
 		A4E0AE9F13AAF545000DE7BD /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A4E0AE9E13AAF545000DE7BD /* libxml2.dylib */; };
 		A4E0AEA113AAF555000DE7BD /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A4E0AEA013AAF555000DE7BD /* libz.dylib */; };
 		A4E0AEA313AAF569000DE7BD /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4E0AEA213AAF569000DE7BD /* AddressBook.framework */; };
@@ -179,6 +179,18 @@
 		A45A792513BF24A600594CF6 /* CalTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalTableViewCell.h; sourceTree = "<group>"; };
 		A45A792613BF24A600594CF6 /* CalTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalTableViewCell.m; sourceTree = "<group>"; };
 		A45A792913BF27A600594CF6 /* CalCustomCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CalCustomCell.xib; sourceTree = "<group>"; };
+		A45A792D13C14A6200594CF6 /* libPayPalMEP.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libPayPalMEP.a; sourceTree = "<group>"; };
+		A45A792E13C14A6200594CF6 /* PayPal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPal.h; sourceTree = "<group>"; };
+		A45A792F13C14A6200594CF6 /* PayPalAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalAddress.h; sourceTree = "<group>"; };
+		A45A793013C14A6200594CF6 /* PayPalAdvancedPayment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalAdvancedPayment.h; sourceTree = "<group>"; };
+		A45A793113C14A6200594CF6 /* PayPalAmounts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalAmounts.h; sourceTree = "<group>"; };
+		A45A793213C14A6200594CF6 /* PayPalContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalContext.h; sourceTree = "<group>"; };
+		A45A793313C14A6200594CF6 /* PayPalInvoiceData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalInvoiceData.h; sourceTree = "<group>"; };
+		A45A793413C14A6200594CF6 /* PayPalInvoiceItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalInvoiceItem.h; sourceTree = "<group>"; };
+		A45A793513C14A6200594CF6 /* PayPalPayment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalPayment.h; sourceTree = "<group>"; };
+		A45A793613C14A6200594CF6 /* PayPalPreapprovalDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalPreapprovalDetails.h; sourceTree = "<group>"; };
+		A45A793713C14A6200594CF6 /* PayPalReceiverAmounts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalReceiverAmounts.h; sourceTree = "<group>"; };
+		A45A793813C14A6200594CF6 /* PPReceiverPaymentDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPReceiverPaymentDetails.h; sourceTree = "<group>"; };
 		A48AD761134B9B36004271C0 /* GroupItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupItem.h; sourceTree = "<group>"; };
 		A48AD762134B9B37004271C0 /* GroupItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupItem.m; sourceTree = "<group>"; };
 		A48AD765134B9BD1004271C0 /* Group.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Group.h; sourceTree = "<group>"; };
@@ -420,18 +432,6 @@
 		A4C9AC8E135179FD00539C1D /* GroupParserDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupParserDelegate.h; sourceTree = "<group>"; };
 		A4C9AC8F13517A0700539C1D /* GroupParserDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupParserDelegate.m; sourceTree = "<group>"; };
 		A4C9AC91135286C000539C1D /* dist.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = dist.plist; sourceTree = "<group>"; };
-		A4E0AE8513AAF423000DE7BD /* libPayPalMEP.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libPayPalMEP.a; sourceTree = "<group>"; };
-		A4E0AE8613AAF423000DE7BD /* PayPal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPal.h; sourceTree = "<group>"; };
-		A4E0AE8713AAF423000DE7BD /* PayPalAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalAddress.h; sourceTree = "<group>"; };
-		A4E0AE8813AAF423000DE7BD /* PayPalAdvancedPayment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalAdvancedPayment.h; sourceTree = "<group>"; };
-		A4E0AE8913AAF423000DE7BD /* PayPalAmounts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalAmounts.h; sourceTree = "<group>"; };
-		A4E0AE8A13AAF423000DE7BD /* PayPalContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalContext.h; sourceTree = "<group>"; };
-		A4E0AE8B13AAF423000DE7BD /* PayPalInvoiceData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalInvoiceData.h; sourceTree = "<group>"; };
-		A4E0AE8C13AAF423000DE7BD /* PayPalInvoiceItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalInvoiceItem.h; sourceTree = "<group>"; };
-		A4E0AE8D13AAF423000DE7BD /* PayPalPayment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalPayment.h; sourceTree = "<group>"; };
-		A4E0AE8E13AAF423000DE7BD /* PayPalPreapprovalDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalPreapprovalDetails.h; sourceTree = "<group>"; };
-		A4E0AE8F13AAF423000DE7BD /* PayPalReceiverAmounts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalReceiverAmounts.h; sourceTree = "<group>"; };
-		A4E0AE9013AAF423000DE7BD /* PPReceiverPaymentDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPReceiverPaymentDetails.h; sourceTree = "<group>"; };
 		A4E0AE9E13AAF545000DE7BD /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		A4E0AEA013AAF555000DE7BD /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		A4E0AEA213AAF569000DE7BD /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
@@ -470,7 +470,7 @@
 				A48D1FC9134992E800B13EC5 /* UIKit.framework in Frameworks */,
 				A48D1FCB134992E800B13EC5 /* Foundation.framework in Frameworks */,
 				A48D1FCD134992E800B13EC5 /* CoreGraphics.framework in Frameworks */,
-				A4E0AE9113AAF423000DE7BD /* libPayPalMEP.a in Frameworks */,
+				A45A793913C14A6300594CF6 /* libPayPalMEP.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -505,6 +505,25 @@
 				A4C4C44713B0ABC700B866BF /* GCalEventsViewController.xib */,
 			);
 			name = "xib files";
+			sourceTree = "<group>";
+		};
+		A45A792C13C14A6200594CF6 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				A45A792D13C14A6200594CF6 /* libPayPalMEP.a */,
+				A45A792E13C14A6200594CF6 /* PayPal.h */,
+				A45A792F13C14A6200594CF6 /* PayPalAddress.h */,
+				A45A793013C14A6200594CF6 /* PayPalAdvancedPayment.h */,
+				A45A793113C14A6200594CF6 /* PayPalAmounts.h */,
+				A45A793213C14A6200594CF6 /* PayPalContext.h */,
+				A45A793313C14A6200594CF6 /* PayPalInvoiceData.h */,
+				A45A793413C14A6200594CF6 /* PayPalInvoiceItem.h */,
+				A45A793513C14A6200594CF6 /* PayPalPayment.h */,
+				A45A793613C14A6200594CF6 /* PayPalPreapprovalDetails.h */,
+				A45A793713C14A6200594CF6 /* PayPalReceiverAmounts.h */,
+				A45A793813C14A6200594CF6 /* PPReceiverPaymentDetails.h */,
+			);
+			path = Library;
 			sourceTree = "<group>";
 		};
 		A48AD771134BDDF4004271C0 /* Unit Test */ = {
@@ -632,7 +651,7 @@
 		A48D1FCE134992E800B13EC5 /* VirtualApp */ = {
 			isa = PBXGroup;
 			children = (
-				A4E0AE8413AAF423000DE7BD /* Library */,
+				A45A792C13C14A6200594CF6 /* Library */,
 				A41B3CA313A086C100EDC2BE /* xib files */,
 				A4C24A86135FBFE7005A73F7 /* ShareKit */,
 				A48D202D1349983B00B13EC5 /* Constants.h */,
@@ -1093,25 +1112,6 @@
 				A4C24B23135FBFE8005A73F7 /* SHKViewControllerWrapper.m */,
 			);
 			path = UI;
-			sourceTree = "<group>";
-		};
-		A4E0AE8413AAF423000DE7BD /* Library */ = {
-			isa = PBXGroup;
-			children = (
-				A4E0AE8513AAF423000DE7BD /* libPayPalMEP.a */,
-				A4E0AE8613AAF423000DE7BD /* PayPal.h */,
-				A4E0AE8713AAF423000DE7BD /* PayPalAddress.h */,
-				A4E0AE8813AAF423000DE7BD /* PayPalAdvancedPayment.h */,
-				A4E0AE8913AAF423000DE7BD /* PayPalAmounts.h */,
-				A4E0AE8A13AAF423000DE7BD /* PayPalContext.h */,
-				A4E0AE8B13AAF423000DE7BD /* PayPalInvoiceData.h */,
-				A4E0AE8C13AAF423000DE7BD /* PayPalInvoiceItem.h */,
-				A4E0AE8D13AAF423000DE7BD /* PayPalPayment.h */,
-				A4E0AE8E13AAF423000DE7BD /* PayPalPreapprovalDetails.h */,
-				A4E0AE8F13AAF423000DE7BD /* PayPalReceiverAmounts.h */,
-				A4E0AE9013AAF423000DE7BD /* PPReceiverPaymentDetails.h */,
-			);
-			path = Library;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1582,6 +1582,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/VirtualApp/Library\"",
+					"\"$(SRCROOT)/VirtualApp/ShareKit\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "84140A55-E6D7-4122-8EE1-97BBB40E1A6D";
@@ -1608,6 +1609,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/VirtualApp/Library\"",
+					"\"$(SRCROOT)/VirtualApp/ShareKit\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "C5D6A74A-4054-4F8D-AAB1-779A0BDBE441";
@@ -1699,6 +1701,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/VirtualApp/Library\"",
+					"\"$(SRCROOT)/VirtualApp/ShareKit\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "C5D6A74A-4054-4F8D-AAB1-779A0BDBE441";

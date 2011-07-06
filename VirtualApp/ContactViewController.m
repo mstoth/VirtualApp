@@ -28,9 +28,9 @@
 	if (userID>0) {
         
 #ifdef LOCAL
-        NSString *urlStringFormat = @"http://localhost:3000/profiles/%@.xml";
+        NSString *urlStringFormat = @"http://localhost:3000/users/%@/showprofile";
 #else
-        NSString *urlStringFormat = @"http://home.my-iphone-app.com/profiles/%@.xml";
+        NSString *urlStringFormat = @"http://home.my-iphone-app.com/users/%@/showprofile";
 #endif
         
 		NSString *urlString = [[NSString alloc] initWithFormat:urlStringFormat, self.userID];
@@ -110,7 +110,6 @@
 }
 
 - (void)viewDidUnload {
-    [super viewDidUnload];
     self.userName = nil;
     self.street = nil;
     self.street2 = nil;
@@ -124,8 +123,7 @@
     self.mapView = nil;
     self.parseQueue = nil;
     self.profileData = nil;
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
+    [super viewDidUnload];
 }
 
 
@@ -155,13 +153,15 @@
     // also make sure the MIMEType is correct:
     //
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-    //NSUInteger status;
-    //NSString *mimeType;
-     //mimeType = [response MIMEType];
-     //status = [httpResponse statusCode];
+#ifdef DEBUG
+    NSUInteger status;
+    NSString *mimeType;
+    mimeType = [response MIMEType];
+    status = [httpResponse statusCode];
+    NSLog(@"MIME type is %@ and status code is %d",mimeType,status);
+#endif
     if ((([httpResponse statusCode]/100) == 2) && ([[response MIMEType] isEqual:@"application/xml"] || [[response MIMEType] isEqual:@"text/xml"]) ) {
-        self.profileData = [[NSMutableData alloc] init 
-                       ];
+        self.profileData = [[NSMutableData alloc] init];
     } else {
         NSDictionary *userInfo = [NSDictionary dictionaryWithObject:
                                   NSLocalizedString(@"HTTP Error",
@@ -200,7 +200,7 @@
     GeneralParser *parseOperation = [[GeneralParser alloc] initWithData:profileData];
     [self.parseQueue addOperation:parseOperation];
     [parseOperation release];   
-    [self.profileData release];
+    [profileData release];
     self.profileData = nil;
 }
 

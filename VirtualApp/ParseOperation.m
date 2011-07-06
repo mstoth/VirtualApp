@@ -104,9 +104,10 @@ NSString *kSitesMsgErrorKey = @"SitesMsgErrorKey";
 
 // the main function for this NSOperation, to start the parsing
 - (void)main {
-    //NSLog(@"Starting ParseOperation");
+#ifdef DEBUG
+    NSLog(@"Starting ParseOperation for %@",self.objectType);
+#endif
     self.menu = [[[Menu alloc] init] autorelease];
-    //NSLog(@"self.menu:%d",[self.menu retainCount]);
     if ([self.objectType isEqualToString:@"Group"]) {
         GroupParserDelegate *gpd = [[[GroupParserDelegate alloc] init] autorelease];
         

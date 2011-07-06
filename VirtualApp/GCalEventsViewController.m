@@ -27,7 +27,11 @@
 }
 
 - (void)dealloc
-{/*
+{
+    [calEvents release];
+    [filename release];
+    filename = nil;
+    /*
     [self.eventTable release];
     self.eventTable = nil;
     [self.urlString release];
@@ -62,6 +66,7 @@
     NSLog(@"GCalEventsViewController: urlString is %@",urlString);
 #endif
     calURL = [[NSURL alloc] initWithString:urlString];
+    [urlString release];
     NSURLRequest *menuRequest = [NSURLRequest requestWithURL:calURL];
     [calURL release];
     self.calConnection = [[NSURLConnection alloc] initWithRequest:menuRequest delegate:self];
@@ -101,7 +106,7 @@
 {
     
     CalEvent *item = [calEvents objectAtIndex:indexPath.row];
-    CGSize constraint = CGSizeMake(320, 20000.0f);
+    CGSize constraint = CGSizeMake(305, 20000.0f);
     CGSize size = [item.content sizeWithFont:[UIFont systemFontOfSize:FONT_SIZE] constrainedToSize:constraint lineBreakMode:UILineBreakModeWordWrap];
     CGFloat height = 54+size.height;
 #ifdef DEBUG
@@ -138,7 +143,7 @@
     [[cell eventTitle] setText:item.title];
     [[cell eventTime] setText:[item start_time]];
 
-    CGSize constraint = CGSizeMake(320, 20000.0f);
+    CGSize constraint = CGSizeMake(305, 20000.0f);
     CGSize size = [item.content sizeWithFont:[UIFont systemFontOfSize:FONT_SIZE] constrainedToSize:constraint lineBreakMode:UILineBreakModeWordWrap];
     [[cell content] setFrame:CGRectMake(5, 36, 310, size.height+16)];
 

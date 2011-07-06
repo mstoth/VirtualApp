@@ -639,6 +639,10 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
     NSXMLParser *parser = [[NSXMLParser alloc] initWithData:self.menuData];
     [parser setDelegate:self];
     result = [parser parse];
+    [currentStringValue release];
+    currentStringValue = nil;
+    [currentMenuItem release];
+    currentMenuItem = nil;
 #ifdef DEBUG
     NSLog(@"Parser returned %d",result);
 #endif

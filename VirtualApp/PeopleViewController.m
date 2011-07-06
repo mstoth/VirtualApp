@@ -379,7 +379,8 @@
 	if (time > URLCacheInterval) {
 		/* file doesn't exist or hasn't been updated for at least one day */
 		[self startAnimation];
-		connection = [[URLCacheConnection alloc] initWithURL:theURL delegate:self];
+        [connection release];
+        connection = [[URLCacheConnection alloc] initWithURL:theURL delegate:self];
 	}
 	else {
 		[self displayCachedImage];
@@ -503,9 +504,9 @@
 	NSString *img = [images objectAtIndex:indexPath.row];
 	NSString *fn = [img stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 	NSString *wsite = [self.rootSite stringByAppendingPathComponent:fn];
-	NSURL *imageURL = [[NSURL alloc] initWithString:wsite];
+	NSURL *imageURL = [[[NSURL alloc] initWithString:wsite] autorelease];
 	[self displayImageWithURL:imageURL];
-	[imageURL release];
+	//   [imageURL release];
 }
 
 

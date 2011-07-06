@@ -8,13 +8,13 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
-         filePath = "VirtualApp/GCalEventsViewController.m"
-         timestampString = "331334446.013879"
+         filePath = "VirtualApp/ContactViewController.m"
+         timestampString = "331423020.896719"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "53"
-         endingLineNumber = "53"
-         landmarkName = "-viewDidLoad"
+         startingLineNumber = "60"
+         endingLineNumber = "60"
+         landmarkName = "-parserDone:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -22,13 +22,13 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
-         filePath = "VirtualApp/MenuViewController.m"
-         timestampString = "331334580.151053"
+         filePath = "VirtualApp/ContactViewController.m"
+         timestampString = "331423025.836653"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "356"
-         endingLineNumber = "356"
-         landmarkName = "-tableView:didSelectRowAtIndexPath:"
+         startingLineNumber = "26"
+         endingLineNumber = "26"
+         landmarkName = "-viewDidLoad"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

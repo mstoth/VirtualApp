@@ -88,13 +88,13 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 
 	//We're on the main RunLoop, so an NSAutoreleasePool is not necessary, but is added defensively
 	// in case someon uses the Reachablity object in a different thread.
-	NSAutoreleasePool* myPool = [[NSAutoreleasePool alloc] init];
+	//NSAutoreleasePool* myPool = [[NSAutoreleasePool alloc] init];
 	
 	Reachability* noteObject = (Reachability*) info;
 	// Post a notification to notify the client that the network reachability changed.
 	[[NSNotificationCenter defaultCenter] postNotificationName: kReachabilityChangedNotification object: noteObject];
 	
-	[myPool release];
+	//[myPool release];
 }
 
 - (BOOL) startNotifier

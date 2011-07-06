@@ -6,6 +6,14 @@
 //  Copyright 2010 Michael Toth. All rights reserved.
 //
 
+#import "PayPal.h"
+#import "PayPalPayment.h"
+#import "PayPalAdvancedPayment.h"
+#import "PayPalAmounts.h"
+#import "PayPalReceiverAmounts.h"
+#import "PayPalAddress.h"
+#import "PayPalInvoiceItem.h"
+
 #import "SummaryViewController.h"
 #import "URLCacheAlert.h"
 #import "URLCacheConnection.h"
@@ -96,6 +104,14 @@
     // info, notes, and more text
     infoView.text = [dict objectForKey:@"info"];
     notesView.text = [dict objectForKey:@"notes"];
+    productCompany = [[dict objectForKey:@"company"] retain];
+    productDescription = [[dict objectForKey:@"description"] retain];
+    productName = [[dict objectForKey:@"name"] retain];
+    productRecipient = [[dict objectForKey:@"recipient"] retain];
+    productShipping = [[dict objectForKey:@"shipping"] retain];
+    productTax = [[dict objectForKey:@"tax"] retain];
+    productPrice = [[dict objectForKey:@"price"] retain];
+    
     more = [[NSString alloc] initWithString:[dict objectForKey:@"more"]];
     
     if ([infoView.text rangeOfString:@"<html"].location != NSNotFound) {
@@ -134,21 +150,28 @@
     self.buttonLabel = [dict objectForKey:@"buttonLabel"];
     
 	if (buttonURL.length > 0) {
-		// Create button with link to URL
+        // Create button with link to URL
 		self.customButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
 		[self.customButton setTitle:buttonLabel forState:UIControlStateNormal];
 		self.customButton.frame=CGRectMake(4,10,152,33);
 		[self.customButton addTarget:self action:@selector(buttonPressed) forControlEvents:UIControlEventTouchUpInside];
 		[self.view addSubview:self.customButton];
-	} else {                        // no button defined, display label instead
-		UILabel *label = [[UILabel alloc] init];
-		label.text = @"Click on image to view.";
-		label.numberOfLines = 1;
-		label.adjustsFontSizeToFitWidth = true;
-		label.frame = CGRectMake(4,0,152,33);
-		[self.view addSubview:label];
-		[label release];
-	}
+    } else {
+        if (productRecipient.length > 0) {
+            // Create Paypal buttons
+            UIButton *button = [[PayPal getInstance] getPayButtonWithTarget:self andAction:@selector(payWithPayPal) andButtonType:BUTTON_152x33 andButtonText:BUTTON_TEXT_PAY];
+            [button setFrame:CGRectMake(4,0,152,33)];
+            [self.view addSubview:button];        
+        } else {                        // no button defined, display label instead
+            UILabel *label = [[UILabel alloc] init];
+            label.text = @"Click on image to view.";
+            label.numberOfLines = 1;
+            label.adjustsFontSizeToFitWidth = true;
+            label.frame = CGRectMake(4,0,152,33);
+            [self.view addSubview:label];
+            [label release];
+        }
+    }
     
     
 	// Create a final modal view controller for viewing image full screen
@@ -161,6 +184,97 @@
     
 }
 
+#pragma mark -
+#pragma mark PayPal Callbacks
+
+- (void) payWithPayPal {
+	
+	//optional, set shippingEnabled to TRUE if you want to display shipping
+	//options to the user, default: TRUE
+	[PayPal getInstance].shippingEnabled = TRUE;
+	
+	//optional, set dynamicAmountUpdateEnabled to TRUE if you want to compute
+	//shipping and tax based on the user's address choice, default: FALSE
+	[PayPal getInstance].dynamicAmountUpdateEnabled = TRUE;
+	
+	//optional, choose who pays the fee, default: FEEPAYER_EACHRECEIVER
+	[PayPal getInstance].feePayer = FEEPAYER_EACHRECEIVER;
+	
+	//for a payment with a single recipient, use a PayPalPayment object
+	PayPalPayment *payment = [[[PayPalPayment alloc] init] autorelease];
+	payment.recipient = productRecipient;
+	payment.paymentCurrency = @"USD";
+	payment.description = productDescription;
+	payment.merchantName = productCompany;
+	
+	//subtotal of all items, without tax and shipping
+	payment.subTotal = [NSDecimalNumber decimalNumberWithString:productPrice];
+	
+	// invoiceData is a PayPalInvoiceData object which contains tax, shipping, and a list of PayPalInvoiceItem objects
+	payment.invoiceData = [[[PayPalInvoiceData alloc] init] autorelease];
+	payment.invoiceData.totalShipping = [NSDecimalNumber decimalNumberWithString:productShipping];
+	payment.invoiceData.totalTax = [NSDecimalNumber decimalNumberWithString:productTax];
+	
+	// invoiceItems is a list of PayPalInvoiceItem objects
+	//NOTE: sum of totalPrice for all items must equal payment.subTotal
+	//NOTE: example only shows a single item, but you can have more than one
+	payment.invoiceData.invoiceItems = [NSMutableArray array];
+	PayPalInvoiceItem *item = [[[PayPalInvoiceItem alloc] init] autorelease];
+    
+	item.totalPrice = [NSDecimalNumber decimalNumberWithString:productPrice];
+    item.itemPrice = [NSDecimalNumber decimalNumberWithString:productPrice];
+	item.name = productName;
+	[payment.invoiceData.invoiceItems addObject:item];
+	
+	[[PayPal getInstance] checkoutWithPayment:payment];
+}
+
+- (void) paymentFailedWithCorrelationID:(NSString *)correlationID andErrorCode:(NSString *)errorCode andErrorMessage:(NSString *)errorMessage {
+}
+
+- (void) paymentCanceled {
+    UIAlertView *av=[[UIAlertView alloc] initWithTitle:@"Payment Cancelled." message:@"You have cancelled the payment." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [av show];
+    [av release];
+}
+
+- (void) paymentLibraryExit {
+    
+}
+
+- (void) paymentSuccessWithKey:(NSString *)payKey andStatus:(PayPalPaymentStatus)paymentStatus {
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Payment Succeeded" message:@"Thank you for your payment!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    [av show];
+    [av release];
+}
+
+- (PayPalAmounts *)adjustAmountsForAddress:(PayPalAddress const *)inAddress andCurrency:(NSString const *)inCurrency andAmount:(NSDecimalNumber const *)inAmount
+									andTax:(NSDecimalNumber const *)inTax andShipping:(NSDecimalNumber const *)inShipping andErrorCode:(PayPalAmountErrorCode *)outErrorCode {
+	//do any logic here that would adjust the amount based on the shipping address
+	PayPalAmounts *newAmounts = [[[PayPalAmounts alloc] init] autorelease];
+	newAmounts.currency = @"USD";
+	newAmounts.payment_amount = (NSDecimalNumber *)inAmount;
+	
+	//change tax based on the address
+    /*
+     if ([inAddress.state isEqualToString:@"CA"]) {
+     newAmounts.tax = [NSDecimalNumber decimalNumberWithString:[NSString stringWithFormat:@"%.2f",[inAmount floatValue] * .1]];
+     } else {
+     newAmounts.tax = [NSDecimalNumber decimalNumberWithString:[NSString stringWithFormat:@"%.2f",[inAmount floatValue] * .08]];
+     }
+     */
+    newAmounts.tax = (NSDecimalNumber *)inTax; 
+	newAmounts.shipping = (NSDecimalNumber *)inShipping;
+	
+	//if you need to notify the library of an error condition, do one of the following
+	//*outErrorCode = AMOUNT_ERROR_SERVER;
+	//*outErrorCode = AMOUNT_ERROR_OTHER;
+	
+	return newAmounts;
+}
+
+#pragma mark -
+#pragma mark Memory Management
 
 - (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.
@@ -190,6 +304,14 @@
     [self.fileName release];
 	[more release];
     [self.rootSite release];
+    [productCompany release];
+    [productDescription release];
+    [productName release];
+    [productRecipient release];
+    [productShipping release];
+    [productTax release];
+    [productPrice release];
+
     [super dealloc];
 }
 
