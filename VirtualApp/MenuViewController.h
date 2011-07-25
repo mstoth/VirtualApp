@@ -48,7 +48,7 @@
     NSURLConnection *menuFeedConnection;
     NSMutableData *menuData;
     UITableViewCell *cellView;
-    
+    UIImageView *customActivityIndicator;
     UIImageView *banner;
 	
 }

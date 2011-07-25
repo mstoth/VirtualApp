@@ -25,11 +25,39 @@
     }
     return self;
 }
+-(void) createCustomActivityIndicator {
+    customActivityIndicator = [[UIImageView alloc] initWithFrame:CGRectMake(100, 200, 100.0, 100.0)];
+    customActivityIndicator.animationImages = [NSArray arrayWithObjects:
+                                               [UIImage imageNamed:@"0001.png"],
+                                               [UIImage imageNamed:@"0002.png"],
+                                               [UIImage imageNamed:@"0003.png"],
+                                               [UIImage imageNamed:@"0004.png"],
+                                               [UIImage imageNamed:@"0005.png"],
+                                               [UIImage imageNamed:@"0006.png"],
+                                               [UIImage imageNamed:@"0007.png"],
+                                               [UIImage imageNamed:@"0008.png"],
+                                               [UIImage imageNamed:@"0009.png"],
+                                               [UIImage imageNamed:@"0010.png"],
+                                               [UIImage imageNamed:@"0011.png"],
+                                               [UIImage imageNamed:@"0012.png"],
+                                               [UIImage imageNamed:@"0013.png"],
+                                               [UIImage imageNamed:@"0014.png"],
+                                               [UIImage imageNamed:@"0015.png"],
+                                               [UIImage imageNamed:@"0016.png"],
+                                               nil];
+    [self.view addSubview:customActivityIndicator];
+    customActivityIndicator.animationDuration = 1.0;
+    customActivityIndicator.animationRepeatCount = 0;
+    [self.view addSubview:customActivityIndicator];
+}
+
 
 - (void)dealloc
 {
+    [customActivityIndicator stopAnimating];
     [calEvents release];
     [filename release];
+    [appID release];
     filename = nil;
     /*
     [self.eventTable release];
@@ -56,6 +84,7 @@
 
 - (void)viewDidLoad
 {
+    [self createCustomActivityIndicator];
     stage = 1;
 #ifdef LOCAL
     urlString = [[NSString alloc] initWithFormat:@"http://localhost:3000/%@",filename];
@@ -72,6 +101,7 @@
     self.calConnection = [[NSURLConnection alloc] initWithRequest:menuRequest delegate:self];
     NSAssert(self.calConnection != nil, @"Failure to create URL connection for Calendar.");
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    [customActivityIndicator startAnimating];
     [super viewDidLoad];
 }
 
@@ -230,6 +260,7 @@
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)theError {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;   
+    [customActivityIndicator stopAnimating];
     if ([theError code] == kCFURLErrorNotConnectedToInternet) {
         NSDictionary *userInfo =
         [NSDictionary dictionaryWithObject:
@@ -255,7 +286,8 @@
     int result;
     [self.calConnection release];
     self.calConnection = nil;
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;   
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;  
+    [customActivityIndicator stopAnimating];
 #ifdef DEBUG
     NSLog(@"GCalEventsViewController: finished loading data, starting to parse calendar.");
 #endif

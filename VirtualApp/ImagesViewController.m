@@ -62,14 +62,43 @@
 - (void)dealloc
 {
 	[imageView release];
+    [customActivityIndicator release];
 	[slider release];
 	
 	[super dealloc];
 }
 
+-(void) createCustomActivityIndicator {
+    customActivityIndicator = [[UIImageView alloc] initWithFrame:CGRectMake(100, 200, 100.0, 100.0)];
+    customActivityIndicator.animationImages = [NSArray arrayWithObjects:
+                                               [UIImage imageNamed:@"0001.png"],
+                                               [UIImage imageNamed:@"0002.png"],
+                                               [UIImage imageNamed:@"0003.png"],
+                                               [UIImage imageNamed:@"0004.png"],
+                                               [UIImage imageNamed:@"0005.png"],
+                                               [UIImage imageNamed:@"0006.png"],
+                                               [UIImage imageNamed:@"0007.png"],
+                                               [UIImage imageNamed:@"0008.png"],
+                                               [UIImage imageNamed:@"0009.png"],
+                                               [UIImage imageNamed:@"0010.png"],
+                                               [UIImage imageNamed:@"0011.png"],
+                                               [UIImage imageNamed:@"0012.png"],
+                                               [UIImage imageNamed:@"0013.png"],
+                                               [UIImage imageNamed:@"0014.png"],
+                                               [UIImage imageNamed:@"0015.png"],
+                                               [UIImage imageNamed:@"0016.png"],
+                                               nil];
+    [self.view addSubview:customActivityIndicator];
+    customActivityIndicator.animationDuration = 1.0;
+    customActivityIndicator.animationRepeatCount = 0;
+    [self.view addSubview:customActivityIndicator];
+}
+
+
 - (void)viewDidLoad
 {	
 	[super viewDidLoad];
+    [self createCustomActivityIndicator];
 	self.myImages = [[NSMutableArray alloc] init];
 	self.title = NSLocalizedString(@"ImagesTitle", @"");
 	
@@ -233,6 +262,7 @@
 	[activityIndicator startAnimating];
 	UIApplication *application = [UIApplication sharedApplication];
 	application.networkActivityIndicatorVisible = YES;
+    [customActivityIndicator startAnimating];
 }
 
 
@@ -243,6 +273,7 @@
 	[activityIndicator stopAnimating];
 	UIApplication *application = [UIApplication sharedApplication];
 	application.networkActivityIndicatorVisible = NO;
+    [customActivityIndicator stopAnimating];
 }
 
 - (NSString *)myTitle {

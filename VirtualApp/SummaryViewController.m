@@ -38,6 +38,33 @@
 	app.networkActivityIndicatorVisible = !app.networkActivityIndicatorVisible;
 }
 
+
+-(void) createCustomActivityIndicator {
+customActivityIndicator = [[UIImageView alloc] initWithFrame:CGRectMake(100, 200, 100.0, 100.0)];
+customActivityIndicator.animationImages = [NSArray arrayWithObjects:
+                                           [UIImage imageNamed:@"0001.png"],
+                                           [UIImage imageNamed:@"0002.png"],
+                                           [UIImage imageNamed:@"0003.png"],
+                                           [UIImage imageNamed:@"0004.png"],
+                                           [UIImage imageNamed:@"0005.png"],
+                                           [UIImage imageNamed:@"0006.png"],
+                                           [UIImage imageNamed:@"0007.png"],
+                                           [UIImage imageNamed:@"0008.png"],
+                                           [UIImage imageNamed:@"0009.png"],
+                                           [UIImage imageNamed:@"0010.png"],
+                                           [UIImage imageNamed:@"0011.png"],
+                                           [UIImage imageNamed:@"0012.png"],
+                                           [UIImage imageNamed:@"0013.png"],
+                                           [UIImage imageNamed:@"0014.png"],
+                                           [UIImage imageNamed:@"0015.png"],
+                                           [UIImage imageNamed:@"0016.png"],
+                                           nil];
+[self.view addSubview:customActivityIndicator];
+customActivityIndicator.animationDuration = 1.0;
+customActivityIndicator.animationRepeatCount = 0;
+}
+
+
 - (void)viewDidLoad {
     if (!self.webSite || !self.rootSite || !self.fileName) {
         return;
@@ -45,8 +72,11 @@
     [self initCache];
     NSString *urlString = [self.rootSite stringByAppendingPathComponent:fileName];
     
+    [self createCustomActivityIndicator];
+    
     // turn on activity indicator
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    //[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    [customActivityIndicator startAnimating];
     
     // request profile data from the URL specified by webSite/fileName
     NSURLRequest *profileRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
@@ -86,6 +116,7 @@
     
     // turn off activity indicator
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    [customActivityIndicator stopAnimating];
     
     // initialize the cache, this sets the path for the cache directory
     [self initCache];
@@ -294,6 +325,7 @@
 
 
 - (void)dealloc {
+    [customActivityIndicator release];
     [self.summaryFeedConnection release];
     [self.summaryData release];
     [self.buttonURL release];
@@ -343,6 +375,7 @@
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)theerror {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;   
+    [customActivityIndicator stopAnimating];
     if ([theerror code] == kCFURLErrorNotConnectedToInternet) {
         NSDictionary *userInfo =
         [NSDictionary dictionaryWithObject:
@@ -366,6 +399,7 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     self.summaryFeedConnection = nil;
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;   
+    [customActivityIndicator stopAnimating];
     
     // create parser and initialize with the xml data earlier specified by the connection URL 
     GeneralParser *parseOperation = [[GeneralParser alloc] initWithData:summaryData];
@@ -466,6 +500,7 @@
 	[activityIndicator startAnimating];
 	UIApplication *application = [UIApplication sharedApplication];
 	application.networkActivityIndicatorVisible = YES;
+    [customActivityIndicator startAnimating];
 }
 
 
@@ -476,6 +511,7 @@
 	[activityIndicator stopAnimating];
 	UIApplication *application = [UIApplication sharedApplication];
 	application.networkActivityIndicatorVisible = NO;
+    [customActivityIndicator stopAnimating];
 }
 
 - (void) displayImageWithURL:(NSURL *)theURL

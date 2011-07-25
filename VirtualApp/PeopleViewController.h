@@ -24,7 +24,8 @@
 	NSMutableArray *bios;
 	NSMutableArray *mores;
 	NSMutableString *currentStringValue;
-	
+	UIImageView *customActivityIndicator;
+    
     NSURLConnection *groupFeedConnection;
     NSMutableData *groupData;
     NSOperationQueue *parseQueue;

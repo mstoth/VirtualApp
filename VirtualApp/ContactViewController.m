@@ -22,11 +22,37 @@
 	app.networkActivityIndicatorVisible = !app.networkActivityIndicatorVisible;
 }
 
+-(void) createCustomActivityIndicator {
+    customActivityIndicator = [[UIImageView alloc] initWithFrame:CGRectMake(100, 200, 100.0, 100.0)];
+    customActivityIndicator.animationImages = [NSArray arrayWithObjects:
+                                               [UIImage imageNamed:@"0001.png"],
+                                               [UIImage imageNamed:@"0002.png"],
+                                               [UIImage imageNamed:@"0003.png"],
+                                               [UIImage imageNamed:@"0004.png"],
+                                               [UIImage imageNamed:@"0005.png"],
+                                               [UIImage imageNamed:@"0006.png"],
+                                               [UIImage imageNamed:@"0007.png"],
+                                               [UIImage imageNamed:@"0008.png"],
+                                               [UIImage imageNamed:@"0009.png"],
+                                               [UIImage imageNamed:@"0010.png"],
+                                               [UIImage imageNamed:@"0011.png"],
+                                               [UIImage imageNamed:@"0012.png"],
+                                               [UIImage imageNamed:@"0013.png"],
+                                               [UIImage imageNamed:@"0014.png"],
+                                               [UIImage imageNamed:@"0015.png"],
+                                               [UIImage imageNamed:@"0016.png"],
+                                               nil];
+    [self.view addSubview:customActivityIndicator];
+    customActivityIndicator.animationDuration = 1.0;
+    customActivityIndicator.animationRepeatCount = 0;
+    [self.view addSubview:customActivityIndicator];
+}
+
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
 	//int success;
 	if (userID>0) {
-        
+        [self createCustomActivityIndicator];
 #ifdef LOCAL
         NSString *urlStringFormat = @"http://localhost:3000/users/%@/showprofile";
 #else
@@ -36,6 +62,7 @@
 		NSString *urlString = [[NSString alloc] initWithFormat:urlStringFormat, self.userID];
         
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+        [customActivityIndicator startAnimating];
 
         NSURLRequest *profileRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
         self.profileFeedConnection = [[[NSURLConnection alloc] initWithRequest:profileRequest delegate:self] autorelease];
@@ -60,6 +87,7 @@
 - (void)parserDone:(NSNotification *)notif {
     assert([NSThread isMainThread]);
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    [customActivityIndicator stopAnimating];
 
     NSDictionary *dict = [notif userInfo];
     NSString *value;
@@ -75,10 +103,12 @@
     zip.text = [dict objectForKey:@"zip"];
     phone.text = [dict objectForKey:@"phone"];
     email.text = [dict objectForKey:@"email"];
+    /*
+
     latitude = [[dict objectForKey:@"latitude"] floatValue];
     longitude = [[dict objectForKey:@"longitude"] floatValue];
     MKCoordinateRegion newRegion;
-    newRegion.center.latitude = latitude ;
+    newRegion.center.latitude = latitude;
     newRegion.center.longitude = longitude;
     newRegion.span.latitudeDelta = 0.0125;
     newRegion.span.longitudeDelta = 0.0125;
@@ -86,11 +116,11 @@
     CLLocationCoordinate2D coordinate;
     coordinate.latitude = latitude;
     coordinate.longitude = longitude;
-    
-    MapAnnotation *anAnnotation = [[[MapAnnotation alloc] initWithCoordinate:coordinate] autorelease];
+    MapAnnotation *anAnnotation = [[MapAnnotation alloc] initWithCoordinate:coordinate];
     [self.mapView addAnnotation:anAnnotation];
     [self.mapView setRegion:newRegion animated:NO];
-
+    [anAnnotation release];
+     */
 }
 
 
@@ -120,7 +150,7 @@
     self.phone = nil;
     self.userID = nil;
     self.appID = nil;
-    self.mapView = nil;
+    //self.mapView = nil;
     self.parseQueue = nil;
     self.profileData = nil;
     [super viewDidUnload];
@@ -128,6 +158,7 @@
 
 
 - (void)dealloc {
+    [customActivityIndicator release];
     [parseQueue release]; 
     [userName release];
     [street release];
@@ -137,10 +168,10 @@
     [state release];
     [zip release];
     [phone release];
-    [userID release];
+    [self.userID release];
     [appID release];
     [profileData release];
-    [mapView release];
+    //[mapView release];
     [super dealloc];
 }
 
@@ -174,6 +205,7 @@
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;   
+    [customActivityIndicator stopAnimating];
     if ([error code] == kCFURLErrorNotConnectedToInternet) {
         NSDictionary *userInfo =
         [NSDictionary dictionaryWithObject:
@@ -197,6 +229,7 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     self.profileFeedConnection = nil;
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;   
+    [customActivityIndicator stopAnimating];
     GeneralParser *parseOperation = [[GeneralParser alloc] initWithData:profileData];
     [self.parseQueue addOperation:parseOperation];
     [parseOperation release];   

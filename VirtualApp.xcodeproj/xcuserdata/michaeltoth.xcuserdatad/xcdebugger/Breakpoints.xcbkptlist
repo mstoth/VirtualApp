@@ -4,17 +4,17 @@
    version = "1.0">
    <FileBreakpoints>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
-         filePath = "VirtualApp/ContactViewController.m"
-         timestampString = "331423020.896719"
+         filePath = "VirtualApp/RootViewController.m"
+         timestampString = "333246091.915999"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "60"
-         endingLineNumber = "60"
-         landmarkName = "-parserDone:"
+         startingLineNumber = "744"
+         endingLineNumber = "744"
+         landmarkName = "-connectionDidFinishLoading:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -22,13 +22,13 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
-         filePath = "VirtualApp/ContactViewController.m"
-         timestampString = "331423025.836653"
+         filePath = "VirtualApp/RootViewController.m"
+         timestampString = "333246091.915999"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "26"
-         endingLineNumber = "26"
-         landmarkName = "-viewDidLoad"
+         startingLineNumber = "709"
+         endingLineNumber = "709"
+         landmarkName = "-connection:didFailWithError:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

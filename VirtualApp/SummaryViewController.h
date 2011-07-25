@@ -54,7 +54,8 @@
 	NSError *error;
 	UIActivityIndicatorView *activityIndicator;
 	UIButton *customButton;
-	
+	UIImageView *customActivityIndicator;
+    
 	// Outlets
 	UIImageView *imageView;
 	UITextView *notesView;

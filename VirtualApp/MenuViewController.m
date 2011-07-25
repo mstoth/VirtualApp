@@ -72,6 +72,32 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 @synthesize banner;
 @synthesize cellView;
 
+-(void) createCustomActivityIndicator {
+    customActivityIndicator = [[UIImageView alloc] initWithFrame:CGRectMake(100, 200, 100.0, 100.0)];
+    customActivityIndicator.animationImages = [NSArray arrayWithObjects:
+                                               [UIImage imageNamed:@"0001.png"],
+                                               [UIImage imageNamed:@"0002.png"],
+                                               [UIImage imageNamed:@"0003.png"],
+                                               [UIImage imageNamed:@"0004.png"],
+                                               [UIImage imageNamed:@"0005.png"],
+                                               [UIImage imageNamed:@"0006.png"],
+                                               [UIImage imageNamed:@"0007.png"],
+                                               [UIImage imageNamed:@"0008.png"],
+                                               [UIImage imageNamed:@"0009.png"],
+                                               [UIImage imageNamed:@"0010.png"],
+                                               [UIImage imageNamed:@"0011.png"],
+                                               [UIImage imageNamed:@"0012.png"],
+                                               [UIImage imageNamed:@"0013.png"],
+                                               [UIImage imageNamed:@"0014.png"],
+                                               [UIImage imageNamed:@"0015.png"],
+                                               [UIImage imageNamed:@"0016.png"],
+                                               nil];
+    [self.view addSubview:customActivityIndicator];
+    customActivityIndicator.animationDuration = 1.0;
+    customActivityIndicator.animationRepeatCount = 0;
+    [self.view addSubview:customActivityIndicator];
+}
+
 
 - (void)setPaths:(NSString *)web root:(NSString *)root fname:(NSString *)fname {
     self.webSite = web;
@@ -102,6 +128,7 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     // NSLog(@"viewDidLoad");
+    //[self createCustomActivityIndicator];
     [[myTableView backgroundView] setAlpha:0.3];
     [super viewDidLoad];
 }
@@ -124,6 +151,7 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 		self.menuFeedConnection = [[NSURLConnection alloc] initWithRequest:menuRequest delegate:self];
 		NSAssert(self.menuFeedConnection != nil, @"Failure to create URL connection for Menus.");
 		[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+        [customActivityIndicator startAnimating];
 	} else {
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"URL failed" message:[rootSite stringByAppendingPathComponent:self.fileName] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
 		[alert show];
@@ -151,7 +179,7 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 
 
 - (void)dealloc {
-    
+    [customActivityIndicator release];
 	[myTableView release];
     [menuItems release];
     [currentMenuItem release];
@@ -166,6 +194,8 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
     //NSLog( @"releasing imageFileName: %d",[self.imageFileName retainCount]);
     //[self.imageFileName release];
     [currentStringValue release];
+    [self.userID release];
+    [self.appID release];
 	[connection release];
     [super dealloc];
 
@@ -484,6 +514,8 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 	[self displayCachedImage];
 }
 
+
+
 /* show the user that loading activity has started */
 
 - (void) startAnimation
@@ -491,6 +523,7 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 	[activityIndicator startAnimating];
 	UIApplication *application = [UIApplication sharedApplication];
 	application.networkActivityIndicatorVisible = YES;
+    [customActivityIndicator startAnimating];
 }
 
 
@@ -501,6 +534,7 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 	[activityIndicator stopAnimating];
 	UIApplication *application = [UIApplication sharedApplication];
 	application.networkActivityIndicatorVisible = NO;
+    [customActivityIndicator stopAnimating];
 }
 
 - (void) displayImageWithURL:(NSURL *)theURL
@@ -608,6 +642,7 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)theError {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;   
+    [customActivityIndicator stopAnimating];
     if ([theError code] == kCFURLErrorNotConnectedToInternet) {
         NSDictionary *userInfo =
         [NSDictionary dictionaryWithObject:
@@ -634,6 +669,7 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
     [self.menuFeedConnection release];
     self.menuFeedConnection = nil;
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;   
+    [customActivityIndicator stopAnimating];
     // NSLog(@"MenuViewController: finished loading data, starting to parse.");
     
     NSXMLParser *parser = [[NSXMLParser alloc] initWithData:self.menuData];

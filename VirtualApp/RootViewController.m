@@ -12,6 +12,7 @@
 #import "MenuViewController.h"
 #import "SHK.h"
 #import "Constants.h"
+#import "PayPal.h"
 
 @implementation RootViewController
 
@@ -26,10 +27,37 @@
 #pragma mark View lifecycle
 
 
+-(void) createCustomActivityIndicator {
+    customActivityIndicator = [[UIImageView alloc] initWithFrame:CGRectMake(100, 200, 100.0, 100.0)];
+    customActivityIndicator.animationImages = [NSArray arrayWithObjects:
+                                               [UIImage imageNamed:@"0001.png"],
+                                               [UIImage imageNamed:@"0002.png"],
+                                               [UIImage imageNamed:@"0003.png"],
+                                               [UIImage imageNamed:@"0004.png"],
+                                               [UIImage imageNamed:@"0005.png"],
+                                               [UIImage imageNamed:@"0006.png"],
+                                               [UIImage imageNamed:@"0007.png"],
+                                               [UIImage imageNamed:@"0008.png"],
+                                               [UIImage imageNamed:@"0009.png"],
+                                               [UIImage imageNamed:@"0010.png"],
+                                               [UIImage imageNamed:@"0011.png"],
+                                               [UIImage imageNamed:@"0012.png"],
+                                               [UIImage imageNamed:@"0013.png"],
+                                               [UIImage imageNamed:@"0014.png"],
+                                               [UIImage imageNamed:@"0015.png"],
+                                               [UIImage imageNamed:@"0016.png"],
+                                               nil];
+    [self.view addSubview:customActivityIndicator];
+    customActivityIndicator.animationDuration = 1.0;
+    customActivityIndicator.animationRepeatCount = 0;
+}
+
+
 - (void)viewDidLoad
 {
     NSError *error;
     [super viewDidLoad];
+    [self createCustomActivityIndicator];
     
     // Uncomment this line if you want to reset your sharing ID information 
     //[SHK logoutOfAll];
@@ -60,37 +88,42 @@
     
     // initialize lists
     self.categoryList = [[NSMutableArray alloc] init];
-    
-    parseQueue = [NSOperationQueue new];
-    
+    //parseQueue = [NSOperationQueue new];
     [self loadSites];
 }
 
 
 - (void) loadSites {
-    
     [self.categoryList release];
 	self.categoryList = [[NSMutableArray alloc] init];
-
+    if (siteObjects) {
+        [siteObjects release];
+        siteObjects = nil;
+    }
     // request the sites xml data
     NSURLRequest *sitesRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:kSitesURL]];
+#ifdef DEBUG
+    NSLog(@"kSitesURL = %@",kSitesURL);
+#endif
 	sitesFeedConnection = [[NSURLConnection alloc] initWithRequest:sitesRequest delegate:self];
-    
 	NSAssert(sitesFeedConnection != nil, @"Failure to create URL connection for Sites.");
-    
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-
+    [customActivityIndicator startAnimating];
 }
+
+
 
 - (void)viewWillAppear:(BOOL)animated
 {
-
     [super viewWillAppear:animated];
 }
 
+
+
 - (void)viewDidAppear:(BOOL)animated
 {
-    
+    [PayPal initializeWithAppID:@"APP-80W284485P519543T" forEnvironment:ENV_SANDBOX];
+
 #ifdef MAKE_FOR_CUSTOMER
     defaultAppID = kAppID;
     defaultUserID = kUserID;
@@ -338,9 +371,13 @@
 	UIButton *button;
     NSUInteger section = [indexPath section];
 	NSInteger count = 0;
+        
 	UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 	if (cell == nil) {
-		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+        if (displayMode == CATEGORIES)
+            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        else
+            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
 	}
 	
 	switch (displayMode) {
@@ -375,13 +412,14 @@
 			[button addTarget:self action:@selector(addToBookmarks:) forControlEvents:UIControlEventTouchUpInside];
 			cell.accessoryView = button;	
             [cell.detailTextLabel setTextColor:[UIColor blackColor]];
-            [cell.detailTextLabel setText:site.siteTitle];
+            [cell.detailTextLabel setText:site.category];
 
 			[list release];
 			return cell;
 			break;
 		case CATEGORIES:
 			cell.accessoryView = nil;
+            [cell.detailTextLabel setText:@""];
 			cell.textLabel.text = [self.categoryList objectAtIndex:indexPath.row];
 			break;
 		case BOOKMARKS:
@@ -406,6 +444,7 @@
 			cell.accessoryView = button;	
 			
 			cell.textLabel.text = [list objectAtIndex:indexPath.row];
+            [cell.detailTextLabel setText:@""];
 			[list release];
 			list=nil;
 			break;
@@ -605,7 +644,6 @@
             //[fn release];
             [url release];
 			[turlString release];
-            
 			[self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 			break;
 		default:
@@ -635,6 +673,7 @@
 
 
 - (void)dealloc {
+    [customActivityIndicator release];
     [sitesFeedConnection release];
     sitesFeedConnection = nil;
     [parseQueue release];
@@ -668,12 +707,13 @@
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;   
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;  
+    [customActivityIndicator stopAnimating];
     if ([error code] == kCFURLErrorNotConnectedToInternet) {
         NSDictionary *userInfo =
         [NSDictionary dictionaryWithObject:
          NSLocalizedString(@"No Connection Error, you need to be connected to the internet to run Virtual App.",
-                           @"For Virtual App to work, you need to be connected to the internet.")
+                           @"For this program to work, you need to be connected to the internet.")
                                     forKey:NSLocalizedDescriptionKey];
         NSError *noConnectionError = [NSError errorWithDomain:NSCocoaErrorDomain
                                                          code:kCFURLErrorNotConnectedToInternet
@@ -694,11 +734,13 @@
     [sitesFeedConnection release];
     sitesFeedConnection = nil;
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;   
+    [customActivityIndicator stopAnimating];
     
     NSXMLParser *parser = [[NSXMLParser alloc] initWithData:self.sitesData];
     [parser setDelegate:self];
     [parser parse];
     [parser release];
+    
     [self copySites];
     [self.tableView reloadData];
     
@@ -742,12 +784,17 @@
 	char *errorMsg;
 	BOOL alreadyThere;
 	alreadyThere = NO;
+    SiteObject *theSite;
 	UIButton *senderButton = (UIButton*)sender;
 	UITableViewCell *buttonCell = (UITableViewCell *)[senderButton superview];
-	NSUInteger buttonRow = [[self.tableView indexPathForCell:buttonCell] row];
-	SiteObject	*site = [siteObjects objectAtIndex:buttonRow];
-	NSString *appID = site.appID;
-	NSString *appTitle = site.siteTitle ;
+    NSString *name = buttonCell.textLabel.text;
+    
+    for (SiteObject *asite in siteObjects) {
+        if ([name isEqualToString:asite.siteTitle])
+            theSite = asite;
+    }
+	NSString *appID = theSite.appID;
+	NSString *appTitle = theSite.siteTitle ;
 	
 	int results = sqlite3_open([[self dataFilePath] UTF8String], &database);
 	if (results != SQLITE_OK) {
@@ -912,7 +959,8 @@
         [currentStringValue release];
         currentStringValue = nil;
     }
-    
+    [currentStringValue release];
+    currentStringValue = nil;
 }
 
 

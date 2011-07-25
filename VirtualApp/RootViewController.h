@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#include "/usr/include/sqlite3.h"
+#include "sqlite3.h"
 #import "MenuViewController.h"
 #include "SiteObject.h"
 
@@ -51,6 +51,7 @@ typedef enum {
     SiteObject *currentSite;
     NSMutableString *currentStringValue;
     BOOL accumulatingChars;
+    UIImageView *customActivityIndicator;
     
 	sqlite3 *database;
 	

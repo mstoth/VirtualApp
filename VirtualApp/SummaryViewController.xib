@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1056</int>
-		<string key="IBDocument.SystemVersion">10J567</string>
+		<string key="IBDocument.SystemVersion">10K540</string>
 		<string key="IBDocument.InterfaceBuilderVersion">1306</string>
-		<string key="IBDocument.AppKitVersion">1038.35</string>
-		<string key="IBDocument.HIToolboxVersion">462.00</string>
+		<string key="IBDocument.AppKitVersion">1038.36</string>
+		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			<string key="NS.object.0">301</string>
@@ -95,7 +95,7 @@
 					<object class="IBUITextView" id="1062789886">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{5, 54}, {160, 145}}</string>
+						<string key="NSFrame">{{0, 54}, {165, 145}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="852026497"/>
@@ -121,22 +121,22 @@
 					</object>
 					<object class="IBUITextView" id="538710508">
 						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{0, 199}, {320, 261}}</string>
+						<int key="NSvFlags">261</int>
+						<string key="NSFrame">{{0, 207}, {320, 209}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MSAxIDEAA</bytes>
 						</object>
-						<bool key="IBUIClipsSubviews">YES</bool>
-						<bool key="IBUIMultipleTouchEnabled">YES</bool>
+						<bool key="IBUIAutoresizesSubviews">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+						<bool key="IBUIDelaysContentTouches">NO</bool>
+						<bool key="IBUIBouncesZoom">NO</bool>
 						<bool key="IBUIEditable">NO</bool>
 						<string key="IBUIText">                       Loading...</string>
 						<reference key="IBUIFont" ref="487656159"/>
 						<object class="IBUITextInputTraits" key="IBUITextInputTraits">
-							<int key="IBUIAutocapitalizationType">2</int>
 							<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						</object>
 						<int key="IBUIDataDetectorTypes">15</int>
@@ -214,9 +214,9 @@
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="852026497"/>
-							<reference ref="538710508"/>
 							<reference ref="1062789886"/>
 							<reference ref="646568564"/>
+							<reference ref="538710508"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -364,6 +364,7 @@
 							<string>infoView</string>
 							<string>notesView</string>
 							<string>purchase</string>
+							<string>webView</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -374,6 +375,7 @@
 							<string>UITextView</string>
 							<string>UITextView</string>
 							<string>UIButton</string>
+							<string>UIWebView</string>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -387,6 +389,7 @@
 							<string>infoView</string>
 							<string>notesView</string>
 							<string>purchase</string>
+							<string>webView</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -417,6 +420,10 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">purchase</string>
 								<string key="candidateClassName">UIButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">webView</string>
+								<string key="candidateClassName">UIWebView</string>
 							</object>
 						</object>
 					</object>

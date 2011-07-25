@@ -16,6 +16,22 @@
 		A45A792713BF24A600594CF6 /* CalTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A45A792613BF24A600594CF6 /* CalTableViewCell.m */; };
 		A45A792A13BF27A600594CF6 /* CalCustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A45A792913BF27A600594CF6 /* CalCustomCell.xib */; };
 		A45A793913C14A6300594CF6 /* libPayPalMEP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A45A792D13C14A6200594CF6 /* libPayPalMEP.a */; };
+		A46531FE13DCF6B70041520F /* 0001.png in Resources */ = {isa = PBXBuildFile; fileRef = A46531EE13DCF6B70041520F /* 0001.png */; };
+		A46531FF13DCF6B70041520F /* 0002.png in Resources */ = {isa = PBXBuildFile; fileRef = A46531EF13DCF6B70041520F /* 0002.png */; };
+		A465320013DCF6B70041520F /* 0003.png in Resources */ = {isa = PBXBuildFile; fileRef = A46531F013DCF6B70041520F /* 0003.png */; };
+		A465320113DCF6B70041520F /* 0004.png in Resources */ = {isa = PBXBuildFile; fileRef = A46531F113DCF6B70041520F /* 0004.png */; };
+		A465320213DCF6B70041520F /* 0005.png in Resources */ = {isa = PBXBuildFile; fileRef = A46531F213DCF6B70041520F /* 0005.png */; };
+		A465320313DCF6B70041520F /* 0006.png in Resources */ = {isa = PBXBuildFile; fileRef = A46531F313DCF6B70041520F /* 0006.png */; };
+		A465320413DCF6B70041520F /* 0007.png in Resources */ = {isa = PBXBuildFile; fileRef = A46531F413DCF6B70041520F /* 0007.png */; };
+		A465320513DCF6B70041520F /* 0008.png in Resources */ = {isa = PBXBuildFile; fileRef = A46531F513DCF6B70041520F /* 0008.png */; };
+		A465320613DCF6B70041520F /* 0009.png in Resources */ = {isa = PBXBuildFile; fileRef = A46531F613DCF6B70041520F /* 0009.png */; };
+		A465320713DCF6B70041520F /* 0010.png in Resources */ = {isa = PBXBuildFile; fileRef = A46531F713DCF6B70041520F /* 0010.png */; };
+		A465320813DCF6B70041520F /* 0011.png in Resources */ = {isa = PBXBuildFile; fileRef = A46531F813DCF6B70041520F /* 0011.png */; };
+		A465320913DCF6B70041520F /* 0012.png in Resources */ = {isa = PBXBuildFile; fileRef = A46531F913DCF6B70041520F /* 0012.png */; };
+		A465320A13DCF6B70041520F /* 0013.png in Resources */ = {isa = PBXBuildFile; fileRef = A46531FA13DCF6B70041520F /* 0013.png */; };
+		A465320B13DCF6B70041520F /* 0014.png in Resources */ = {isa = PBXBuildFile; fileRef = A46531FB13DCF6B70041520F /* 0014.png */; };
+		A465320C13DCF6B70041520F /* 0015.png in Resources */ = {isa = PBXBuildFile; fileRef = A46531FC13DCF6B70041520F /* 0015.png */; };
+		A465320D13DCF6B70041520F /* 0016.png in Resources */ = {isa = PBXBuildFile; fileRef = A46531FD13DCF6B70041520F /* 0016.png */; };
 		A48AD763134B9B39004271C0 /* GroupItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A48AD762134B9B37004271C0 /* GroupItem.m */; };
 		A48AD767134B9BD4004271C0 /* Group.m in Sources */ = {isa = PBXBuildFile; fileRef = A48AD766134B9BD2004271C0 /* Group.m */; };
 		A48AD7BF134BEAD8004271C0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A48D1FC8134992E800B13EC5 /* UIKit.framework */; };
@@ -191,6 +207,22 @@
 		A45A793613C14A6200594CF6 /* PayPalPreapprovalDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalPreapprovalDetails.h; sourceTree = "<group>"; };
 		A45A793713C14A6200594CF6 /* PayPalReceiverAmounts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalReceiverAmounts.h; sourceTree = "<group>"; };
 		A45A793813C14A6200594CF6 /* PPReceiverPaymentDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPReceiverPaymentDetails.h; sourceTree = "<group>"; };
+		A46531EE13DCF6B70041520F /* 0001.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 0001.png; sourceTree = "<group>"; };
+		A46531EF13DCF6B70041520F /* 0002.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 0002.png; sourceTree = "<group>"; };
+		A46531F013DCF6B70041520F /* 0003.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 0003.png; sourceTree = "<group>"; };
+		A46531F113DCF6B70041520F /* 0004.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 0004.png; sourceTree = "<group>"; };
+		A46531F213DCF6B70041520F /* 0005.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 0005.png; sourceTree = "<group>"; };
+		A46531F313DCF6B70041520F /* 0006.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 0006.png; sourceTree = "<group>"; };
+		A46531F413DCF6B70041520F /* 0007.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 0007.png; sourceTree = "<group>"; };
+		A46531F513DCF6B70041520F /* 0008.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 0008.png; sourceTree = "<group>"; };
+		A46531F613DCF6B70041520F /* 0009.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 0009.png; sourceTree = "<group>"; };
+		A46531F713DCF6B70041520F /* 0010.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 0010.png; sourceTree = "<group>"; };
+		A46531F813DCF6B70041520F /* 0011.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 0011.png; sourceTree = "<group>"; };
+		A46531F913DCF6B70041520F /* 0012.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 0012.png; sourceTree = "<group>"; };
+		A46531FA13DCF6B70041520F /* 0013.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 0013.png; sourceTree = "<group>"; };
+		A46531FB13DCF6B70041520F /* 0014.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 0014.png; sourceTree = "<group>"; };
+		A46531FC13DCF6B70041520F /* 0015.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 0015.png; sourceTree = "<group>"; };
+		A46531FD13DCF6B70041520F /* 0016.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 0016.png; sourceTree = "<group>"; };
 		A48AD761134B9B36004271C0 /* GroupItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupItem.h; sourceTree = "<group>"; };
 		A48AD762134B9B37004271C0 /* GroupItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupItem.m; sourceTree = "<group>"; };
 		A48AD765134B9BD1004271C0 /* Group.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Group.h; sourceTree = "<group>"; };
@@ -526,6 +558,29 @@
 			path = Library;
 			sourceTree = "<group>";
 		};
+		A46531AC13DCE8920041520F /* spinner */ = {
+			isa = PBXGroup;
+			children = (
+				A46531EE13DCF6B70041520F /* 0001.png */,
+				A46531EF13DCF6B70041520F /* 0002.png */,
+				A46531F013DCF6B70041520F /* 0003.png */,
+				A46531F113DCF6B70041520F /* 0004.png */,
+				A46531F213DCF6B70041520F /* 0005.png */,
+				A46531F313DCF6B70041520F /* 0006.png */,
+				A46531F413DCF6B70041520F /* 0007.png */,
+				A46531F513DCF6B70041520F /* 0008.png */,
+				A46531F613DCF6B70041520F /* 0009.png */,
+				A46531F713DCF6B70041520F /* 0010.png */,
+				A46531F813DCF6B70041520F /* 0011.png */,
+				A46531F913DCF6B70041520F /* 0012.png */,
+				A46531FA13DCF6B70041520F /* 0013.png */,
+				A46531FB13DCF6B70041520F /* 0014.png */,
+				A46531FC13DCF6B70041520F /* 0015.png */,
+				A46531FD13DCF6B70041520F /* 0016.png */,
+			);
+			name = spinner;
+			sourceTree = "<group>";
+		};
 		A48AD771134BDDF4004271C0 /* Unit Test */ = {
 			isa = PBXGroup;
 			children = (
@@ -604,7 +659,6 @@
 				A49A67831352C99100ED1B70 /* icon.png */,
 				A4C9AC91135286C000539C1D /* dist.plist */,
 				A48AD7D0134BEAE5004271C0 /* LogicTests */,
-				A48D203513499C9900B13EC5 /* libsqlite3.dylib */,
 				A48D1FCE134992E800B13EC5 /* VirtualApp */,
 				A48D1FEE134992E900B13EC5 /* VirtualAppTests */,
 				A48AD771134BDDF4004271C0 /* Unit Test */,
@@ -651,6 +705,8 @@
 		A48D1FCE134992E800B13EC5 /* VirtualApp */ = {
 			isa = PBXGroup;
 			children = (
+				A46531AC13DCE8920041520F /* spinner */,
+				A48D203513499C9900B13EC5 /* libsqlite3.dylib */,
 				A45A792C13C14A6200594CF6 /* Library */,
 				A41B3CA313A086C100EDC2BE /* xib files */,
 				A4C24A86135FBFE7005A73F7 /* ShareKit */,
@@ -1235,6 +1291,22 @@
 				A452D2B2138B691E00987109 /* TextViewController.xib in Resources */,
 				A4C4C44913B0ABC700B866BF /* GCalEventsViewController.xib in Resources */,
 				A45A792A13BF27A600594CF6 /* CalCustomCell.xib in Resources */,
+				A46531FE13DCF6B70041520F /* 0001.png in Resources */,
+				A46531FF13DCF6B70041520F /* 0002.png in Resources */,
+				A465320013DCF6B70041520F /* 0003.png in Resources */,
+				A465320113DCF6B70041520F /* 0004.png in Resources */,
+				A465320213DCF6B70041520F /* 0005.png in Resources */,
+				A465320313DCF6B70041520F /* 0006.png in Resources */,
+				A465320413DCF6B70041520F /* 0007.png in Resources */,
+				A465320513DCF6B70041520F /* 0008.png in Resources */,
+				A465320613DCF6B70041520F /* 0009.png in Resources */,
+				A465320713DCF6B70041520F /* 0010.png in Resources */,
+				A465320813DCF6B70041520F /* 0011.png in Resources */,
+				A465320913DCF6B70041520F /* 0012.png in Resources */,
+				A465320A13DCF6B70041520F /* 0013.png in Resources */,
+				A465320B13DCF6B70041520F /* 0014.png in Resources */,
+				A465320C13DCF6B70041520F /* 0015.png in Resources */,
+				A465320D13DCF6B70041520F /* 0016.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1518,17 +1590,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Toth (Z2X5TZNEHK)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG,",
-					LOCAL,
-				);
-				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
-					"LOCAL,",
-					DEBUG,
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = DEBUG;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1538,7 +1604,7 @@
 					"-all_load",
 					"-ObjC",
 				);
-				PROVISIONING_PROFILE = "CA851D1C-DE63-45C8-91AD-B2BBA41BED40";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1547,7 +1613,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1568,7 +1634,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Toth (Z2X5TZNEHK)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1585,7 +1651,7 @@
 					"\"$(SRCROOT)/VirtualApp/ShareKit\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "84140A55-E6D7-4122-8EE1-97BBB40E1A6D";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1595,7 +1661,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Michael Toth";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1612,7 +1678,7 @@
 					"\"$(SRCROOT)/VirtualApp/ShareKit\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "C5D6A74A-4054-4F8D-AAB1-779A0BDBE441";
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=*]" = "";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
@@ -1667,7 +1733,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Michael Toth";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1678,7 +1744,7 @@
 					"-all_load",
 					"-ObjC",
 				);
-				PROVISIONING_PROFILE = "C5D6A74A-4054-4F8D-AAB1-779A0BDBE441";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 			};
 			name = Beta;
@@ -1688,7 +1754,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Michael Toth";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1704,7 +1770,7 @@
 					"\"$(SRCROOT)/VirtualApp/ShareKit\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "C5D6A74A-4054-4F8D-AAB1-779A0BDBE441";
+				PROVISIONING_PROFILE = "";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};

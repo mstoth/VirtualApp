@@ -66,6 +66,7 @@
 	NSURLConnection *connection;
 	NSError *error;
 	UIActivityIndicatorView *activityIndicator;
+    UIImageView *customActivityIndicator;
 	
 }
 @property (nonatomic, retain) NSMutableArray *myImages;

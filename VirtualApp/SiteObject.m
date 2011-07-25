@@ -23,17 +23,12 @@
     return self;
 }
 
-/*
+
 -(id)init {
-    [super init];
-    siteTitle = [[NSString alloc] init];
-    appID = [[NSString alloc] init];
-    userID = [[NSString alloc] init];
-    filename = [[NSString alloc] init];
-    category = [[NSString alloc] init];
-                 
+    self=[super init];
+    return self;
 }
-*/
+
 -(void)dealloc {
 	[siteTitle release];
 	[appID release];

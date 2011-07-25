@@ -24,6 +24,7 @@
     NSMutableString *currentStringValue;
     BOOL accumulatingChars;
     NSString *appID;
+    UIImageView *customActivityIndicator;
     NSInteger stage;
 }
 @property (nonatomic, retain) NSString *appID;

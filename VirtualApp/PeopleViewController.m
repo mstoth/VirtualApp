@@ -32,6 +32,33 @@
     self.rootSite = aroot;
     self.fileName = afileName;
 }
+-(void) createCustomActivityIndicator {
+    customActivityIndicator = [[UIImageView alloc] initWithFrame:CGRectMake(100, 200, 100.0, 100.0)];
+    customActivityIndicator.animationImages = [NSArray arrayWithObjects:
+                                               [UIImage imageNamed:@"0001.png"],
+                                               [UIImage imageNamed:@"0002.png"],
+                                               [UIImage imageNamed:@"0003.png"],
+                                               [UIImage imageNamed:@"0004.png"],
+                                               [UIImage imageNamed:@"0005.png"],
+                                               [UIImage imageNamed:@"0006.png"],
+                                               [UIImage imageNamed:@"0007.png"],
+                                               [UIImage imageNamed:@"0008.png"],
+                                               [UIImage imageNamed:@"0009.png"],
+                                               [UIImage imageNamed:@"0010.png"],
+                                               [UIImage imageNamed:@"0011.png"],
+                                               [UIImage imageNamed:@"0012.png"],
+                                               [UIImage imageNamed:@"0013.png"],
+                                               [UIImage imageNamed:@"0014.png"],
+                                               [UIImage imageNamed:@"0015.png"],
+                                               [UIImage imageNamed:@"0016.png"],
+                                               nil];
+    [self.view addSubview:customActivityIndicator];
+    customActivityIndicator.animationDuration = 1.0;
+    customActivityIndicator.animationRepeatCount = 0;
+    [self.view addSubview:customActivityIndicator];
+}
+
+
 -(void) toggleNetworkIndicator {
 	UIApplication *app = [UIApplication sharedApplication];
 	app.networkActivityIndicatorVisible = !app.networkActivityIndicatorVisible;
@@ -59,7 +86,7 @@
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
-    
+    [self createCustomActivityIndicator];
     names = [[NSMutableArray alloc] init];
 	bios = [[NSMutableArray alloc] init];
 	images = [[NSMutableArray alloc] init];
@@ -72,6 +99,7 @@
 		self.groupFeedConnection = [[[NSURLConnection alloc] initWithRequest:groupRequest delegate:self] autorelease];
 		NSAssert(self.groupFeedConnection != nil, @"Failure to create URL connection for Groups.");
 		[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+        [customActivityIndicator startAnimating];
 		parseQueue = [NSOperationQueue new];
 		[[NSNotificationCenter defaultCenter] addObserver:self
 												 selector:@selector(addGroup:)
@@ -217,6 +245,7 @@
 
 
 - (void)dealloc {
+    [customActivityIndicator release];
     [connection release];
     [names release];
     [bios release];
@@ -341,6 +370,7 @@
 	[activityIndicator startAnimating];
 	UIApplication *application = [UIApplication sharedApplication];
 	application.networkActivityIndicatorVisible = YES;
+    [customActivityIndicator startAnimating];
 }
 
 
@@ -351,6 +381,7 @@
 	[activityIndicator stopAnimating];
 	UIApplication *application = [UIApplication sharedApplication];
 	application.networkActivityIndicatorVisible = NO;
+    [customActivityIndicator stopAnimating];
 }
 
 - (NSString *)myTitle {
@@ -561,6 +592,7 @@
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)theError {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;   
+    [customActivityIndicator stopAnimating];
     if ([theError code] == kCFURLErrorNotConnectedToInternet) {
         NSDictionary *userInfo =
         [NSDictionary dictionaryWithObject:
@@ -583,7 +615,8 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     self.groupFeedConnection = nil;
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;   
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;  
+    [customActivityIndicator stopAnimating];
     
     ParseOperation *parseOperation = [[ParseOperation alloc] initWithDataAndType:self.groupData type:@"Group"];
     [self.parseQueue addOperation:parseOperation];

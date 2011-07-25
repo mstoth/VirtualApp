@@ -26,7 +26,7 @@
     NSURLConnection *profileFeedConnection;
     NSMutableData *profileData;
     NSOperationQueue *parseQueue;
-
+    UIImageView *customActivityIndicator;
 
 }
 @property (nonatomic, retain) NSOperationQueue *parseQueue;
