@@ -135,7 +135,7 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 
 - (void)viewWillAppear:(BOOL)animated {
    // NSLog(@"%@",self.fileName);
-    [menuItems release];
+    //[menuItems release];
     NSURL *url;
     if ([self.fileName isEqualToString:@"mainmenu.xml"]) 
         url = [[NSURL alloc] initWithString:[webSite stringByAppendingPathComponent:self.fileName]];
@@ -182,6 +182,7 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
     [customActivityIndicator release];
 	[myTableView release];
     [menuItems release];
+    menuItems = nil;
     [currentMenuItem release];
     [dataPath release];
     [filePath release];
@@ -674,6 +675,10 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
     
     NSXMLParser *parser = [[NSXMLParser alloc] initWithData:self.menuData];
     [parser setDelegate:self];
+    if (menuItems) {
+        [menuItems release];
+        menuItems = nil;
+    }
     result = [parser parse];
     [currentStringValue release];
     currentStringValue = nil;
