@@ -49,6 +49,7 @@
 #import "WebViewController.h"
 #import "ImagesViewController.h"
 #import "ContactViewController.h"
+#import "ImagePageViewController.h"
 #import "TextViewController.h"
 #import "Menu.h"
 #import "MenuItem.h"
@@ -435,6 +436,12 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 		[self.navigationController pushViewController:slideShowViewController animated:YES];
 		[slideShowViewController release];
 	}
+    if ([[item pageType] isEqualToString:@"IMAGEPAGE"]) {
+        ImagePageViewController *fsc = [[ImagePageViewController alloc] initWithNibName:@"ImagePageViewController" bundle:nil];
+        fsc.fileName = iFileName;
+        [self.navigationController pushViewController:fsc animated:YES];
+        [fsc release];
+    }
 	if ([[item pageType] isEqualToString:@"CONTACT"]) {
 		ContactViewController *contactViewController = [[ContactViewController alloc] initWithNibName:@"ContactViewController" bundle:nil];
 		contactViewController.userID = self.userID;

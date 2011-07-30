@@ -166,6 +166,8 @@
 		A4C9AC851351091600539C1D /* SitesParserDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C9AC841351090D00539C1D /* SitesParserDelegate.m */; };
 		A4C9AC9013517A1F00539C1D /* GroupParserDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C9AC8F13517A0700539C1D /* GroupParserDelegate.m */; };
 		A4C9AC92135286C400539C1D /* dist.plist in Resources */ = {isa = PBXBuildFile; fileRef = A4C9AC91135286C000539C1D /* dist.plist */; };
+		A4CEEF4B13E1006700E3294C /* ImagePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4CEEF4913E1006700E3294C /* ImagePageViewController.m */; };
+		A4CEEF4C13E1006700E3294C /* ImagePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4CEEF4A13E1006700E3294C /* ImagePageViewController.xib */; };
 		A4E0AE9F13AAF545000DE7BD /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A4E0AE9E13AAF545000DE7BD /* libxml2.dylib */; };
 		A4E0AEA113AAF555000DE7BD /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A4E0AEA013AAF555000DE7BD /* libz.dylib */; };
 		A4E0AEA313AAF569000DE7BD /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4E0AEA213AAF569000DE7BD /* AddressBook.framework */; };
@@ -464,6 +466,9 @@
 		A4C9AC8E135179FD00539C1D /* GroupParserDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupParserDelegate.h; sourceTree = "<group>"; };
 		A4C9AC8F13517A0700539C1D /* GroupParserDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupParserDelegate.m; sourceTree = "<group>"; };
 		A4C9AC91135286C000539C1D /* dist.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = dist.plist; sourceTree = "<group>"; };
+		A4CEEF4813E1006700E3294C /* ImagePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImagePageViewController.h; sourceTree = "<group>"; };
+		A4CEEF4913E1006700E3294C /* ImagePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImagePageViewController.m; sourceTree = "<group>"; };
+		A4CEEF4A13E1006700E3294C /* ImagePageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImagePageViewController.xib; sourceTree = "<group>"; };
 		A4E0AE9E13AAF545000DE7BD /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		A4E0AEA013AAF555000DE7BD /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		A4E0AEA213AAF569000DE7BD /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
@@ -777,6 +782,9 @@
 				A45A792513BF24A600594CF6 /* CalTableViewCell.h */,
 				A45A792913BF27A600594CF6 /* CalCustomCell.xib */,
 				A45A792613BF24A600594CF6 /* CalTableViewCell.m */,
+				A4CEEF4813E1006700E3294C /* ImagePageViewController.h */,
+				A4CEEF4913E1006700E3294C /* ImagePageViewController.m */,
+				A4CEEF4A13E1006700E3294C /* ImagePageViewController.xib */,
 			);
 			path = VirtualApp;
 			sourceTree = "<group>";
@@ -1307,6 +1315,7 @@
 				A465320B13DCF6B70041520F /* 0014.png in Resources */,
 				A465320C13DCF6B70041520F /* 0015.png in Resources */,
 				A465320D13DCF6B70041520F /* 0016.png in Resources */,
+				A4CEEF4C13E1006700E3294C /* ImagePageViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1456,6 +1465,7 @@
 				A4C4C44D13B1F7C500B866BF /* CalEvent.m in Sources */,
 				A426A8CC13B9FE3300C0322A /* CalAppParser.m in Sources */,
 				A45A792713BF24A600594CF6 /* CalTableViewCell.m in Sources */,
+				A4CEEF4B13E1006700E3294C /* ImagePageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1738,6 +1748,10 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					DEBUG,
+					LOCAL,
+				);
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;

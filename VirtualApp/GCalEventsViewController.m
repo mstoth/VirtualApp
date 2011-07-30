@@ -59,6 +59,8 @@
     [filename release];
     [appID release];
     filename = nil;
+    [self.calData release];
+    self.calData = nil;
     /*
     [self.eventTable release];
     self.eventTable = nil;
@@ -247,7 +249,8 @@
 	status = [httpResponse statusCode];
     NSLog(@"mimeType = %@, status = %d",mimeType,status);
     if ((([httpResponse statusCode]/100) == 2) && ([[response MIMEType] isEqual:@"application/xml"] || [[response MIMEType] isEqual:@"text/xml"]) ) {
-        self.calData = [NSMutableData data];
+        //self.calData = [NSMutableData data];
+        self.calData = [[NSMutableData alloc] init];
     } else {
         NSDictionary *userInfo = [NSDictionary dictionaryWithObject:
                                   NSLocalizedString(@"HTTP Error",
@@ -299,7 +302,7 @@
     NSLog(@"Calendar Parser returned %d",result);
 #endif
     [self.eventTable reloadData];
-    self.calData = nil;
+    //self.calData = nil;
 }
 
 - (void)handleError:(NSError *)theError {

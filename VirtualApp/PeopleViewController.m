@@ -428,9 +428,10 @@
 	UIImage *theImage = [[UIImage alloc] initWithContentsOfFile:filePath];
 	
 	if (theImage) {
-		self.imageView.image = theImage;
+		//self.imageView.image = theImage;
 		myImage = theImage;
-		[imageButton setImage:myImage forState:UIControlStateNormal];
+		[imageButton setImage:theImage forState:UIControlStateNormal];
+        //[self.imageView setImage:theImage];
 	}
 	[theImage release];
 }

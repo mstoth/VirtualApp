@@ -557,7 +557,8 @@ customActivityIndicator.animationRepeatCount = 0;
 	if (theImage) {
 		self.imageView.image = theImage;
 	}
-	[imageButton setBackgroundImage:theImage forState:UIControlStateNormal];
+	//[imageButton setBackgroundImage:theImage forState:UIControlStateNormal];
+    [imageView setImage:theImage];
 }
 
 /* get modification date of the current cached image */
