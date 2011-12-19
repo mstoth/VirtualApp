@@ -35,7 +35,7 @@
 	NSString *filePath;
 	NSDate *fileDate;
 	NSString *more;
-	NSURLConnection *connection;
+	URLCacheConnection *connection;
 	NSError *error;
 	UIActivityIndicatorView *activityIndicator;
 	

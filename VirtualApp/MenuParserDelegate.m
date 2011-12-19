@@ -13,7 +13,7 @@
 @synthesize    menutype, menuItems, imageFileName, menuTitle;
 
 -(id)init {
-    [super init];
+    self = [super init];
     accumulatingChars = NO;
     return self;
 }

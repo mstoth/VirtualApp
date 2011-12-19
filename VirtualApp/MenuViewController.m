@@ -56,6 +56,7 @@
 #import "ParseOperation.h"
 #import "MenuCell.h"
 #import "GCalEventsViewController.h"
+#import "Constants.h"
 
 NSString *kAddMenuItemNotif = @"AddMenuItemNotif";
 NSString *kMenuItemResultsKey = @"MenuItemResultsKey";
@@ -72,6 +73,8 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
 @synthesize myTableView;
 @synthesize banner;
 @synthesize cellView;
+@synthesize myTabBar, homeTabBarItem, contactTabBarItem;
+
 
 -(void) createCustomActivityIndicator {
     customActivityIndicator = [[UIImageView alloc] initWithFrame:CGRectMake(100, 200, 100.0, 100.0)];
@@ -791,6 +794,28 @@ NSString *kMenuItemMsgErrorKey = @"MenuItemMsgErrorKey";
     }
 }
 
+#pragma mark -
+#pragma mark Tab Bar Delegate Methods
+
+- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
+{
+    if (item == homeTabBarItem) {
+#ifdef MAKE_FOR_CUSTOMER
+        MenuViewController *mvc = [[MenuViewController alloc] initWithNibName:@"MenuViewController" bundle:nil];
+        [mvc setPaths:kWebPath root:kRootPath fname:kFileName];
+        [self.navigationController initWithRootViewController:mvc];
+        mvc.title = kTitle;
+        mvc.userID = kUserID;
+        //self.window.rootViewController = self.navigationController;
+        //[self.window makeKeyAndVisible];
+        [self.navigationController pushViewController:mvc animated:YES];
+        [mvc release];
+#else
+        self.fileName = @"mainmenu.xml";
+        [self reloadInputViews];
+#endif
+    }
+}
 
 
 

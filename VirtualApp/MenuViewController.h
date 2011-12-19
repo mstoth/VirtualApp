@@ -14,7 +14,7 @@
 #define TITLE_FONT_SIZE 18.0f
 #define CELL_CONTENT_WIDTH 320.0f
 #define CELL_CONTENT_MARGIN 10.0f
-@interface MenuViewController : UIViewController  <NSXMLParserDelegate, UITableViewDelegate, UITableViewDataSource, URLCacheConnectionDelegate> {
+@interface MenuViewController : UIViewController  <NSXMLParserDelegate, UITableViewDelegate, UITableViewDataSource, URLCacheConnectionDelegate, UITabBarDelegate> {
 	
 	NSMutableString *currentStringValue; // used by parser to keep intermediate results
 	Menu *menu;
@@ -41,7 +41,7 @@
 	NSString *dataPath;
 	NSString *filePath;
 	NSDate *fileDate;
-	NSURLConnection *connection;
+	URLCacheConnection *connection;
 	NSError *error;
 	UIActivityIndicatorView *activityIndicator;
 	
@@ -50,6 +50,9 @@
     UITableViewCell *cellView;
     UIImageView *customActivityIndicator;
     UIImageView *banner;
+    
+    UITabBar *myTabBar;
+    UITabBarItem *homeTabBarItem, *contactTabBarItem;
 	
 }
 @property (nonatomic, retain) IBOutlet UITableView *myTableView;
@@ -60,7 +63,7 @@
 
 @property (nonatomic, retain) NSString *userID;
 @property (nonatomic, retain) NSString *appID;
-@property (nonatomic, retain) NSURLConnection *connection;
+@property (nonatomic, retain) URLCacheConnection *connection;
 @property (nonatomic, retain) NSString *menuTitle;
 @property (nonatomic, retain) NSMutableArray *pageTypes;
 @property (nonatomic, retain) NSMutableArray *fileNames;
@@ -72,6 +75,10 @@
 @property (nonatomic, retain) NSString *filePath;
 @property (nonatomic, retain) NSString *dataPath;
 @property (nonatomic, retain) IBOutlet UIImageView *banner;
+
+@property (nonatomic, retain) IBOutlet UITabBar *myTabBar;
+@property (nonatomic, retain) IBOutlet UITabBarItem *homeTabBarItem, *contactTabBarItem;
+
 -(void)initCache;
 -(void)startAnimation;
 -(void)stopAnimation;

@@ -31,7 +31,7 @@ typedef enum {
 	SUBLIST
 } DisplayMode; 
 
-@interface RootViewController : UIViewController <NSXMLParserDelegate> {
+@interface RootViewController : UIViewController <UITabBarDelegate, NSXMLParserDelegate> {
 	NSMutableArray *subList;
 	NSString *currentCategory;
 	NSMutableArray *categoryList;
@@ -54,7 +54,8 @@ typedef enum {
     UIImageView *customActivityIndicator;
     
 	sqlite3 *database;
-	
+	UITabBar *tabBar;
+    UITabBarItem *homeTabBarItem, *contactTabBarItem;
 	UIToolbar *toolBar;
 	UIBarButtonItem *allButtonItem, *bookmarksButtonItem, *categoriesButtonItem;
 	DisplayMode displayMode;
@@ -66,7 +67,8 @@ typedef enum {
 @property (nonatomic, retain) IBOutlet UIBarButtonItem *allButtonItem, *bookmarksButtonItem, *categoriesButtonItem;
 @property (nonatomic, retain) NSOperationQueue *parseQueue;
 @property (nonatomic, retain) NSMutableData *sitesData;
-
+@property (nonatomic, retain) IBOutlet UITabBar *tabBar;
+@property (nonatomic, retain) IBOutlet UITabBarItem *homeTabBarItem, *contactTabBarItem;
 @property (nonatomic, retain) IBOutlet UIToolbar *toolBar;
 
 - (void) handleError:(NSError *)error;

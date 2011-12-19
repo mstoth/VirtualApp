@@ -9,11 +9,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "VirtualApp/RootViewController.m"
-         timestampString = "333246091.915999"
+         timestampString = "343540068.120313"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "744"
-         endingLineNumber = "744"
+         startingLineNumber = "745"
+         endingLineNumber = "745"
          landmarkName = "-connectionDidFinishLoading:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -22,13 +22,13 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
-         filePath = "VirtualApp/RootViewController.m"
-         timestampString = "333246091.915999"
+         filePath = "VirtualApp/MenuViewController.m"
+         timestampString = "345780842.024665"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "709"
-         endingLineNumber = "709"
-         landmarkName = "-connection:didFailWithError:"
+         startingLineNumber = "814"
+         endingLineNumber = "814"
+         landmarkName = "-tabBar:didSelectItem:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

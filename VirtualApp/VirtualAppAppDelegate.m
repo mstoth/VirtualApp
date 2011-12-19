@@ -36,6 +36,7 @@
     MenuViewController *mvc = [[MenuViewController alloc] initWithNibName:@"MenuViewController" bundle:nil];
     [mvc setPaths:kWebPath root:kRootPath fname:kFileName];
     [self.navigationController initWithRootViewController:mvc];
+    [self.navigationController setViewControllers:[[NSArray alloc] initWithObjects:mvc, nil]];
     mvc.title = kTitle;
     mvc.userID = kUserID;
     self.window.rootViewController = self.navigationController;

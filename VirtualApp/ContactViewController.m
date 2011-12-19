@@ -8,7 +8,7 @@
 
 #import "ContactViewController.h"
 #import "ProfileParserDelegate.h"
-#import "MapAnnotation.h"
+// #import "MapAnnotation.h"
 #import "GeneralParser.h"
 #import "ParseOperation.h"
 

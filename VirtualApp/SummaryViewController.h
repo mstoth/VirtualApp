@@ -50,7 +50,7 @@
 	NSString *dataPath;
 	NSString *filePath;
 	NSDate *fileDate;
-	NSURLConnection *myConnection;
+	URLCacheConnection *myConnection;
 	NSError *error;
 	UIActivityIndicatorView *activityIndicator;
 	UIButton *customButton;

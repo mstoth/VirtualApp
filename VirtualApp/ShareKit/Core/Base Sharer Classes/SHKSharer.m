@@ -127,6 +127,9 @@
 		case SHKShareTypeFile:
 			return [self canShareFile];
 			break;
+        case SHKShareTypeUndefined:
+            return false;
+            break;
 	}
 	return NO;
 }
@@ -567,6 +570,8 @@
 		case SHKShareTypeFile:
 			return (item.data != nil);
 			break;
+        case SHKShareTypeUndefined:
+            break;
 	}
 	
 	return NO;
@@ -655,6 +660,10 @@
 		case SHKPendingShare:
 			[self share];
 			break;
+        case SHKPendingRefreshToken:
+            break;
+        case SHKPendingNone:
+            break;
 	}
 }
 

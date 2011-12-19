@@ -61,7 +61,6 @@
 		A48D201B1349982600B13EC5 /* SummaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A48D20071349980F00B13EC5 /* SummaryViewController.m */; };
 		A48D201C1349982600B13EC5 /* PeopleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A48D20091349981000B13EC5 /* PeopleViewController.m */; };
 		A48D201D1349982600B13EC5 /* ProfileParserDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A48D200B1349981100B13EC5 /* ProfileParserDelegate.m */; };
-		A48D201E1349982600B13EC5 /* MapAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = A48D200D1349981300B13EC5 /* MapAnnotation.m */; };
 		A48D201F1349982600B13EC5 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A48D200F1349981500B13EC5 /* WebViewController.m */; };
 		A48D20201349982600B13EC5 /* MoreInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A48D20111349981700B13EC5 /* MoreInfoViewController.m */; };
 		A48D20211349982600B13EC5 /* ImagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A48D20131349981900B13EC5 /* ImagesViewController.m */; };
@@ -277,8 +276,6 @@
 		A48D20091349981000B13EC5 /* PeopleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeopleViewController.m; sourceTree = "<group>"; };
 		A48D200A1349981100B13EC5 /* ProfileParserDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileParserDelegate.h; sourceTree = "<group>"; };
 		A48D200B1349981100B13EC5 /* ProfileParserDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileParserDelegate.m; sourceTree = "<group>"; };
-		A48D200C1349981200B13EC5 /* MapAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapAnnotation.h; sourceTree = "<group>"; };
-		A48D200D1349981300B13EC5 /* MapAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapAnnotation.m; sourceTree = "<group>"; };
 		A48D200E1349981400B13EC5 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		A48D200F1349981500B13EC5 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		A48D20101349981600B13EC5 /* MoreInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreInfoViewController.h; sourceTree = "<group>"; };
@@ -736,8 +733,6 @@
 				A48D20091349981000B13EC5 /* PeopleViewController.m */,
 				A48D200A1349981100B13EC5 /* ProfileParserDelegate.h */,
 				A48D200B1349981100B13EC5 /* ProfileParserDelegate.m */,
-				A48D200C1349981200B13EC5 /* MapAnnotation.h */,
-				A48D200D1349981300B13EC5 /* MapAnnotation.m */,
 				A48D200E1349981400B13EC5 /* WebViewController.h */,
 				A48D200F1349981500B13EC5 /* WebViewController.m */,
 				A48D20101349981600B13EC5 /* MoreInfoViewController.h */,
@@ -1240,6 +1235,9 @@
 /* Begin PBXProject section */
 		A48D1FBB134992E800B13EC5 /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
 			buildConfigurationList = A48D1FBE134992E800B13EC5 /* Build configuration list for PBXProject "VirtualApp" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
@@ -1381,7 +1379,6 @@
 				A48D201B1349982600B13EC5 /* SummaryViewController.m in Sources */,
 				A48D201C1349982600B13EC5 /* PeopleViewController.m in Sources */,
 				A48D201D1349982600B13EC5 /* ProfileParserDelegate.m in Sources */,
-				A48D201E1349982600B13EC5 /* MapAnnotation.m in Sources */,
 				A48D201F1349982600B13EC5 /* WebViewController.m in Sources */,
 				A48D20201349982600B13EC5 /* MoreInfoViewController.m in Sources */,
 				A48D20211349982600B13EC5 /* ImagesViewController.m in Sources */,
@@ -1566,6 +1563,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Logic Test/Logic Test-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Logic Test/Logic Test-Info.plist";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -1586,6 +1584,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Logic Test/Logic Test-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Logic Test/Logic Test-Info.plist";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -1600,14 +1599,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
-				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
-					DEBUG,
-					LOCAL,
-				);
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = DEBUG;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1626,7 +1622,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1647,7 +1643,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1656,6 +1652,7 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VirtualApp/VirtualApp-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "VirtualApp/VirtualApp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.1;
 				LIBRARY_SEARCH_PATHS = (
@@ -1674,7 +1671,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1683,6 +1680,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VirtualApp/VirtualApp-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "VirtualApp/VirtualApp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.1;
 				LIBRARY_SEARCH_PATHS = (
@@ -1709,6 +1707,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VirtualAppTests/VirtualAppTests-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "VirtualAppTests/VirtualAppTests-Info.plist";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -1731,6 +1730,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VirtualAppTests/VirtualAppTests-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "VirtualAppTests/VirtualAppTests-Info.plist";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -1746,12 +1746,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					DEBUG,
-					LOCAL,
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = "";
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = "";
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -1771,7 +1769,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1779,6 +1777,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VirtualApp/VirtualApp-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "VirtualApp/VirtualApp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.1;
 				LIBRARY_SEARCH_PATHS = (
@@ -1804,6 +1803,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VirtualAppTests/VirtualAppTests-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "VirtualAppTests/VirtualAppTests-Info.plist";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -1825,6 +1825,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Logic Test/Logic Test-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Logic Test/Logic Test-Info.plist";
 				OTHER_LDFLAGS = (
 					"-framework",

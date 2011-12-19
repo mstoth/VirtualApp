@@ -22,6 +22,7 @@
 @synthesize allButtonItem, bookmarksButtonItem, categoriesButtonItem;
 @synthesize categoryList,subList, currentCategory;
 @synthesize searchBar;
+@synthesize tabBar, homeTabBarItem, contactTabBarItem;
 
 #pragma mark -
 #pragma mark View lifecycle
@@ -144,6 +145,10 @@
         NSURL *url = [[NSURL alloc] initWithString:urlString];
         defaultMenuViewController.userID = defaultUserID;
         
+#ifdef MAKE_FOR_CUSTOMER
+        defaultMenuViewController.title = kTitle;
+#endif
+
         if (!url) {
             [defaultMenuViewController release];
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"URL failed" message:url.path delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -247,7 +252,7 @@
 		sqlite3_close(database);
         NSString *format = @"Error createing table: %s";
         NSString *msg = [[NSString alloc] initWithFormat:format,errorMsg];
-		NSAssert(0,msg);
+        NSAssert(false, msg);
         [msg release];
 	}
 }
@@ -806,7 +811,7 @@
 		sqlite3_close(database);
         NSString *format = @"Error creating table: %s";
         NSString *msg = [[NSString alloc] initWithFormat:format,errorMsg];
-		NSAssert(0,msg);
+        NSAssert(0, msg);
         [msg release];
 	}
 	// check to see if it's already there. 
